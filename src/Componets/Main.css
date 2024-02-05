@@ -1,0 +1,341 @@
+
+/* code for new design css here */
+
+/* Import Google font - Poppins */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #4070f4;
+}
+:where(.container, form, .input-field, header) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  background: #fff;
+  padding: 30px 65px;
+  border-radius: 12px;
+  row-gap: 20px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+.container header {
+  height: 65px;
+  width: 65px;
+  background: #4070f4;
+  color: #fff;
+  font-size: 2.5rem;
+  border-radius: 50%;
+}
+.container h4 {
+  font-size: 1.25rem;
+  color: #333;
+  font-weight: 500;
+}
+form .input-field {
+  flex-direction: row;
+  column-gap: 10px;
+}
+.input-field input {
+  height: 45px;
+  width: 42px;
+  border-radius: 6px;
+  outline: none;
+  font-size: 1.125rem;
+  text-align: center;
+  border: 1px solid #5d5353;
+}
+.input-field input:focus {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+.input-field input::-webkit-inner-spin-button,
+.input-field input::-webkit-outer-spin-button {
+  display: none;
+}
+.vbtn {
+  margin-top: 25px;
+  width: 100%;
+  color: #fff;
+  font-size: 1rem;
+  border: none;
+  padding: 9px 0;
+  border-radius: 6px;
+  background: #4070f4;
+  cursor: pointer;
+}
+.vbtn:hover{
+  background-color: #0030b6;
+}
+
+
+
+
+/* css for info page */
+
+.main{
+    margin:20px;
+    padding: 10px;
+    height: auto;
+    width: 800px;
+    background-color: #fff;
+    border-radius: 10px;
+}
+.aphead{
+    margin: 10px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: lighter;
+    color: #4070f4;
+}
+.aphead h2{
+    text-align: center;
+    font-size: 20px;
+    font-weight: bolder;
+    color: #0059ff;
+}
+.aphead .profileimg{
+  margin-top: 20px;
+}
+.aphead .profileimg img{
+  border-radius: 5%;
+  height: 150px;
+  width: 150px;
+}
+.personal-info h2{
+  text-align: center;
+}
+section{
+  border: 1px solid #000000;
+  font-size: 15px;
+  color: black;
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+section h2{
+  text-align: center;
+}
+section label{
+  line-height: 30px;
+  display: block;
+}
+.pi{
+  margin-left: 10px;
+  display: block;
+}
+.dd{
+  margin-left: 20px;
+  line-height: 30px;
+}
+
+/* card detail css here */
+.card {
+  border: 1px solid #000000;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  display: flex;
+}
+.cardinfo{
+  line-height: 30px;
+}
+.cardinfo label{
+  color:#a0a0a0;
+  font-size: 18px;
+}
+
+.image-container {
+  max-width: 100%;
+  height: auto;
+  margin-left: 60px;
+}
+
+.image-container img {
+  width: 350px;
+  height: 230px;
+  border-radius: 5px;
+}
+
+.verification-link {
+  margin-top: 10px;
+}
+
+.degreecard h2{
+  text-align: center;
+}
+
+.ehistory h2{
+  text-align: center;
+}
+.extraquilificatin h2{
+  text-align: center;
+}
+.digitalsign h2{
+  text-align: center;
+}
+.privacy h2{
+  text-align: center;
+}
+.privacy p{
+  text-align: center;
+  text-transform: uppercase;
+}
+
+#loading-message h1{
+  padding: 15px;
+  background-color: white;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 20px;
+}
+#error-message h1{
+  padding: 15px;
+  background-color: white;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 20px;
+  color: red;
+}
+
+/* Add this to your CSS file or in a style tag within your HTML */
+.loader {
+  color: #ffffff;
+  font-size: 45px;
+  text-indent: -9999em;
+  overflow: hidden;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  position: relative;
+  transform: translateZ(0);
+  animation: mltShdSpin 1.7s infinite ease, round 1.7s infinite ease;
+}
+
+@keyframes mltShdSpin {
+  0% {
+    box-shadow: 0 -0.83em 0 -0.4em,
+    0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em,
+    0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+  }
+  5%,
+  95% {
+    box-shadow: 0 -0.83em 0 -0.4em, 
+    0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 
+    0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+  }
+  10%,
+  59% {
+    box-shadow: 0 -0.83em 0 -0.4em, 
+    -0.087em -0.825em 0 -0.42em, -0.173em -0.812em 0 -0.44em, 
+    -0.256em -0.789em 0 -0.46em, -0.297em -0.775em 0 -0.477em;
+  }
+  20% {
+    box-shadow: 0 -0.83em 0 -0.4em, -0.338em -0.758em 0 -0.42em,
+     -0.555em -0.617em 0 -0.44em, -0.671em -0.488em 0 -0.46em, 
+     -0.749em -0.34em 0 -0.477em;
+  }
+  38% {
+    box-shadow: 0 -0.83em 0 -0.4em, -0.377em -0.74em 0 -0.42em,
+     -0.645em -0.522em 0 -0.44em, -0.775em -0.297em 0 -0.46em, 
+     -0.82em -0.09em 0 -0.477em;
+  }
+  100% {
+    box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 
+    0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+  }
+}
+
+@keyframes round {
+  0% { transform: rotate(0deg) }
+  100% { transform: rotate(360deg) }
+}
+ 
+/* send otp file css code here */
+
+body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #4070f4;
+}
+:where(.container, header) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.container {
+    background: #fff;
+    padding: 30px 65px;
+    border-radius: 12px;
+    row-gap: 20px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+.container header {
+    height: 65px;
+    width: 65px;
+    background: #4070f4;
+    color: #fff;
+    font-size: 2.5rem;
+    border-radius: 50%;
+}
+.container h4 {
+    font-size: 1.25rem;
+    color: #333;
+    font-weight: 500;
+}
+.sbtn {
+    margin-top: 25px;
+    width: 100%;
+    color: #fff;
+    font-size: 1rem;
+    border: none;
+    padding: 9px 0;
+    cursor: pointer;
+    border-radius: 6px;
+    background:#0059ff;
+}
+
+.sbtn:hover{
+  background-color: #003821;
+}
+
+@media only screen and (max-width: 600px) {
+    /* Styles for screens less than or equal to 600px wide */
+    .container {
+      padding: 20px;
+    }
+  }
+
+  @media only screen and (max-width: 400px) {
+    /* Styles for screens less than or equal to 400px wide */
+    .container {
+      padding: 15px;
+    }
+    .container header {
+      height: 50px;
+      width: 50px;
+      font-size: 2rem;
+    }
+    .container h4 {
+      font-size: 1rem;
+    }
+    button {
+      margin-top: 20px;
+      font-size: 0.9rem;
+    }
+  }
