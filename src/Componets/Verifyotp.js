@@ -75,7 +75,7 @@ const OTPVerification = () => {
       const response = await fetch(apiUrl, requestOptions);
       console.log("Response Status:", response.status);
       const data = await response.json();
-      console.log("API Data:", data);
+      console.log("API Data:",data);
 
       // Handle the API response as needed
       if (data.Status_Code === 200) {

@@ -9,6 +9,7 @@ const App = () => {
     <Router>
       <Routes>
           <Route path="/"  element= { <SendOTP/>} />
+          {/* <Route path="/verify-otp/:id"  element= { <Verifyotp/>} /> */}
           <Route path="/verify-otp"  element= { <Verifyotp/>} />
           <Route path="/profile"  element= { <Profilepage/>} />
       </Routes>

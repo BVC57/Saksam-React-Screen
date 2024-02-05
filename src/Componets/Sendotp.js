@@ -9,7 +9,8 @@ const SendOTP = () => {
 
   const sendOTP = () => {
     alert('Send Done');
-    navigate('/verify-otp'); // Navigate to the Verifyotp page
+    // navigate(`/verify-otp/${10}`); // Navigate to the Verifyotp page
+    navigate(`/verify-otp`);
   };
 
   return (
