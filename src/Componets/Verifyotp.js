@@ -2,11 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import "./Main.css";
 
-const OTPVerification = () => {
+const OTPVerification = (Newdata) => {
+  const { userId, authToken } = Newdata;
+  console.log('userId for verify otp:', userId);
+  console.log('authToken: verify otp', authToken);
   const [otpValues, setOtpValues] = useState(["", "", "", "", "", ""]);
   const [buttonText, setButtonText] = useState("Enter OTP");
+  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     document.getElementById("otpInput1").focus();
   }, []);
@@ -47,21 +51,17 @@ const OTPVerification = () => {
     const enteredOTP = otpValues.join("");
     console.log("Entered OTP:", enteredOTP);
     CallAPI(enteredOTP);
-
-    // Make API call here
-    // Use the apiUrl, token, and enteredOTP to make the API request
   };
+
   const CallAPI = async (otp) => {
     console.log(otp);
-    const apiUrl =
-      "https://huf6ubili4.execute-api.ap-south-1.amazonaws.com/DEV/viewer_otp_verification";
+    const apiUrl = "https://huf6ubili4.execute-api.ap-south-1.amazonaws.com/DEV/viewer_otp_verification";
     const method = "POST";
     const requestBody = {
-      id: 1,
+      id: `${userId}`,
       OTP: otp,
     };
-    const token =
-      "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcwNzExMDU5MywianRpIjoiMjllYzIxNDYtYzQxOC00NDEyLWE1NzYtZGI4Yjc3ZjkxZjVjIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImJmMDIyN2FkLWE5MDItNDVlNC04NDU2LTEzOWEwYWNhNmY5MyIsIm5iZiI6MTcwNzExMDU5MywiZXhwIjoxNzA3MTE0MTkzfQ.x9BSTVTMRTNeOzt2yiFjZEdhHZ9zNwDdwxlTTx3u2Bs";
+    const token = `Bearer ${authToken}`;
     const requestOptions = {
       method: method,
       headers: {
@@ -75,26 +75,20 @@ const OTPVerification = () => {
       const response = await fetch(apiUrl, requestOptions);
       console.log("Response Status:", response.status);
       const data = await response.json();
-      console.log("API Data:",data);
+      console.log("API Data:", data);
 
       // Handle the API response as needed
       if (data.Status_Code === 200) {
         alert("API Response: " + JSON.stringify(data.message));
-        navigate("/profile");//open the profile page when otp is valid
+        navigate("/profile");
       } else if (data.Status_Code === 400 || data.Status_Code === 500) {
-        alert("API Response: " + JSON.stringify(data.message));
-        window.location.reload();
+        setErrorMessage(data.message);
       } else {
-        alert("API Request Failed! API Error: " + JSON.stringify(data));
-        window.location.reload();
+        setErrorMessage(JSON.stringify(data.message));
       }
     } catch (error) {
       console.error("Error during API call:", error);
-      alert(
-        "An error occurred during the API call. Check the console for more details."
-      );
-      console.log("Request:", requestOptions);
-      console.log("Error Response:", error);
+      setErrorMessage("An error occurred during the API call. Check the console for more details.");
     }
   };
 
@@ -103,7 +97,7 @@ const OTPVerification = () => {
       <header>
         <i className="bx bxs-check-shield"></i>
       </header>
-      <h4>Enter OTP To Send Into MailBox</h4>
+      <h4>Please enter OTP received in your email id</h4>
       <form>
         <div className="input-field">
           {otpValues.map((value, index) => (
@@ -121,6 +115,9 @@ const OTPVerification = () => {
           {buttonText}
         </button>
       </form>
+      <div className="error-massage">
+        {errorMessage && <label style={{ color: 'red', textWrap:"wrap" }}>{errorMessage}</label>}
+      </div>
     </div>
   );
 };

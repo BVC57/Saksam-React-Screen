@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "./Main.css";
 
-const App = () => {
+const App = (Newdata) => {
+  const { userId, authToken } = Newdata;
+  console.log('userId for profile', userId);
+  console.log('authToken: profile', authToken);
   // State variables to manage loading, error, and API data
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [aadharImageSrc, setAadharImageSrc] = useState("");
+  const [ProfileImagesrc, setProfileImagesrc] = useState("");
 
   // useEffect to make the API call when the component mounts
   useEffect(() => {
@@ -16,12 +20,12 @@ const App = () => {
       try {
         // Make API call
         const response = await fetch(
-          "https://huf6ubili4.execute-api.ap-south-1.amazonaws.com/DEV/get_viewer_attribute_list?id=1",
+          `https://huf6ubili4.execute-api.ap-south-1.amazonaws.com/DEV/get_viewer_attribute_list?id=${userId}`,
           {
             method: "GET",
             headers: {
               Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcwNzExMDU5MywianRpIjoiMjllYzIxNDYtYzQxOC00NDEyLWE1NzYtZGI4Yjc3ZjkxZjVjIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImJmMDIyN2FkLWE5MDItNDVlNC04NDU2LTEzOWEwYWNhNmY5MyIsIm5iZiI6MTcwNzExMDU5MywiZXhwIjoxNzA3MTE0MTkzfQ.x9BSTVTMRTNeOzt2yiFjZEdhHZ9zNwDdwxlTTx3u2Bs", // Replace with your actual access token
+              `Bearer ${authToken}`,
               "Content-Type": "application/json",
             },
           }
@@ -58,6 +62,15 @@ const App = () => {
       setLabelData("date-of-birth-label", data.data.p_info.dob || "-");
       setLabelData("contact-Phone-label", data.data.p_info.phonenumber || "-");
       setLabelData("contact-Email-label", data.data.p_info.mail || "-");
+      // Set Aadhar Card image
+      if (data.data.p_info && data.data.p_info.image) {
+        const imageSrc = `data:image/jpeg;base64, ${data.data.p_info.image}`;
+        setProfileImagesrc(imageSrc);
+      } else {
+        console.error("Profile image not found in the API response.");
+      }
+      
+      
 
       // Check Aadhar Card data
       if (
@@ -191,7 +204,8 @@ const App = () => {
           <h1>VERIFIABLE CREDENTIALS PROFILE</h1>
           <h2 id="full-name-label">-</h2>
           <div className="profileimg">
-            <img src={aadharImageSrc} alt="Not Uploded" id="aadhar-image" />
+            <img src={ProfileImagesrc} alt="Not Uploded" id="aadhar-image" />
+            {/* <img src="Images/pp.JPG" alt="" /> */}
           </div>
         </div>
         <hr />
