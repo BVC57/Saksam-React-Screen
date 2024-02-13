@@ -16,7 +16,9 @@ body {
   align-items: center;
   justify-content: center;
   background: #4070f4;
+  caret-color: transparent;
 }
+
 :where(.container, form, .input-field, header) {
   display: flex;
   flex-direction: column;
@@ -47,6 +49,7 @@ body {
 form .input-field {
   flex-direction: row;
   column-gap: 10px;
+  caret-color: black;
 }
 .input-field input {
   height: 45px;

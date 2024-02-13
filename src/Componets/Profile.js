@@ -3,8 +3,8 @@ import "./Main.css";
 
 const App = (Newdata) => {
   const { userId, authToken } = Newdata;
-  console.log('userId for profile', userId);
-  console.log('authToken: profile', authToken);
+  // console.log('userId for profile', userId);
+  // console.log('authToken: profile', authToken);
   // State variables to manage loading, error, and API data
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);

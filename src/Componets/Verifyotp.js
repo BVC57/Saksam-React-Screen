@@ -4,8 +4,8 @@ import "./Main.css";
 
 const OTPVerification = (Newdata) => {
   const { userId, authToken } = Newdata;
-  console.log('userId for verify otp:', userId);
-  console.log('authToken: verify otp', authToken);
+  // console.log('userId for verify otp:', userId);
+  // console.log('authToken: verify otp', authToken);
   const [otpValues, setOtpValues] = useState(["", "", "", "", "", ""]);
   const [buttonText, setButtonText] = useState("Enter OTP");
   const [errorMessage, setErrorMessage] = useState('');

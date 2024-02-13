@@ -7,8 +7,6 @@ const getUserData = async () => {
     // Extract the userId from the path
     const userId = pathName.split('/').pop();
 
-    console.log("User ID from URL:", userId); // Log the userId
-
     // Make sure userId is available
     if (!userId) {
       throw new Error('User ID not found in URL');
@@ -27,6 +25,7 @@ const getUserData = async () => {
     }
 
     const data = await response.json();
+    
     return { userId: userId, authToken: data.Token };
   } catch (error) {
     console.error('There was a problem fetching the data:', error);
