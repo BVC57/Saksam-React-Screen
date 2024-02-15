@@ -21,7 +21,7 @@ const App = () => {
   return (
     <Router>
       <Routes>
-          <Route path="/:id" element={<SendOTP userId={userId} authToken={authToken} />} initial={true} />
+          <Route path="/:id" element={<SendOTP userId={userId} authToken={authToken} />}/>
           <Route path="/verify-otp"  element={<Verifyotp userId={userId} authToken={authToken} />} />
           <Route path="/profile"  element={<Profilepage userId={userId} authToken={authToken} />} />
       </Routes>

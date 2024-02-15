@@ -9,6 +9,7 @@ const App = (Newdata) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [aadharImageSrc, setAadharImageSrc] = useState("");
+  const [panImageSrc, setpanImageSrc] = useState("");
   const [ProfileImagesrc, setProfileImagesrc] = useState("");
 
   // useEffect to make the API call when the component mounts
@@ -16,6 +17,9 @@ const App = (Newdata) => {
     console.log("API is calling");
 
     const makeAPICall = async () => {
+      if(authToken === undefined){
+        setError("Token Not Found")
+      }else{
       setLoading(true);
       try {
         // Make API call
@@ -32,6 +36,7 @@ const App = (Newdata) => {
         );
 
         const result = await response.json();
+        console.log(result)
 
         // Handle API response
         if (result.Status_Code === 200) {
@@ -48,6 +53,7 @@ const App = (Newdata) => {
         setError(true);
       }
     };
+  }
 
     makeAPICall();
   }, [null]);
@@ -75,29 +81,29 @@ const App = (Newdata) => {
       // Check Aadhar Card data
       if (
         data.data &&
-        data.data.aadhaarcard &&
-        Array.isArray(data.data.aadhaarcard) &&
-        data.data.aadhaarcard.length > 0
+        data.data.aadhaar &&
+        Array.isArray(data.data.aadhaar) &&
+        data.data.aadhaar.length > 0
       ) {
         setLabelData(
           "aadhar-id-number-label",
-          data.data.aadhaarcard[0].aadhaar_number || "-"
+          data.data.aadhaar[0].aadhaar_number || "-"
         );
         setLabelData(
           "aadhar-issue-date-label",
-          data.data.aadhaarcard[0].issueDate || "-"
+          data.data.aadhaar[0].issueDate || "-"
         );
         setLabelData(
           "aadhar-verification-link-label",
-          data.data.aadhaarcard[0].verificationLink || "-"
+          data.data.aadhaar[0].verificationLink || "-"
         );
         // Set Aadhar Card image
         if (
-          data.data.aadhaarcard &&
-          data.data.aadhaarcard.length > 0 &&
-          data.data.aadhaarcard[0].aadhaar_image
+          data.data.aadhaar &&
+          data.data.aadhaar.length > 0 &&
+          data.data.aadhaar[0].aadhaar_image
         ) {
-          const imageSrc = `data:image/jpeg;base64, ${data.data.aadhaarcard[0].aadhaar_image} `;
+          const imageSrc = `data:image/jpeg;base64, ${data.data.aadhaar[0].aadhaar_image} `;
           setAadharImageSrc(imageSrc);
         } else {
           console.error("Aadhar Card image not found in the API response.");
@@ -107,30 +113,30 @@ const App = (Newdata) => {
       // Check PAN Card data
       if (
         data.data &&
-        data.data.pancard &&
-        Array.isArray(data.data.pancard) &&
-        data.data.pancard.length > 0
+        data.data.pan &&
+        Array.isArray(data.data.pan) &&
+        data.data.pan.length > 0
       ) {
         setLabelData(
           "pan-id-number-label",
-          data.data.pancard[0].aadhaar_number || "-"
+          data.data.pan[0].pan_number || "-"
         );
         setLabelData(
           "pan-issue-date-label",
-          data.data.pancard[0].issueDate || "-"
+          data.data.pan[0].issueDate || "-"
         );
         setLabelData(
           "pan-verification-link-label",
-          data.data.pancard[0].verificationLink || "-"
+          data.data.pan[0].verificationLink || "-"
         );
         // Set Aadhar Card image
         if (
-          data.data.aadhaarcard &&
-          data.data.aadhaarcard.length > 0 &&
-          data.data.aadhaarcard[0].aadhaar_image
+          data.data.pan &&
+          data.data.pan.length > 0 &&
+          data.data.pan[0].image
         ) {
-          const imageSrc = `data:image/jpeg;base64, ${data.data.aadhaarcard[0].aadhaar_image} `;
-          setAadharImageSrc(imageSrc);
+          const imageSrc = `data:image/jpeg;base64, ${data.data.pan[0].image} `;
+          setpanImageSrc(imageSrc);
         } else {
           console.error("Aadhar Card image not found in the API response.");
         }
@@ -281,7 +287,7 @@ const App = (Newdata) => {
               </div>
             </div>
             <div className="image-container">
-              <img src="" alt="Not Uploded" id="aadhar-image" />
+            <img src={panImageSrc} alt="Not Uploded" id="aadhar-image" />
             </div>
           </div>
 
@@ -293,7 +299,7 @@ const App = (Newdata) => {
               <label htmlFor="license-number-label" id="license-number-label">
                 -
               </label>
-              <p>Valid From/To: [Enter Validity Dates]</p>
+              <p>Valid From/To: [Validity Dates]</p>
               <label
                 htmlFor="license-validity-label"
                 id="license-validity-label">

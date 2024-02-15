@@ -12,7 +12,7 @@ const SendOTP = (Newdata) => {
   const [error, setError] = useState('');
 
   const sendOTP = () => {
-    if(authToken == undefined){
+    if(authToken === undefined){
       setError("Token Not Found")
     }else{
     try {
@@ -42,7 +42,7 @@ const SendOTP = (Newdata) => {
         .then(data => {
           if (data.Status_Code === 200) {
             console.log(data);
-            alert(data.OTP);
+            // alert(data.OTP);
             setApiResponse(`Send Done - OTP: ${data.OTP}`);
             setError('');
             navigate(`/verify-otp`);

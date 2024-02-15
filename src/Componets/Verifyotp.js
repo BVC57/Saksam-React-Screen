@@ -3,7 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import "./Main.css";
 
 const OTPVerification = (Newdata) => {
+  
   const { userId, authToken } = Newdata;
+
   // console.log('userId for verify otp:', userId);
   // console.log('authToken: verify otp', authToken);
   const [otpValues, setOtpValues] = useState(["", "", "", "", "", ""]);
@@ -54,6 +56,9 @@ const OTPVerification = (Newdata) => {
   };
 
   const CallAPI = async (otp) => {
+    if(authToken === undefined){
+      setErrorMessage("Token Not Found")
+    }else{
     console.log(otp);
     const apiUrl = "https://huf6ubili4.execute-api.ap-south-1.amazonaws.com/DEV/viewer_otp_verification";
     const method = "POST";
@@ -79,7 +84,7 @@ const OTPVerification = (Newdata) => {
 
       // Handle the API response as needed
       if (data.Status_Code === 200) {
-        alert("API Response: " + JSON.stringify(data.message));
+        // alert("API Response: " + JSON.stringify(data.message));
         navigate("/profile");
       } else if (data.Status_Code === 400 || data.Status_Code === 500) {
         setErrorMessage(data.message);
@@ -89,6 +94,7 @@ const OTPVerification = (Newdata) => {
     } catch (error) {
       console.error("Error during API call:", error);
       setErrorMessage("An error occurred during the API call. Check the console for more details.");
+    }
     }
   };
 
