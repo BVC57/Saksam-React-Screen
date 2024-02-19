@@ -17,50 +17,54 @@ const App = (Newdata) => {
     console.log("API is calling");
 
     const makeAPICall = async () => {
-      if(authToken === undefined){
-        setError("Token Not Found")
-      }else{
-      setLoading(true);
-      try {
-        // Make API call
-        const response = await fetch(
-          `https://huf6ubili4.execute-api.ap-south-1.amazonaws.com/DEV/get_viewer_attribute_list?id=${userId}`,
-          {
-            method: "GET",
-            headers: {
-              Authorization:
-              `Bearer ${authToken}`,
-              "Content-Type": "application/json",
-            },
+      if (authToken === undefined) {
+        setError("Token Not Found");
+      } else {
+        setLoading(true);
+        try {
+          // Make API call
+          const response = await fetch(
+            `https://huf6ubili4.execute-api.ap-south-1.amazonaws.com/DEV/get_viewer_attribute_list?id=${userId}`,
+            {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${authToken}`,
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          const result = await response.json();
+          console.log(result);
+
+          // Handle API response
+          if (result.Status_Code === 200) {
+            setLoading(false);
+            setDataLabels(result); // Call setDataLabels to update labels with the new data
+          } else {
+            console.error("API call failed with status:", result.message);
+            setLoading(false);
+            setError(true);
           }
-        );
-
-        const result = await response.json();
-        console.log(result)
-
-        // Handle API response
-        if (result.Status_Code === 200) {
-          setLoading(false);
-          setDataLabels(result); // Call setDataLabels to update labels with the new data
-        } else {
-          console.error("API call failed with status:", result.message);
+        } catch (error) {
+          console.error("Error fetching data from API:", error);
           setLoading(false);
           setError(true);
         }
-      } catch (error) {
-        console.error("Error fetching data from API:",error);
-        setLoading(false);
-        setError(true);
       }
     };
-  }
 
     makeAPICall();
   }, [null]);
 
   // Function to set label data based on the API response
   const setDataLabels = (data) => {
-    console.log("data message:--","******************[",data.message,"]*********************")
+    console.log(
+      "data message:--",
+      "******************[",
+      data.message,
+      "]*********************"
+    );
     if (data !== null) {
       // Set personal information
       setLabelData("full-name-label", data.data.p_info.fullname || "-");
@@ -75,8 +79,6 @@ const App = (Newdata) => {
       } else {
         console.error("Profile image not found in the API response.");
       }
-      
-      
 
       // Check Aadhar Card data
       if (
@@ -117,14 +119,8 @@ const App = (Newdata) => {
         Array.isArray(data.data.pan) &&
         data.data.pan.length > 0
       ) {
-        setLabelData(
-          "pan-id-number-label",
-          data.data.pan[0].pan_number || "-"
-        );
-        setLabelData(
-          "pan-issue-date-label",
-          data.data.pan[0].issueDate || "-"
-        );
+        setLabelData("pan-id-number-label", data.data.pan[0].pan_number || "-");
+        setLabelData("pan-issue-date-label", data.data.pan[0].issueDate || "-");
         setLabelData(
           "pan-verification-link-label",
           data.data.pan[0].verificationLink || "-"
@@ -173,8 +169,50 @@ const App = (Newdata) => {
           console.error("Aadhar Card image not found in the API response.");
         }
       }
-    }else{
-      console.log("data is empty")
+
+  // Check EDUCATIONAL QUALIFICATIONS//
+
+      //  if (
+      //   data.data &&
+      //   data.data.drivinglicense &&
+      //   Array.isArray(data.data.drivinglicense) &&
+      //   data.data.drivinglicense.length > 0
+      // ) {
+      //   setLabelData(
+      //     "Institution-Name-label",
+      //     data.data.drivinglicense[0].dl_number || "-"
+      //   );
+      //   setLabelData(
+      //     "Degree-Name-label",
+      //     data.data.drivinglicense[0].issueDate || "-"
+      //   );
+      //   setLabelData(
+      //     "Year-Of-Passing-label",
+      //     data.data.drivinglicense[0].verificationLink || "-"
+      //   );
+      //   setLabelData(
+      //     "Honors-label",
+      //     data.data.drivinglicense[0].verificationLink || "-"
+      //   );
+      //   setLabelData(
+      //     "Distinctions-label",
+      //     data.data.drivinglicense[0].verificationLink || "-"
+      //   );
+      //   // Set Aadhar Card image
+      //   if (
+      //     data.data.aadhaarcard &&
+      //     data.data.aadhaarcard.length > 0 &&
+      //     data.data.aadhaarcard[0].aadhaar_image
+      //   ) {
+      //     const imageSrc = `data:image/jpeg;base64, ${data.data.aadhaarcard[0].aadhaar_image} `;
+      //     setAadharImageSrc(imageSrc);
+      //   } else {
+      //     console.error("Aadhar Card image not found in the API response.");
+      //   }
+      // }
+
+    } else {
+      console.log("data is empty");
     }
   };
 
@@ -198,16 +236,18 @@ const App = (Newdata) => {
             </h1>
           )}
           {error && (
-           <div id="error-message">
+            <div id="error-message">
               <h1>Error In Page Generating! Please try again later.</h1>
-           </div>
+            </div>
           )}
         </div>
       )}
 
-      <div className="main" style={{ display: loading ||error ? "none" : "block"}}>
+      <div
+        className="main"
+        style={{ display: loading || error ? "none" : "block" }}>
         <div className="aphead">
-          <h1>VERIFIABLE CREDENTIALS PROFILE</h1>
+          <h1>VERIFIABLE PROFILE <br/>OF</h1>
           <h2 id="full-name-label">-</h2>
           <div className="profileimg">
             <img src={ProfileImagesrc} alt="Not Uploded" id="aadhar-image" />
@@ -215,7 +255,7 @@ const App = (Newdata) => {
           </div>
         </div>
         <hr />
-
+        {/* Personal information */}
         <div className="personal-info">
           <h2>PERSONAL INFORMATION</h2>
           <section>
@@ -235,37 +275,45 @@ const App = (Newdata) => {
         </div>
 
         <div className="creddata">
-          <div className="card">
-            {/* Aadhar Card */}
-            <div className="cardinfo">
-              <h2>Aadhar Card</h2>
-              <p>Aadhar Number:</p>
-              <label
-                htmlFor="aadhar-id-number-label"
-                id="aadhar-id-number-label">
-                -
-              </label>
-              <p>Issue Date:</p>
-              <label
-                htmlFor="aadhar-issue-date-label"
-                id="aadhar-issue-date-label">
-                -
-              </label>
-              <p>Verification Link/QR Code: [If applicable]</p>
-              <div className="verification-link">
+          {/* Aadhar Card */}
+          <div className="mcard">
+            <div className="card">
+              <div className="cardinfo">
+                <h2>Aadhar Card</h2>
+                <p>Aadhar Number:</p>
                 <label
-                  htmlFor="aadhar-verification-link-label"
-                  id="aadhar-verification-link-label">
+                  htmlFor="aadhar-id-number-label"
+                  id="aadhar-id-number-label">
                   -
                 </label>
+                <p>Issue Date:</p>
+                <label
+                  htmlFor="aadhar-issue-date-label"
+                  id="aadhar-issue-date-label">
+                  -
+                </label>
+                <p>Verification Link/QR Code: [If applicable]</p>
+                <div className="verification-link">
+                  <label
+                    htmlFor="aadhar-verification-link-label"
+                    id="aadhar-verification-link-label">
+                    -
+                  </label>
+                </div>
+              </div>
+              <div className="image-container">
+                <img src={aadharImageSrc} alt="Not Uploded" id="aadhar-image" />
               </div>
             </div>
-            <div className="image-container">
-              <img src={aadharImageSrc} alt="Not Uploded" id="aadhar-image" />
+            <div className="upbyadhar">
+              <p id="upbyadhar">Added On 16-Augus-2023 10:15:00 AM / By Aadhar API</p>
+
+              <p id="upbyzoop">Verified On 16-Augus-2023 10:15:00 AM / By Zoop API</p>
             </div>
           </div>
 
           {/* PAN Card */}
+        <div className="mcard">
           <div className="card">
             <div className="cardinfo">
               <h2>PAN Card</h2>
@@ -287,11 +335,18 @@ const App = (Newdata) => {
               </div>
             </div>
             <div className="image-container">
-            <img src={panImageSrc} alt="Not Uploded" id="aadhar-image" />
+              <img src={panImageSrc} alt="Not Uploded" id="aadhar-image" />
             </div>
           </div>
+          <div className="upbyadhar">
+              <p id="upbyadhar">Added On 16-Augus-2023 10:15:00 AM / By Aadhar API</p>
+
+              <p id="upbyzoop">Verified On 16-Augus-2023 10:15:00 AM / By Zoop API</p>
+          </div>
+        </div>
 
           {/* Driving License */}
+        <div className="mcard">
           <div className="card">
             <div className="cardinfo">
               <h2>Driving License</h2>
@@ -318,9 +373,170 @@ const App = (Newdata) => {
               <img src="" alt="Not Uploded" id="aadhar-image" />
             </div>
           </div>
+          <div className="upbyadhar">
+              <p id="upbyadhar">Added On 16-Augus-2023 10:15:00 AM / By Aadhar API</p>
+
+              <p id="upbyzoop">Verified On 16-Augus-2023 10:15:00 AM / By Zoop API</p>
+          </div>
+        </div>
+
+        {/* EDUCATIONAL QUALIFICATIONS */}
+        <div className="mcard">
+          <div className="card">
+            <div className="cardinfo">
+              <h2>EDUCATIONAL QUALIFICATIONS</h2>
+              <p>Institution Name:</p>
+              <label htmlFor="Institution-Name-label" id="Institution-Name-label">
+                -
+              </label>
+              <p>Degree Name</p>
+              <label
+                htmlFor="Degree-Name-label"
+                id="Degree-Name-label">
+                -
+              </label>
+              <p>Year Of Passing</p>
+              <label
+                  htmlFor="Year-Of-Passing-label"
+                  id="Year-Of-Passing-label">
+                  -
+              </label>
+              <p>Honors:</p>
+              <label
+                  htmlFor="Honors-label"
+                  id="Honors-label">
+                  -
+              </label>
+              <p>Distinctions:</p>
+              <label
+                  htmlFor="Distinctions-label"
+                  id="Distinctions-label">
+                  -
+              </label>
+            </div>
+            <div className="image-container">
+              <img src="" alt="Not Uploded" id="aadhar-image" />
+            </div>
+          </div>
+          <div className="upbyadhar">
+              <p id="upbyadhar">Added On 16-Augus-2023 10:15:00 AM / By Aadhar API</p>
+
+              <p id="upbyzoop">Verified On 16-Augus-2023 10:15:00 AM / By Zoop API</p>
+          </div>
+        </div>
+
+        {/* EMPLOYMENT HISTORY */}
+        <div className="mcard">
+          <div className="card">
+            <div className="cardinfo">
+              <h2>EMPLOYMENT HISTORY</h2>
+              <p>Job Title:</p>
+              <label htmlFor="Job-Title-label" id="Job-Title-label">
+                -
+              </label>
+              <p>Company Name</p>
+              <label
+                htmlFor="Company-Name-label"
+                id="Company-Name-label">
+                -
+              </label>
+              <p>Duration</p>
+              <label
+                  htmlFor="Duration-label"
+                  id="Duration-label">
+                  -
+              </label>
+              <p>Description:</p>
+              <label
+                  htmlFor="Description-label"
+                  id="Description-label">
+                  -
+              </label>
+            </div>
+            <div className="image-container">
+              <img src="" alt="Not Uploded" id="aadhar-image" />
+            </div>
+          </div>
+          <div className="upbyadhar">
+              <p id="upbyadhar">Added On 16-Augus-2023 10:15:00 AM / By Aadhar API</p>
+
+              <p id="upbyzoop">Verified On 16-Augus-2023 10:15:00 AM / By Zoop API</p>
+          </div>
+        </div>
+
+         {/* EDUCATIONAL CERTIFICATIONS */}
+         <div className="mcard">
+          <div className="card">
+            <div className="cardinfo">
+              <h2>EDUCATIONAL CERTIFICATE</h2>
+              <p>Issuing Organization:</p>
+              <label htmlFor="Issuing-Organization-label" id="Issuing-Organization-label">
+                -
+              </label>
+              <p>Issuing Date</p>
+              <label
+                htmlFor="Issuing-Date-label"
+                id="Issuing-Date-label">
+                -
+              </label>
+
+            </div>
+            <div className="image-container">
+              <img src="" alt="Not Uploded" id="aadhar-image" />
+            </div>
+          </div>
+          <div className="upbyadhar">
+              <p id="upbyadhar">Added On 16-Augus-2023 10:15:00 AM / By Aadhar API</p>
+
+              <p id="upbyzoop">Verified On 16-Augus-2023 10:15:00 AM / By Zoop API</p>
+          </div>
+        </div>
+
+         {/* DECLARATION AND DIGITAL SIGNATURE */}
+         <div className="mcard">
+          <div className="card">
+            <div className="cardinfo">
+              <h2>DECLARATION AND DIGITAL SIGNATURE</h2>
+              <p>Your Digital Signature:</p>
+              <label htmlFor="Your-Digital-Signature-label" id="Your-Digital-Signature-label">
+                -
+              </label>
+              <p>Date:</p>
+              <label
+                htmlFor="Dsing-Date-label"
+                id="Dsign-Date-label">
+                -
+              </label>
+
+            </div>
+            <div className="image-container">
+              <img src="" alt="Not Uploded" id="aadhar-image" />
+            </div>
+          </div>
+          <div className="upbyadhar">
+              <p id="upbyadhar">Added On 16-Augus-2023 10:15:00 AM / By Aadhar API</p>
+
+              <p id="upbyzoop">Verified On 16-Augus-2023 10:15:00 AM / By Zoop API</p>
+          </div>
+        </div>
+
+        {/* PRIVACY STATEMENT AND CONSENT */}
+        <div className="mcard">
+          <div className="card">
+            <div className="cardinfo">
+              <h2>PRIVACY STATEMENT AND CONSENT</h2>
+              <p>
+              A statement about the privacy and use of this document. Consent
+              clause for the verifier to use this document for verification
+              purposes only.
+              </p>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
+  </div>
   );
 };
 
