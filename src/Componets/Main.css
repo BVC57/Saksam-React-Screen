@@ -226,8 +226,8 @@ section label{
 
 /* Add this to your CSS file or in a style tag within your HTML */
 .loader {
-  color: #ffffff;
-  font-size: 45px;
+  color: #00703c;
+  font-size: 25px;
   text-indent: -9999em;
   overflow: hidden;
   width: 1em;
@@ -235,8 +235,23 @@ section label{
   border-radius: 50%;
   position: relative;
   transform: translateZ(0);
+  margin-left: 10px;
+  margin-top: 10px;
   animation: mltShdSpin 1.7s infinite ease, round 1.7s infinite ease;
 }
+.loader1 {
+  color: #ffffff;
+  font-size: 80px;
+  text-indent: -9999em;
+  overflow: hidden;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  position: relative;
+  transform: translateZ(0);
+  animation: mltShdSpin 1.8s infinite ease, round 1.8s infinite ease;
+}
+
 
 @keyframes mltShdSpin {
   0% {
@@ -313,12 +328,13 @@ body {
     font-weight: 500;
 }
 .sbtn {
-    margin-top: 25px;
-    width: 100%;
+    /* margin-top: 25px; */
+    width: 80%;
+    height: 40px;
     color: #fff;
     font-size: 1rem;
     border: none;
-    padding: 9px 0;
+    padding: 5px 0;
     cursor: pointer;
     border-radius: 6px;
     background:#0059ff;
@@ -347,57 +363,63 @@ body {
   display: block;
   margin-top: 20px;
 }
+.lnb{
+  padding: 5px;
+  display: flex;
+  height: 40px;
+  width: 300px;
 
-  @media only screen and (max-width:400px) {
-    .container {
-      padding: 5px;
-      margin: 20px;
-    }
-    .container header {
-      height: 40px;
-      width: 40px;
-      font-size: 2rem;
-    }
-    .container h4 {
-      font-size: 14px;
-    }
-    button {
-      margin-top: 20px;
-      font-size: 0.9rem;
-    }
+}
+
+/* privacy text  */
+.ph{
+  text-align: center;
+}
+.pd{
+    color: red;
+    text-align: center;
+    line-height: 2;
+}
+
+
+/* responsive desing for all devices code here */
+/* General styles for smaller screens */
+@media only screen and (max-width: 400px) {
+  .container {
+    width: 300px !important;
+    height: 250px !important;
+    padding: 5px !important; /* Important to override previous styles */
+    margin: 20px !important; /* Important to override previous styles */
   }
-
-
-  @media only screen and (max-width: 768px) {
-    /* Styles for screens less than or equal to 400px wide */
-    .container {
-      padding: 15px;
-    }
-    .container header {
-      height: 50px;
-      width: 50px;
-      font-size: 2rem;
-    }
-    .container h4 {
-      font-size: 14px;
-    }
-    button {
-      margin-top: 20px;
-      font-size: 0.9rem;
-    }
+  .container header {
+    height: 40px !important; /* Important to override previous styles */
+    width: 40px !important; /* Important to override previous styles */
+    font-size: 2rem !important; /* Important to override previous styles */
   }
+  .container h4 {
+    font-size: 10px !important; /* Important to override previous styles */
+  }
+  button {
+    margin-top: 20px !important; /* Important to override previous styles */
+    font-size: 0.9rem !important; /* Important to override previous styles */
+  }
+  .loader{
+    margin-left: 10px;
+  }
+}
+
 
 /* Responsive styles for Galaxy Fold */
-@media only screen and (max-width: 300px) and (max-height: 653px) {
+@media screen and (max-width: 300px) and (max-height: 653px) {
   .main {
-    width: 150px;
-    align-items: center;
-    text-align: center;
-    margin: 20px;
+    width: 250px !important;
+    align-items: center !important;
+    text-align: center !important;
+    margin: 20px !important;
   }
   .container {
-    padding: 10px;
-    width: 260px;
+    padding: 10px !important;
+    width: 260px !important;
   }
   form .input-field {
     flex-direction: row;
@@ -466,6 +488,9 @@ body {
     font-size: 10px;
     padding-bottom: 5px;
   }
+  .loader{
+    margin-left: 10px;
+  }
 }
 
 
@@ -509,5 +534,25 @@ body {
     display: block;
     font-size: 10px;
     padding-bottom: 5px;
+  }
+  .container {
+    padding: 15px;
+    width: 350px !important;
+    height: 250px !important;
+  }
+  .container header {
+    height: 50px;
+    width: 50px;
+    font-size: 2rem;
+  }
+  .container h4 {
+    font-size: 14px;
+  }
+  button {
+    margin-top: 20px;
+    font-size: 0.9rem;
+  }
+  .loader{
+    margin-left: 10px;
   }
 }

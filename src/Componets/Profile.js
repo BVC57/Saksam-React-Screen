@@ -59,14 +59,26 @@ const App = (Newdata) => {
 
   // Function to set label data based on the API response
   const setDataLabels = (data) => {
-    console.log(
-      "data message:--",
-      "******************[",
-      data.message,
-      "]*********************"
-    );
+    
     if (data !== null) {
-      // Set personal information
+      var adharelement = document.getElementById("adharid").style.display = "none";
+      var panelement = document.getElementById("panid").style.display = "none";;
+      var dlelement = document.getElementById("dlid").style.display = "none";;
+      var eqelement = document.getElementById("eqid").style.display = "none";;
+      var ehelement = document.getElementById("ehid").style.display = "none";;
+      var ecelement = document.getElementById("ecid").style.display = "none";;
+      var dselement = document.getElementById("dsid").style.display = "none";;
+
+      // adharelement.style.display = "none";
+      // panelement.style.display = "none";
+      // dlelement.style.display = "none";
+      // eqelement.style.display = "none";
+      // ehelement.style.display = "none";
+      // ecelement.style.display = "none";
+      // dselement.style.display = "none";
+      
+// Set personal information // 
+
       setLabelData("full-name-label", data.data.p_info.fullname || "-");
       setLabelData("full-name-label-pinfo", data.data.p_info.fullname || "-");
       setLabelData("date-of-birth-label", data.data.p_info.dob || "-");
@@ -80,13 +92,15 @@ const App = (Newdata) => {
         console.error("Profile image not found in the API response.");
       }
 
-      // Check Aadhar Card data
+// Check Aadhar Card data
+  
       if (
         data.data &&
         data.data.aadhaar &&
         Array.isArray(data.data.aadhaar) &&
         data.data.aadhaar.length > 0
       ) {
+        adharelement.style.display = "flex"; //set the true for displaying data
         setLabelData(
           "aadhar-id-number-label",
           data.data.aadhaar[0].aadhaar_number || "-"
@@ -110,22 +124,24 @@ const App = (Newdata) => {
         } else {
           console.error("Aadhar Card image not found in the API response.");
         }
-      }
+  }
 
-      // Check PAN Card data
+// Check PAN Card data
+
       if (
         data.data &&
         data.data.pan &&
         Array.isArray(data.data.pan) &&
         data.data.pan.length > 0
       ) {
+        panelement.style.display = "flex"; //set the true for displaying data
         setLabelData("pan-id-number-label", data.data.pan[0].pan_number || "-");
         setLabelData("pan-issue-date-label", data.data.pan[0].issueDate || "-");
         setLabelData(
           "pan-verification-link-label",
           data.data.pan[0].verificationLink || "-"
         );
-        // Set Aadhar Card image
+        // Set Pan Card image
         if (
           data.data.pan &&
           data.data.pan.length > 0 &&
@@ -138,13 +154,15 @@ const App = (Newdata) => {
         }
       }
 
-      // Check Driving License data
+// Check Driving License data
+
       if (
         data.data &&
         data.data.drivinglicense &&
         Array.isArray(data.data.drivinglicense) &&
         data.data.drivinglicense.length > 0
       ) {
+        dlelement.style.display = "flex"; //set the true for displaying data
         setLabelData(
           "license-number-label",
           data.data.drivinglicense[0].dl_number || "-"
@@ -156,6 +174,90 @@ const App = (Newdata) => {
         setLabelData(
           "license-verification-link-label",
           data.data.drivinglicense[0].verificationLink || "-"
+        );
+        // Set drivinglicence image
+        if (
+          data.data.aadhaarcard &&
+          data.data.aadhaarcard.length > 0 &&
+          data.data.aadhaarcard[0].aadhaar_image
+        ) {
+          const imageSrc = `data:image/jpeg;base64, ${data.data.aadhaarcard[0].aadhaar_image} `;
+          setAadharImageSrc(imageSrc);
+        } else {
+          console.error("Aadhar Card image not found in the API response.");
+        }
+      }
+
+// Check EDUCATIONAL QUALIFICATIONS//
+
+       if (
+        data.data &&
+        data.data.education &&
+        Array.isArray(data.data.education) &&
+        data.data.education.length > 0
+      ) {
+        eqelement.style.display = "flex";
+        setLabelData(
+          "Institution-Name-label",
+          data.data.education[0].dl_number || "-"
+        );
+        setLabelData(
+          "Degree-Name-label",
+          data.data.education[0].issueDate || "-"
+        );
+        setLabelData(
+          "Year-Of-Passing-label",
+          data.data.education[0].verificationLink || "-"
+        );
+        setLabelData(
+          "Honors-label",
+          data.data.education[0].verificationLink || "-"
+        );
+        setLabelData(
+          "Distinctions-label",
+          data.data.education[0].verificationLink || "-"
+        );
+        // Set Educational image
+        if (
+          data.data.education &&
+          data.data.education.length > 0 &&
+          data.data.education[0].aadhaar_image
+        ) {
+          const imageSrc = `data:image/jpeg;base64, ${data.data.education[0].aadhaar_image} `;
+          setAadharImageSrc(imageSrc);
+        } else {
+          console.error("Aadhar Card image not found in the API response.");
+        }
+      }
+
+// Check EDUCATIONAL CERTIFICATE//
+
+       if (
+        data.data &&
+        data.data.education &&
+        Array.isArray(data.data.education) &&
+        data.data.education.length > 0
+      ) {
+        ecelement.style.display = "flex"; //set the true for displaying data
+        setLabelData(
+          "Institution-Name-label",
+          data.data.education[0].dl_number || "-"
+        );
+        setLabelData(
+          "Degree-Name-label",
+          data.data.education[0].issueDate || "-"
+        );
+        setLabelData(
+          "Year-Of-Passing-label",
+          data.data.education[0].verificationLink || "-"
+        );
+        setLabelData(
+          "Honors-label",
+          data.data.education[0].verificationLink || "-"
+        );
+        setLabelData(
+          "Distinctions-label",
+          data.data.education[0].verificationLink || "-"
         );
         // Set Aadhar Card image
         if (
@@ -170,48 +272,93 @@ const App = (Newdata) => {
         }
       }
 
-  // Check EDUCATIONAL QUALIFICATIONS//
 
-      //  if (
-      //   data.data &&
-      //   data.data.drivinglicense &&
-      //   Array.isArray(data.data.drivinglicense) &&
-      //   data.data.drivinglicense.length > 0
-      // ) {
-      //   setLabelData(
-      //     "Institution-Name-label",
-      //     data.data.drivinglicense[0].dl_number || "-"
-      //   );
-      //   setLabelData(
-      //     "Degree-Name-label",
-      //     data.data.drivinglicense[0].issueDate || "-"
-      //   );
-      //   setLabelData(
-      //     "Year-Of-Passing-label",
-      //     data.data.drivinglicense[0].verificationLink || "-"
-      //   );
-      //   setLabelData(
-      //     "Honors-label",
-      //     data.data.drivinglicense[0].verificationLink || "-"
-      //   );
-      //   setLabelData(
-      //     "Distinctions-label",
-      //     data.data.drivinglicense[0].verificationLink || "-"
-      //   );
-      //   // Set Aadhar Card image
-      //   if (
-      //     data.data.aadhaarcard &&
-      //     data.data.aadhaarcard.length > 0 &&
-      //     data.data.aadhaarcard[0].aadhaar_image
-      //   ) {
-      //     const imageSrc = `data:image/jpeg;base64, ${data.data.aadhaarcard[0].aadhaar_image} `;
-      //     setAadharImageSrc(imageSrc);
-      //   } else {
-      //     console.error("Aadhar Card image not found in the API response.");
-      //   }
-      // }
+// Check EMPLOYMENT HISTORY //
 
-    } else {
+     if (
+      data.data &&
+      data.data.employment &&
+      Array.isArray(data.data.employment) &&
+      data.data.employment.length > 0
+    ) {
+      ehelement.style.display = "flex"; //set the true for displaying data
+      setLabelData(
+        "Institution-Name-label",
+        data.data.employment[0].dl_number || "-"
+      );
+      setLabelData(
+        "Degree-Name-label",
+        data.data.employment[0].issueDate || "-"
+      );
+      setLabelData(
+        "Year-Of-Passing-label",
+        data.data.employment[0].verificationLink || "-"
+      );
+      setLabelData(
+        "Honors-label",
+        data.data.employment[0].verificationLink || "-"
+      );
+      setLabelData(
+        "Distinctions-label",
+        data.data.employment[0].verificationLink || "-"
+      );
+      // Set Aadhar Card image
+      if (
+        data.data.employment &&
+        data.data.employment.length > 0 &&
+        data.data.employment[0].aadhaar_image
+      ) {
+        const imageSrc = `data:image/jpeg;base64, ${data.data.employment[0].aadhaar_image} `;
+        setAadharImageSrc(imageSrc);
+      } else {
+        console.error("Aadhar Card image not found in the API response.");
+      }
+    }
+
+// Check DIGITAL SIGNNATURE //
+
+    if (
+      data.data &&
+      data.data.employment &&
+      Array.isArray(data.data.employment) &&
+      data.data.employment.length > 0
+    ) {
+      dselement.style.display = "flex"; //set the true for displaying data
+      setLabelData(
+        "Institution-Name-label",
+        data.data.employment[0].dl_number || "-"
+      );
+      setLabelData(
+        "Degree-Name-label",
+        data.data.employment[0].issueDate || "-"
+      );
+      setLabelData(
+        "Year-Of-Passing-label",
+        data.data.employment[0].verificationLink || "-"
+      );
+      setLabelData(
+        "Honors-label",
+        data.data.employment[0].verificationLink || "-"
+      );
+      setLabelData(
+        "Distinctions-label",
+        data.data.employment[0].verificationLink || "-"
+      );
+      // Set Aadhar Card image
+      if (
+        data.data.employment &&
+        data.data.employment.length > 0 &&
+        data.data.employment[0].aadhaar_image
+      ) {
+        const imageSrc = `data:image/jpeg;base64, ${data.data.employment[0].aadhaar_image} `;
+        setAadharImageSrc(imageSrc);
+      } else {
+        console.error("Aadhar Card image not found in the API response.");
+      }
+    }
+
+    } 
+    else {
       console.log("data is empty");
     }
   };
@@ -251,7 +398,6 @@ const App = (Newdata) => {
           <h2 id="full-name-label">-</h2>
           <div className="profileimg">
             <img src={ProfileImagesrc} alt="Not Uploded" id="aadhar-image" />
-            {/* <img src="Images/pp.JPG" alt="" /> */}
           </div>
         </div>
         <hr />
@@ -275,8 +421,9 @@ const App = (Newdata) => {
         </div>
 
         <div className="creddata">
+
           {/* Aadhar Card */}
-          <div className="mcard">
+          <div className="mcard" id="adharid">
             <div className="card">
               <div className="cardinfo">
                 <h2>Aadhar Card</h2>
@@ -313,7 +460,7 @@ const App = (Newdata) => {
           </div>
 
           {/* PAN Card */}
-        <div className="mcard">
+        <div className="mcard" id="panid">
           <div className="card">
             <div className="cardinfo">
               <h2>PAN Card</h2>
@@ -346,7 +493,7 @@ const App = (Newdata) => {
         </div>
 
           {/* Driving License */}
-        <div className="mcard">
+        <div className="mcard" id="dlid">
           <div className="card">
             <div className="cardinfo">
               <h2>Driving License</h2>
@@ -381,7 +528,7 @@ const App = (Newdata) => {
         </div>
 
         {/* EDUCATIONAL QUALIFICATIONS */}
-        <div className="mcard">
+        <div className="mcard" id="eqid">
           <div className="card">
             <div className="cardinfo">
               <h2>EDUCATIONAL QUALIFICATIONS</h2>
@@ -426,7 +573,7 @@ const App = (Newdata) => {
         </div>
 
         {/* EMPLOYMENT HISTORY */}
-        <div className="mcard">
+        <div className="mcard" id="ehid">
           <div className="card">
             <div className="cardinfo">
               <h2>EMPLOYMENT HISTORY</h2>
@@ -465,7 +612,7 @@ const App = (Newdata) => {
         </div>
 
          {/* EDUCATIONAL CERTIFICATIONS */}
-         <div className="mcard">
+         <div className="mcard" id="ecid">
           <div className="card">
             <div className="cardinfo">
               <h2>EDUCATIONAL CERTIFICATE</h2>
@@ -493,7 +640,7 @@ const App = (Newdata) => {
         </div>
 
          {/* DECLARATION AND DIGITAL SIGNATURE */}
-         <div className="mcard">
+         <div className="mcard" id="dsid">
           <div className="card">
             <div className="cardinfo">
               <h2>DECLARATION AND DIGITAL SIGNATURE</h2>
@@ -524,8 +671,8 @@ const App = (Newdata) => {
         <div className="mcard">
           <div className="card">
             <div className="cardinfo">
-              <h2>PRIVACY STATEMENT AND CONSENT</h2>
-              <p>
+              <h2 className="ph">PRIVACY STATEMENT AND CONSENT</h2>
+              <p className="pd">
               A statement about the privacy and use of this document. Consent
               clause for the verifier to use this document for verification
               purposes only.
@@ -534,6 +681,7 @@ const App = (Newdata) => {
           </div>
 
         </div>
+
       </div>
     </div>
   </div>
