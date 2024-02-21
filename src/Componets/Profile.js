@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import html2pdf from "html2pdf.js";
 import "./Main.css";
 
 const App = (Newdata) => {
@@ -8,16 +9,22 @@ const App = (Newdata) => {
   // State variables to manage loading, error, and API data
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const [aadharImageSrc, setAadharImageSrc] = useState("");
-  const [panImageSrc, setpanImageSrc] = useState("");
   const [ProfileImagesrc, setProfileImagesrc] = useState("");
-  const [aadharDataPresent, setAadharDataPresent] = useState(false);
-  const [panDataPresent, setpanDataPresent] = useState(false);
-  const [dlDataPresent, setdlDataPresent] = useState(false);
-  const [ecDataPresent, setecDataPresent] = useState(false);
-  const [ehDataPresent, setehDataPresent] = useState(false);
-  const [dsDataPresent, setdsDataPresent] = useState(false);
-  const [eqDataPresent, seteqDataPresent] = useState(false);
+  const [aadharImageSrc, setAadharImageSrc] = useState(""); //set for update the image path
+  const [panImageSrc, setpanImageSrc] = useState("");
+  const [DLImagesrc, setDLImagesrc] = useState("");
+  const [ECImagesrc, setECImagesrc] = useState("");
+  const [EHImagesrc, setEHImagesrc] = useState("");
+  const [EQImagesrc, setEQImagesrc] = useState("");
+  const [DSImagesrc, setDSImagesrc] = useState("");
+  const [aadharDataPresent, setAadharDataPresent] = useState(false); // set for Aadhar card visibility
+  const [panDataPresent, setpanDataPresent] = useState(false); // set for Pan card visibility
+  const [dlDataPresent, setdlDataPresent] = useState(false); // set for driving licence visibility
+  const [ecDataPresent, setecDataPresent] = useState(false); // set for eduction certificate visibility
+  const [ehDataPresent, setehDataPresent] = useState(false); // set for employment history visibility
+  const [dsDataPresent, setdsDataPresent] = useState(false); // set for digital sign visibility
+  const [eqDataPresent, seteqDataPresent] = useState(false); // set for eduction qulification visibility
+  const [username, setUsername] = useState(""); // State variable to store username
 
   // useEffect to make the API call when the component mounts
   useEffect(() => {
@@ -70,7 +77,7 @@ const App = (Newdata) => {
     if (data !== null) {
       
 // Set personal information // 
-
+      setUsername(data.data.p_info.fullname);
       setLabelData("full-name-label", data.data.p_info.fullname || "-");
       setLabelData("full-name-label-pinfo", data.data.p_info.fullname || "-");
       setLabelData("date-of-birth-label", data.data.p_info.dob || "-");
@@ -176,7 +183,7 @@ const App = (Newdata) => {
           data.data.aadhaarcard[0].aadhaar_image
         ) {
           const imageSrc = `data:image/jpeg;base64, ${data.data.aadhaarcard[0].aadhaar_image} `;
-          setAadharImageSrc(imageSrc);
+          setDLImagesrc(imageSrc);
         } else {
           console.error("Aadhar Card image not found in the API response.");
         }
@@ -218,7 +225,7 @@ const App = (Newdata) => {
           data.data.education[0].aadhaar_image
         ) {
           const imageSrc = `data:image/jpeg;base64, ${data.data.education[0].aadhaar_image} `;
-          setAadharImageSrc(imageSrc);
+          setEQImagesrc(imageSrc);
         } else {
           console.error("Aadhar Card image not found in the API response.");
         }
@@ -260,7 +267,7 @@ const App = (Newdata) => {
           data.data.aadhaarcard[0].aadhaar_image
         ) {
           const imageSrc = `data:image/jpeg;base64, ${data.data.aadhaarcard[0].aadhaar_image} `;
-          setAadharImageSrc(imageSrc);
+          setECImagesrc(imageSrc);
         } else {
           console.error("Aadhar Card image not found in the API response.");
         }
@@ -303,7 +310,7 @@ const App = (Newdata) => {
         data.data.employment[0].aadhaar_image
       ) {
         const imageSrc = `data:image/jpeg;base64, ${data.data.employment[0].aadhaar_image} `;
-        setAadharImageSrc(imageSrc);
+        setEHImagesrc(imageSrc);
       } else {
         console.error("Aadhar Card image not found in the API response.");
       }
@@ -345,7 +352,7 @@ const App = (Newdata) => {
         data.data.employment[0].aadhaar_image
       ) {
         const imageSrc = `data:image/jpeg;base64, ${data.data.employment[0].aadhaar_image} `;
-        setAadharImageSrc(imageSrc);
+        setDSImagesrc(imageSrc);
       } else {
         console.error("Aadhar Card image not found in the API response.");
       }
@@ -363,6 +370,16 @@ const App = (Newdata) => {
     if (labelElement) {
       labelElement.textContent = value;
     }
+  };
+
+
+  const handleDownloadPDF = () => {
+    // Function to handle PDF download
+    const filename = `${username}_Saksham_Profile.pdf`; // Filename with username
+    const element = document.getElementById("pdf-content"); // Get the element to convert to PDF
+    html2pdf()
+      .from(element)
+      .save(filename);
   };
 
   // Render the component UI
@@ -383,8 +400,10 @@ const App = (Newdata) => {
           )}
         </div>
       )}
-
-      <div
+      {/* <div className="download-pdf-icon" onClick={handleDownloadPDF}>
+          <i className="fas fa-download"></i>
+      </div> */}
+      <div id="pdf-content"
         className="main"
         style={{ display: loading || error ? "none" : "block" }}>
         <div className="aphead">
@@ -511,7 +530,7 @@ const App = (Newdata) => {
               </div>
             </div>
             <div className="image-container">
-              <img src="" alt="Not Uploded" id="aadhar-image" />
+               <img src={DLImagesrc} alt="Not Uploded" id="aadhar-image" />
             </div>
           </div>
           <div className="upbyadhar">
@@ -556,7 +575,7 @@ const App = (Newdata) => {
               </label>
             </div>
             <div className="image-container">
-              <img src="" alt="Not Uploded" id="aadhar-image" />
+               <img src={EQImagesrc} alt="Not Uploded" id="aadhar-image" />
             </div>
           </div>
           <div className="upbyadhar">
@@ -595,7 +614,7 @@ const App = (Newdata) => {
               </label>
             </div>
             <div className="image-container">
-              <img src="" alt="Not Uploded" id="aadhar-image" />
+               <img src={EHImagesrc} alt="Not Uploded" id="aadhar-image" />
             </div>
           </div>
           <div className="upbyadhar">
@@ -623,7 +642,7 @@ const App = (Newdata) => {
 
             </div>
             <div className="image-container">
-              <img src="" alt="Not Uploded" id="aadhar-image" />
+               <img src={ECImagesrc} alt="Not Uploded" id="aadhar-image" />
             </div>
           </div>
           <div className="upbyadhar">
@@ -651,7 +670,7 @@ const App = (Newdata) => {
 
             </div>
             <div className="image-container">
-              <img src="" alt="Not Uploded" id="aadhar-image" />
+               <img src={DSImagesrc} alt="Not Uploded" id="aadhar-image" />
             </div>
           </div>
           <div className="upbyadhar">
@@ -677,6 +696,7 @@ const App = (Newdata) => {
         </div>
 
       </div>
+    
     </div>
   </div>
   );

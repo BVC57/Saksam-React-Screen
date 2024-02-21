@@ -354,6 +354,7 @@ body {
 }
 
 .upbyadhar p {
+  color: #667085;
   display: block;
   font-size: 15px;
 }
@@ -380,16 +381,22 @@ body {
     text-align: center;
     line-height: 2;
 }
+i.fas.fa-download {
+    font-size: 30px;
+    float: right;
+    padding: 10px;
+    color: red;
+}
 
 
 /* responsive desing for all devices code here */
 /* General styles for smaller screens */
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 600px) {
   .container {
-    width: 300px !important;
+    width: 300px;
     height: 250px !important;
-    padding: 5px !important; /* Important to override previous styles */
-    margin: 20px !important; /* Important to override previous styles */
+    padding: 5px ; /* Important to override previous styles */
+    margin: 20px ; /* Important to override previous styles */
   }
   .container header {
     height: 40px !important; /* Important to override previous styles */
@@ -405,6 +412,9 @@ body {
   }
   .loader{
     margin-left: 10px;
+  }
+  .profileimg img{
+    border-radius: 100% !important;
   }
 }
 
@@ -453,12 +463,10 @@ body {
   }
 
   .image-container img {
-    width: 150px;
-    height: 150px;
-    /* Adjusted image size for better fit */
-    margin-left: -75px;
-    /* Centering the image */
-  }
+    width: 180px !important;
+    height: 200px !important;
+    margin-left: -110px;
+}
 
   .pi,
   .dd {
@@ -479,6 +487,9 @@ body {
   }
   .loader{
     margin-left: 10px;
+  }
+  .profileimg img{
+    border-radius: 100% !important;
   }
 }
 
@@ -519,6 +530,7 @@ body {
     align-items: center;
     text-align: center;
   }
+  
   .upbyadhar p {
     display: block;
     font-size: 10px;
@@ -526,7 +538,7 @@ body {
   }
   .container {
     padding: 15px;
-    width: 350px !important;
+    width: 350px;
     height: 250px !important;
   }
   .container header {
@@ -544,4 +556,17 @@ body {
   .loader{
     margin-left: 10px;
   }
+  #error-message h1{
+    font-size: 10px;
+  }
+  .profileimg img{
+    border-radius: 100% I !important;
+  }
+  i.fas.fa-download {
+    margin-right: 20px;
+    font-size: 30px;
+    float: right;
+    padding: 10px;
+    color: red;
+}
 }

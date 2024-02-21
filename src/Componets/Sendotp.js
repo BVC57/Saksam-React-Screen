@@ -58,15 +58,17 @@ const SendOTP = ({ userId, authToken }) => {
               navigate(`/verify-otp`);
             } else {
               setError(`${data.message}`);
+              setLoading1(false);
             }
           })
           .catch(error => {
             console.error('Error:', error);
             setError('Error sending OTP. Please try again.');
             setApiResponse('');
+            setLoading1(false);
           })
           .finally(() => {
-            setLoading(false); // Set loading to false when OTP sending is complete
+            setLoading1(false); // Set loading to false when OTP sending is complete
             setButtonText('Send OTP'); // Reset button text to "Send OTP"
           });
       } catch (error) {

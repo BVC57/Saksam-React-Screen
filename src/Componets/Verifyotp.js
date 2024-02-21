@@ -140,10 +140,13 @@ const OTPVerification = (Newdata) => {
           navigate("/profile");
         } else if (data.Status_Code === 400 || data.Status_Code === 500) {
           setErrorMessage(data.message);
+          setLoading(false);
         } else {
+          setLoading(false);
           setErrorMessage(JSON.stringify(data.message));
         }
       } catch (error) {
+        setLoading(false);
         console.error("Error during API call:", error);
         setErrorMessage("An error occurred during the API call. Check the console for more details.");
       } finally {
