@@ -472,17 +472,6 @@ body {
     text-align: center;
   }
 
-  .upbyadhar {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    border: 1px solid black;
-    padding: 5px;
-    margin-top: 10px;
-    /* Added padding and margin for better spacing */
-  }
-
   .upbyadhar p {
     display: block;
     font-size: 10px;

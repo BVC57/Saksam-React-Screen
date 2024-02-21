@@ -40,24 +40,36 @@ const OTPVerification = (Newdata) => {
 
   const handleChange = (index, event) => {
     if(event.nativeEvent.inputType !== 'deleteContentBackward' ){
-      const value = event.target.value; 
+
+    const { value } = event.target;
+  
+    // Only accept numeric values and limit to one character
+    if (/^\d*$/.test(value) && value.length <= 1) {
       const updatedValues = [...otpValues];
       updatedValues[index] = value;
       setOtpValues(updatedValues);
-      // console.log("enter value",updatedValues[index])
-
-      const nextInput = document.getElementById(`otpInput${index + 2}`);
-      if (nextInput && value !== "") {
-        nextInput.focus();
+  
+      // Set focus to the next input field if value is entered
+      if (value !== "") {
+        const nextIndex = index + 1;
+        if (nextIndex < otpValues.length) {
+          const nextInput = document.getElementById(`otpInput${nextIndex + 1}`);
+          if (nextInput) {
+            nextInput.focus();
+          }
+        }
       }
+  
       updateButtonText(updatedValues);
     }
+  }
   };
+  
 
   const handleBackspace = (index, event) => {
     if (event.key === "Backspace") {
       const updatedValues = [...otpValues];
-      console.log("updatedvlues",updatedValues)
+      // console.log("updatedvlues",updatedValues)
 
       updatedValues[index] = ""; // Clear the current input value
 
@@ -73,7 +85,7 @@ const OTPVerification = (Newdata) => {
       const prevInput = document.getElementById(`otpInput${prevIndex + 1}`);
       if (prevInput) {
         prevInput.focus();
-        console.log(index)
+        // console.log(index)
       }
   
       updateButtonText(updatedValues);

@@ -11,6 +11,13 @@ const App = (Newdata) => {
   const [aadharImageSrc, setAadharImageSrc] = useState("");
   const [panImageSrc, setpanImageSrc] = useState("");
   const [ProfileImagesrc, setProfileImagesrc] = useState("");
+  const [aadharDataPresent, setAadharDataPresent] = useState(false);
+  const [panDataPresent, setpanDataPresent] = useState(false);
+  const [dlDataPresent, setdlDataPresent] = useState(false);
+  const [ecDataPresent, setecDataPresent] = useState(false);
+  const [ehDataPresent, setehDataPresent] = useState(false);
+  const [dsDataPresent, setdsDataPresent] = useState(false);
+  const [eqDataPresent, seteqDataPresent] = useState(false);
 
   // useEffect to make the API call when the component mounts
   useEffect(() => {
@@ -61,21 +68,6 @@ const App = (Newdata) => {
   const setDataLabels = (data) => {
     
     if (data !== null) {
-      var adharelement = document.getElementById("adharid").style.display = "none";
-      var panelement = document.getElementById("panid").style.display = "none";;
-      var dlelement = document.getElementById("dlid").style.display = "none";;
-      var eqelement = document.getElementById("eqid").style.display = "none";;
-      var ehelement = document.getElementById("ehid").style.display = "none";;
-      var ecelement = document.getElementById("ecid").style.display = "none";;
-      var dselement = document.getElementById("dsid").style.display = "none";;
-
-      // adharelement.style.display = "none";
-      // panelement.style.display = "none";
-      // dlelement.style.display = "none";
-      // eqelement.style.display = "none";
-      // ehelement.style.display = "none";
-      // ecelement.style.display = "none";
-      // dselement.style.display = "none";
       
 // Set personal information // 
 
@@ -100,7 +92,7 @@ const App = (Newdata) => {
         Array.isArray(data.data.aadhaar) &&
         data.data.aadhaar.length > 0
       ) {
-        adharelement.style.display = "flex"; //set the true for displaying data
+        
         setLabelData(
           "aadhar-id-number-label",
           data.data.aadhaar[0].aadhaar_number || "-"
@@ -121,6 +113,7 @@ const App = (Newdata) => {
         ) {
           const imageSrc = `data:image/jpeg;base64, ${data.data.aadhaar[0].aadhaar_image} `;
           setAadharImageSrc(imageSrc);
+          setAadharDataPresent(true);
         } else {
           console.error("Aadhar Card image not found in the API response.");
         }
@@ -134,7 +127,7 @@ const App = (Newdata) => {
         Array.isArray(data.data.pan) &&
         data.data.pan.length > 0
       ) {
-        panelement.style.display = "flex"; //set the true for displaying data
+       
         setLabelData("pan-id-number-label", data.data.pan[0].pan_number || "-");
         setLabelData("pan-issue-date-label", data.data.pan[0].issueDate || "-");
         setLabelData(
@@ -149,6 +142,7 @@ const App = (Newdata) => {
         ) {
           const imageSrc = `data:image/jpeg;base64, ${data.data.pan[0].image} `;
           setpanImageSrc(imageSrc);
+          setpanDataPresent(true);
         } else {
           console.error("Aadhar Card image not found in the API response.");
         }
@@ -162,7 +156,7 @@ const App = (Newdata) => {
         Array.isArray(data.data.drivinglicense) &&
         data.data.drivinglicense.length > 0
       ) {
-        dlelement.style.display = "flex"; //set the true for displaying data
+        setdlDataPresent(true);
         setLabelData(
           "license-number-label",
           data.data.drivinglicense[0].dl_number || "-"
@@ -196,7 +190,7 @@ const App = (Newdata) => {
         Array.isArray(data.data.education) &&
         data.data.education.length > 0
       ) {
-        eqelement.style.display = "flex";
+        seteqDataPresent(true);
         setLabelData(
           "Institution-Name-label",
           data.data.education[0].dl_number || "-"
@@ -238,7 +232,7 @@ const App = (Newdata) => {
         Array.isArray(data.data.education) &&
         data.data.education.length > 0
       ) {
-        ecelement.style.display = "flex"; //set the true for displaying data
+        setecDataPresent(true);
         setLabelData(
           "Institution-Name-label",
           data.data.education[0].dl_number || "-"
@@ -281,7 +275,7 @@ const App = (Newdata) => {
       Array.isArray(data.data.employment) &&
       data.data.employment.length > 0
     ) {
-      ehelement.style.display = "flex"; //set the true for displaying data
+      setehDataPresent(true);
       setLabelData(
         "Institution-Name-label",
         data.data.employment[0].dl_number || "-"
@@ -323,7 +317,7 @@ const App = (Newdata) => {
       Array.isArray(data.data.employment) &&
       data.data.employment.length > 0
     ) {
-      dselement.style.display = "flex"; //set the true for displaying data
+      setdsDataPresent(true);
       setLabelData(
         "Institution-Name-label",
         data.data.employment[0].dl_number || "-"
@@ -423,7 +417,7 @@ const App = (Newdata) => {
         <div className="creddata">
 
           {/* Aadhar Card */}
-          <div className="mcard" id="adharid">
+          <div className="mcard" style={{ display: aadharDataPresent ? 'block' : 'none' }}>
             <div className="card">
               <div className="cardinfo">
                 <h2>Aadhar Card</h2>
@@ -454,13 +448,13 @@ const App = (Newdata) => {
             </div>
             <div className="upbyadhar">
               <p id="upbyadhar">Added On 16-Augus-2023 10:15:00 AM / By Aadhar API</p>
-
+    
               <p id="upbyzoop">Verified On 16-Augus-2023 10:15:00 AM / By Zoop API</p>
             </div>
           </div>
 
           {/* PAN Card */}
-        <div className="mcard" id="panid">
+        <div className="mcard" style={{ display: panDataPresent ? 'block' : 'none' }}>
           <div className="card">
             <div className="cardinfo">
               <h2>PAN Card</h2>
@@ -493,7 +487,7 @@ const App = (Newdata) => {
         </div>
 
           {/* Driving License */}
-        <div className="mcard" id="dlid">
+        <div className="mcard" style={{ display: dlDataPresent ? 'block' : 'none' }}>
           <div className="card">
             <div className="cardinfo">
               <h2>Driving License</h2>
@@ -528,7 +522,7 @@ const App = (Newdata) => {
         </div>
 
         {/* EDUCATIONAL QUALIFICATIONS */}
-        <div className="mcard" id="eqid">
+        <div className="mcard" style={{ display: eqDataPresent ? 'block' : 'none' }}>
           <div className="card">
             <div className="cardinfo">
               <h2>EDUCATIONAL QUALIFICATIONS</h2>
@@ -573,7 +567,7 @@ const App = (Newdata) => {
         </div>
 
         {/* EMPLOYMENT HISTORY */}
-        <div className="mcard" id="ehid">
+        <div className="mcard" style={{ display: ehDataPresent ? 'block' : 'none' }}>
           <div className="card">
             <div className="cardinfo">
               <h2>EMPLOYMENT HISTORY</h2>
@@ -612,7 +606,7 @@ const App = (Newdata) => {
         </div>
 
          {/* EDUCATIONAL CERTIFICATIONS */}
-         <div className="mcard" id="ecid">
+         <div className="mcard" style={{ display: ecDataPresent ? 'block' : 'none' }}>
           <div className="card">
             <div className="cardinfo">
               <h2>EDUCATIONAL CERTIFICATE</h2>
@@ -640,7 +634,7 @@ const App = (Newdata) => {
         </div>
 
          {/* DECLARATION AND DIGITAL SIGNATURE */}
-         <div className="mcard" id="dsid">
+         <div className="mcard" style={{ display: dsDataPresent ? 'block' : 'none' }}>
           <div className="card">
             <div className="cardinfo">
               <h2>DECLARATION AND DIGITAL SIGNATURE</h2>
