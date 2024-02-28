@@ -15,8 +15,11 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #4070f4;
   caret-color: transparent;
+  background-image: url('../Images/otp\ Screen.png');
+  background-size: auto; /* Adjusts the background image size to cover the entire body */
+  background-position: center; /* Centers the background image */
+  background-repeat: no-repeat; /* Prevents the background image from repeating */
 }
 
 :where(.container, form, .input-field, header) {
@@ -26,25 +29,20 @@ body {
   justify-content: center;
 }
 
-.container {
-  background: #fff;
-  padding: 30px 65px;
-  border-radius: 12px;
-  row-gap: 20px;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-}
+
 .container header {
   height: 65px;
   width: 65px;
-  background: #4070f4;
+  /* background: #4070f4; */
   color: #fff;
   font-size: 2.5rem;
   border-radius: 50%;
 }
 .container h4 {
   font-size: 1.25rem;
-  color: #333;
+  color:white;
   font-weight: 500;
+  line-height: 20px;
 }
 form .input-field {
   flex-direction: row;
@@ -53,23 +51,25 @@ form .input-field {
 }
 .input-field input {
   height: 45px;
-  width: 42px;
+  width: 50px;
   border-radius: 6px;
-  outline: none;
   font-size: 1.125rem;
   text-align: center;
-  border: 1px solid #5d5353;
+  border: none;
+  background-color: #ffffff;
 }
 .input-field input:focus {
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+  outline: none;
 }
 .input-field input::-webkit-inner-spin-button,
 .input-field input::-webkit-outer-spin-button {
   display: none;
 }
+
+
 .vbtn {
   margin-top: 25px;
-  width: 100%;
+  width: 80%;
   color: #fff;
   font-size: 1rem;
   border: none;
@@ -80,6 +80,14 @@ form .input-field {
 }
 .vbtn:hover{
   background-color: #0030b6;
+}
+
+a.ro{
+  text-decoration: none;
+  font-size: 18px;
+  color: #0075F3;
+  font-weight: 500;
+  margin-top: 10px;
 }
 
 
@@ -111,25 +119,24 @@ form .input-field {
     font-weight: bolder;
     color: #0059ff;
 }
-.aphead .profileimg{
-  margin-top: 20px;
-}
-.aphead .profileimg img{
-  border-radius: 5%;
-  height: 150px;
-  width: 150px;
-}
+
 .personal-info h2{
   text-align: center;
 }
 section{
   border: 1px solid #000000;
   font-size: 15px;
-  color: black;
+  background: #19254B;
   display: flex;
   justify-content: space-evenly;
   margin-bottom: 20px;
   border-radius: 10px;
+  padding: 20px;
+  height: 270px;
+  background-image: url('../Images/Mask\ group.png');
+  background-size: auto; /* Adjusts the background image size to cover the entire body */
+  background-position: right; /* Centers the background image */
+  background-repeat:repeat-y; /* Prevents the background image from repeating */
 }
 section h2{
   text-align: center;
@@ -137,6 +144,8 @@ section h2{
 section label{
   line-height: 30px;
   display: block;
+  line-height: 40px;
+  color: white;
 }
 .pi{
   margin-left: 10px;
@@ -144,7 +153,10 @@ section label{
 }
 .dd{
   margin-left: 20px;
-  line-height: 30px;
+}
+.dd p{
+  line-height: 40px;
+  color: white;
 }
 
 /* card detail css here */
@@ -156,9 +168,9 @@ section label{
   margin-bottom: 20px;
 }
 .cardinfo{
-  flex: 1;
-  padding: 10px;
-  line-height: 30px;
+    width: 100%;
+    display: flex;
+    line-height: 30px;
 }
 .cardinfo h2{
   font-size: 19px;
@@ -171,14 +183,14 @@ section label{
 .image-container {
   max-width: 100%;
   height: auto;
-  margin-left: 60px;
+  margin-left: 140px;
   flex: 1;
   padding: 10px;
 }
 
 .image-container img {
-  width: 350px;
-  height: 230px;
+  width: 400px;
+  height: 280px;
   border-radius: 5px;
 }
 
@@ -240,7 +252,7 @@ section label{
   animation: mltShdSpin 1.7s infinite ease, round 1.7s infinite ease;
 }
 .loader1 {
-  color: #ffffff;
+  color: #003cff;
   font-size: 80px;
   text-indent: -9999em;
   overflow: hidden;
@@ -251,6 +263,8 @@ section label{
   transform: translateZ(0);
   animation: mltShdSpin 1.8s infinite ease, round 1.8s infinite ease;
 }
+
+
 
 
 @keyframes mltShdSpin {
@@ -294,26 +308,8 @@ section label{
  
 /* send otp file css code here */
 
-body {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #4070f4;
-}
-:where(.container, header) {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-.container {
-    background: #fff;
-    padding: 30px 65px;
-    border-radius: 12px;
-    row-gap: 20px;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-}
+
+
 .container header {
     height: 65px;
     width: 65px;
@@ -323,20 +319,22 @@ body {
     border-radius: 50%;
 }
 .container h4 {
-    font-size: 1.25rem;
-    color: #333;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 30px;
+    text-align: center;
     font-weight: 500;
+    padding-bottom: 15px;
 }
 .sbtn {
     /* margin-top: 25px; */
-    width: 80%;
-    height: 40px;
+    width: 328px;
+    height: 46px;
     color: #fff;
     font-size: 1rem;
     border: none;
-    padding: 5px 0;
     cursor: pointer;
-    border-radius: 6px;
+    border-radius: 8px;
     background:#0059ff;
 }
 
@@ -349,8 +347,8 @@ body {
   flex-direction: column; /* Added to display <p> elements in a column */
   height: auto; /* Adjusted to accommodate content */
   font-size: 10px;
-  align-items: center;
-  text-align: center;
+  padding: 20px;
+  margin-top: -60px;
 }
 
 .upbyadhar p {
@@ -358,12 +356,39 @@ body {
   display: block;
   font-size: 15px;
 }
-.mcard{
-  border: 1px solid #000000;
-  border-radius: 10px;
+
+/* new css add here */
+
+.MainCard{
+  border: 1px solid black;
   display: block;
+  border-radius: 10px;
   margin-top: 20px;
+  width: 200%;
 }
+.mcard{
+  display: block;
+  border: 1px solid black;
+  margin: 10px;
+  border-radius: 15px;
+}
+h2.eq{
+  margin-left: 15px;
+}
+
+.apd{
+  width: 50%;
+}
+.od{
+  width: 50%;
+}
+.creddata {
+  background-image: url('../Images/Group\ 427318468.png');
+  background-size: auto;
+  background-position:right;
+}
+
+
 .lnb{
   padding: 5px;
   display: flex;
@@ -388,6 +413,12 @@ i.fas.fa-download {
     color: red;
 }
 
+/*   css for hr line in eduction detail    */
+hr{
+    width: 50%;
+    margin: 1% 0px 1% 25%;
+    background: white;
+}
 
 /* responsive desing for all devices code here */
 /* General styles for smaller screens */
@@ -509,6 +540,9 @@ i.fas.fa-download {
   .card {
     flex-direction: column;
   }
+  .card h2{
+    text-align: center;
+  }
 
   .cardinfo,
   .image-container {
@@ -520,7 +554,7 @@ i.fas.fa-download {
   .image-container img{
     width: 290px;
     height: 200px;
-    margin-left: -120px;
+    margin-left: -280px;
   }
   .pi ,.dd{
     font-size: 10px;
@@ -569,4 +603,71 @@ i.fas.fa-download {
     padding: 10px;
     color: red;
 }
+}
+
+
+
+
+
+
+
+/*########################## the new page css here start  ############################*/
+
+.ps{
+  display: block;
+}
+
+
+.personal-info h1{
+  text-align: center;
+  color: #003cff;
+}
+
+
+.profileimg img{
+  height: 90px;
+  width: 90px;
+  border-radius: 50%;
+}
+
+.tscore p{
+  height: 70px;
+  width: 70px;
+  border: 5px solid white;
+  border-radius: 50%;
+  text-align: center;
+  padding: 17px;
+  margin-top: 50px;
+  margin-left: 5px;
+}
+
+.apdlable,
+.apddata {
+  flex: 0.5; /* To make both elements take equal space */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align items to start (left) */
+}
+.apdlable p{
+  font-size: 20px;
+  line-height: 2.5;
+}
+
+.apddata label{
+  font-size: 20px;
+  line-height: 2;
+}
+
+h4.AH{
+  margin: 20px;
+}
+
+.score{
+  margin-top: 30px;
+}
+.score p{
+  color: white;
+  margin-top: -10px;
+  margin-left: 10px;
+  font-weight: 500;
 }

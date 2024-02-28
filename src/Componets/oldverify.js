@@ -2,45 +2,49 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "./Main.css";
 
-const OTPVerification = (Newdata) => {
-  
-  const { userId, authToken } = Newdata;
-
-  // console.log('userId for verify otp:', userId);
-  // console.log('authToken: verify otp', authToken);
-  const [otpValues, setOtpValues] = useState(["", "", "", "", "", ""]);
+const OTPVerification = ({ userId, authToken }) => {
+  const navigate = useNavigate();
+  const [otpValues, setOtpValues] = useState(Array(6).fill(""));
   const [buttonText, setButtonText] = useState("Enter OTP");
   const [errorMessage, setErrorMessage] = useState('');
-  const [loading, setLoading] = useState(false); // State variable to track loading status
-  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     document.getElementById("otpInput1").focus();
   }, []);
 
-  const handleChange = (index, value) => {
-    const updatedValues = [...otpValues];
-    updatedValues[index] = value;
-    setOtpValues(updatedValues);
-
-    const nextInput = document.getElementById(`otpInput${index + 2}`);
-    if (nextInput && value !== "") {
-      nextInput.focus();
+  const handleChange = (index, event) => {
+    const { value } = event.target;
+    if (/^\d*$/.test(value) && value.length <= 1) {
+      const updatedValues = [...otpValues];
+      updatedValues[index] = value;
+      setOtpValues(updatedValues);
+      if (value !== "") {
+        const nextIndex = index + 1;
+        if (nextIndex < otpValues.length) {
+          const nextInput = document.getElementById(`otpInput${nextIndex + 1}`);
+          if (nextInput) {
+            nextInput.focus();
+          }
+        }
+      }
+      updateButtonText(updatedValues);
     }
-
-    updateButtonText(updatedValues);
   };
 
   const handleBackspace = (index, event) => {
-    if (event.key === "Backspace" && index > 0) {
+    if (event.key === "Backspace") {
       const updatedValues = [...otpValues];
       updatedValues[index] = "";
+      if (updatedValues[index] === "" && index > 0) {
+        updatedValues[index - 1] = "";
+      }
       setOtpValues(updatedValues);
-      const prevInput = document.getElementById(`otpInput${index}`);
+      const prevIndex = index > 0 ? index - 1 : 0;
+      const prevInput = document.getElementById(`otpInput${prevIndex + 1}`);
       if (prevInput) {
         prevInput.focus();
       }
-
       updateButtonText(updatedValues);
     }
   };
@@ -51,55 +55,36 @@ const OTPVerification = (Newdata) => {
   };
 
   const verifyOTP = async () => {
-    setLoading(true); // Set loading to true when OTP verification starts
+    setLoading(true);
     const enteredOTP = otpValues.join("");
-    console.log("Entered OTP:", enteredOTP);
-    CallAPI(enteredOTP);
-  };
-
-  const CallAPI = async (otp) => {
-    if(authToken === undefined){
-      setErrorMessage("Token Not Found")
-      setLoading(false); // Set loading to false if token is not found
-    } else {
-      console.log(otp);
+    try {
+      if (!authToken) {
+        throw new Error("Token Not Found");
+      }
       const apiUrl = "https://huf6ubili4.execute-api.ap-south-1.amazonaws.com/DEV/viewer_otp_verification";
-      const method = "POST";
-      const requestBody = {
-        id: `${userId}`,
-        OTP: otp,
-      };
-      const token = `Bearer ${authToken}`;
       const requestOptions = {
-        method: method,
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: token,
+          "Authorization": `Bearer ${authToken}`,
         },
-        body: JSON.stringify(requestBody),
+        body: JSON.stringify({ id: userId, OTP: enteredOTP }),
       };
-
-      try {
-        const response = await fetch(apiUrl, requestOptions);
-        console.log("Response Status:", response.status);
-        const data = await response.json();
-        console.log("API Data:", data);
-
-        // Handle the API response as needed
-        if (data.Status_Code === 200) {
-          // alert("API Response: " + JSON.stringify(data.message));
-          navigate("/profile");
-        } else if (data.Status_Code === 400 || data.Status_Code === 500) {
-          setErrorMessage(data.message);
-        } else {
-          setErrorMessage(JSON.stringify(data.message));
-        }
-      } catch (error) {
-        console.error("Error during API call:", error);
-        setErrorMessage("An error occurred during the API call. Check the console for more details.");
-      } finally {
-        setLoading(false); // Set loading to false after API call completes
+      const response = await fetch(apiUrl, requestOptions);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
+      const data = await response.json();
+      if (data.Status_Code === 200) {
+        navigate("/profile");
+      } else {
+        throw new Error(data.message || "Error verifying OTP. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error during OTP verification:", error);
+      setErrorMessage(error.message || "An error occurred. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -117,17 +102,19 @@ const OTPVerification = (Newdata) => {
               type="number"
               id={`otpInput${index + 1}`}
               value={value}
-              onChange={(e) => handleChange(index, e.target.value)}
+              onChange={(e) => handleChange(index, e)}
               onKeyDown={(e) => handleBackspace(index, e)}
+              maxLength={1}
             />
           ))}
         </div>
         <button type="button" className="vbtn" onClick={verifyOTP} disabled={loading}>
-          {loading ? 'Verifying OTP.....' : buttonText} {/* Change button text if loading */}
+          {loading ? 'Verifying OTP...' : buttonText}
         </button>
+        {loading && <div className="loader"></div>}
       </form>
       <div className="error-massage">
-        {errorMessage && <label style={{ color: 'red', textWrap:"wrap" }}>{errorMessage}</label>}
+        {errorMessage && <label style={{ color: 'red' }}>{errorMessage}</label>}
       </div>
     </div>
   );
