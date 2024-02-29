@@ -325,12 +325,12 @@ const App = (Newdata) => {
         data.data.address.length > 0
       ) {
         setaddDataPresent(true);
-        
-          setLabelData(`Mainaddress-label`, data.data.address[0].house || "-");
-          setLabelData(`Pincode-label`, data.data.address[0].zip || "-");
-          setLabelData(`District-label`, data.data.address[0].dist || "-");
-          setLabelData(`State-label`, data.data.address[0].state || "-");
-   
+        data.data.address.forEach((address, index) => {
+          setLabelData(`Mainaddress-label-${index}`, address.house || "-");
+          setLabelData(`Pincode-label-${index}`, address.zip || "-");
+          setLabelData(`District-label-${index}`, address.dist || "-");
+          setLabelData(`State-label-${index}`, address.state || "-");
+        });
       }
     } else {
       console.log("data is empty");
@@ -360,7 +360,8 @@ const App = (Newdata) => {
         <div id="loading-message">
           {loading && (
             <h1>
-              Please Wait....
+              Pls Wait <br />
+              Page is Generating...
             </h1>
           )}
           {error && (
@@ -667,39 +668,42 @@ const App = (Newdata) => {
 
               <div className="MainCard" style={{ border: "none" }}>
                 <h2 className="eq">Address Details</h2>
-            
-                    <div className="mcard">
-                      <h4 className="AH"></h4>
-                      {/* <p className="isv" style={{ backgroundColor: ified ? "green" : "darkgray" }}>{ified ? "Verify" : "Not Verify"}</p> */}
+                {addDataPresent &&
+                  data.data.address &&
+                  data.data.address.map((address, index) => (
+                    <div className="mcard" key={index}>
+                      <h4 className="AH">{address.type}</h4>
                       <div className="card">
                         <div className="cardinfo">
                           <div className="apddata">
-                            <label id={`Mainaddress-label`} >
-                              -
+                            <label htmlFor={`Mainaddress-label-${index}`}>
+                              {address.house || "-"} - {address.street || "-"} - {" "}
+                              {address.landmark || "-"}
                             </label>
-                            <label id={`Pincode-label`}>
-                              -
+                            <label htmlFor={`Pincode-label-${index}`}>
+                              {address.zip || "-"}
                             </label>
-                            <label id={`District-label`}>
-                              -
+                            <label htmlFor={`District-label-${index}`}>
+                              {address.dist || "-"}
                             </label>
-                            <label id={`State-label`}>
-                              -
+                            <label htmlFor={`State-label-${index}`}>
+                              {address.state || "-"}
                             </label>
                           </div>
                         </div>
                       </div>
                       <div className="upbyadhar">
                         <p id="upbyadhar">
-                          Added On  / By Aadhar API
+                          Added On {address.updated_date} / By Aadhar API
                         </p>
                         <p id="upbyzoop">
-                          Latest verifation date / By
+                          Latest verifation date {address.updated_date} / By
                           Zoop API
                         </p>
                       </div>
                       {/* <hr /> */}
                     </div>
+                  ))}
               </div>
 
               {/* EDUCATIONAL CERTIFICATIONS */}

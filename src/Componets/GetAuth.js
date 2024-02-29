@@ -25,7 +25,8 @@ const getUserData = async () => {
     }
 
     const data = await response.json();
-    
+    // console.log("from auth",userId)
+    // console.log("from auth",data.Token)
     return { userId: userId, authToken: data.Token };
   } catch (error) {
     console.error('There was a problem fetching the data:', error);

@@ -659,7 +659,25 @@ hr{
 }
 
 h4.AH{
-  margin: 20px;
+    margin: 10px;
+}
+
+p.isv {
+    width: fit-content !important;
+    margin-top: -30px !important;
+    float: right;
+    margin: 10px;
+    font-family: 'Heebo', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.025rem;
+    font-style: normal;
+    text-transform: uppercase;
+    color: white;
+    background-color: #FFFFFF;
+    border-radius: 1.25rem;
+    padding: 0.35rem 0.75rem;
+    background-color: darkgray;
 }
 
 .score{
