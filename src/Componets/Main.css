@@ -133,10 +133,6 @@ section{
   border-radius: 10px;
   padding: 20px;
   height: 270px;
-  background-image: url('../Images/Mask\ group.png');
-  background-size: auto; /* Adjusts the background image size to cover the entire body */
-  background-position: right; /* Centers the background image */
-  background-repeat:repeat-y; /* Prevents the background image from repeating */
 }
 section h2{
   text-align: center;
