@@ -16,10 +16,7 @@ body {
   align-items: center;
   justify-content: center;
   caret-color: transparent;
-  background-image: url('../Images/otp\ Screen.png');
-  background-size: auto; /* Adjusts the background image size to cover the entire body */
-  background-position: center; /* Centers the background image */
-  background-repeat: no-repeat; /* Prevents the background image from repeating */
+  background-color: #003cff;
 }
 
 :where(.container, form, .input-field, header) {
@@ -48,15 +45,15 @@ form .input-field {
   flex-direction: row;
   column-gap: 10px;
   caret-color: black;
+  margin-top: 10px;
 }
 .input-field input {
   height: 45px;
-  width: 50px;
+  width: 65px;
   border-radius: 6px;
   font-size: 1.125rem;
   text-align: center;
-  border: none;
-  background-color: #ffffff;
+  border: 1px solid #C9C9C9;
 }
 .input-field input:focus {
   outline: none;
@@ -102,9 +99,8 @@ a.ro{
     width: 800px;
     background-color: #fff;
     border-radius: 10px;
-    max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 35px;
 }
 .aphead{
     margin: 10px;
@@ -133,6 +129,10 @@ section{
   border-radius: 10px;
   padding: 20px;
   height: 270px;
+  background-image: url('../Images/Mask\ group.png');
+  background-size: auto; /* Adjusts the background image size to cover the entire body */
+  background-position: right; /* Centers the background image */
+  background-repeat:repeat-y; /* Prevents the background image from repeating */
 }
 section h2{
   text-align: center;
@@ -162,31 +162,34 @@ section label{
   display: flex;
   flex-wrap: wrap;
   margin-bottom: 20px;
+
 }
 .cardinfo{
-    width: 100%;
-    display: flex;
+    width: 300px;
     line-height: 30px;
 }
-.cardinfo h2{
-  font-size: 19px;
+.cardinfo h1{
+  font-size: 20px;
+  color:black;
 }
 .cardinfo label{
   color:#a0a0a0;
   font-size: 18px;
 }
+.carddata{
+  display: flex;
+}
 
 .image-container {
   max-width: 100%;
   height: auto;
-  margin-left: 140px;
   flex: 1;
   padding: 10px;
 }
 
 .image-container img {
-  width: 400px;
-  height: 280px;
+  width: 350px;
+  height: 250px;
   border-radius: 5px;
 }
 
@@ -248,7 +251,7 @@ section label{
   animation: mltShdSpin 1.7s infinite ease, round 1.7s infinite ease;
 }
 .loader1 {
-  color: #003cff;
+  color: white;
   font-size: 80px;
   text-indent: -9999em;
   overflow: hidden;
@@ -260,6 +263,10 @@ section label{
   animation: mltShdSpin 1.8s infinite ease, round 1.8s infinite ease;
 }
 
+.ab{
+  background-color: white;
+  border-radius: 10px;
+}
 
 
 
@@ -345,6 +352,7 @@ section label{
   font-size: 10px;
   padding: 20px;
   margin-top: -60px;
+  text-align: center;
 }
 
 .upbyadhar p {
@@ -360,14 +368,18 @@ section label{
   display: block;
   border-radius: 10px;
   margin-top: 20px;
-  width: 200%;
+  width: 190%;
+  margin: 20px;
 }
 .mcard{
   display: block;
   border: 1px solid black;
   margin: 10px;
-  border-radius: 15px;
+  background-color: white;
+  margin-top: 40px;
 }
+
+
 h2.eq{
   margin-left: 15px;
 }
@@ -375,13 +387,20 @@ h2.eq{
 .apd{
   width: 50%;
 }
+.apd h2{
+  color: white;
+  margin-left: 22px;
+}
 .od{
   width: 50%;
 }
+.od h2{
+  color: white;
+  margin-left: 22px;
+}
 .creddata {
-  background-image: url('../Images/Group\ 427318468.png');
-  background-size: auto;
-  background-position:right;
+  background-color: #0059ff;
+  border-radius: 10px;
 }
 
 
@@ -420,7 +439,7 @@ hr{
 /* General styles for smaller screens */
 @media only screen and (max-width: 600px) {
   .container {
-    width: 300px;
+    width: 300px !important;
     height: 250px !important;
     padding: 5px ; /* Important to override previous styles */
     margin: 20px ; /* Important to override previous styles */
@@ -457,6 +476,7 @@ hr{
   .container {
     padding: 10px !important;
     width: 260px !important;
+    height: 400px !important;
   }
   form .input-field {
     flex-direction: row;
@@ -479,6 +499,9 @@ hr{
   .card {
     flex-direction: column;
     width: 200px;
+  }
+  .creddata{
+    width: 260px !important;
   }
 
   .cardinfo,
@@ -527,8 +550,8 @@ hr{
   .main{
     width: 350px;
     align-items: center;
-    text-align: center;
     margin: 20px;
+    padding: 5px;
   }
   .mcard{
     margin-top: 10px;
@@ -550,7 +573,12 @@ hr{
   .image-container img{
     width: 290px;
     height: 200px;
-    margin-left: -280px;
+    margin-left: -15px;
+  }
+  .cardinfo h2{
+    font-size: 25px;
+    color: black;
+    margin: 0;
   }
   .pi ,.dd{
     font-size: 10px;
@@ -567,9 +595,9 @@ hr{
     padding-bottom: 5px;
   }
   .container {
-    padding: 15px;
-    width: 350px;
-    height: 250px !important;
+    width: 340px !important;
+    height: 440px !important;
+    margin-left: 20px;
   }
   .container header {
     height: 50px;
@@ -598,6 +626,43 @@ hr{
     float: right;
     padding: 10px;
     color: red;
+}
+.input-field input{
+  width: 45px !important;
+}
+.rimg img{
+  display: none;
+}
+.limg img{
+  display: none;
+}
+section{
+  height: 400px !important;
+  width: 335px !important;
+}
+.carddata{
+  display: block;
+}
+.creddata{
+  width: 340px !important;
+}
+.ab{
+  padding: 0;
+}
+.MainCard{
+  margin: 6px !important;
+}
+p.at{
+  /* margin-top: -5px !important; */
+  display: none;
+}
+.apddata{
+  font-size: 12px;
+  text-align: start;
+
+}
+.personal-info h1{
+  font-size: 25px;
 }
 }
 
@@ -660,7 +725,6 @@ h4.AH{
 
 p.isv {
     width: fit-content !important;
-    margin-top: -30px !important;
     float: right;
     margin: 10px;
     font-family: 'Heebo', sans-serif;
@@ -675,6 +739,23 @@ p.isv {
     padding: 0.35rem 0.75rem;
     background-color: darkgray;
 }
+p.at {
+  width: fit-content !important;
+  float: left;
+  margin: 10px;
+  font-family: 'Heebo', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.025rem;
+  font-style: normal;
+  text-transform: uppercase;
+  color:#0059ff;
+  background-color: #FFFFFF;
+  border-radius:5px;
+  padding: 0.35rem 0.75rem;
+  margin-top: -20px;
+  margin-left: -0.10px;
+}
 
 .score{
   margin-top: 30px;
@@ -684,4 +765,53 @@ p.isv {
   margin-top: -10px;
   margin-left: 10px;
   font-weight: 500;
+}
+
+
+
+/*////////////////////////////  NEW VERIFY CSS ////////////////////////////////////////////*/
+
+.container{
+    background-color: white;
+    padding: 20px;
+    align-items: center;
+    text-align: center;
+    width: 550px;
+    border-radius: 25px;
+}
+.lh{
+  display: flex;
+}
+.lh img{
+  height: 70px;
+  width: 70px;
+}
+.lh h1{
+    color: #0075F3;
+    font-size: 40px;
+    text-align: center;
+    align-items: center;
+    margin: 10px;
+    font-weight: bold;
+    font-family: Helvetica;
+}
+
+.hl h3{
+  margin-top: 25px;
+}
+.hl p{
+  font-size: 10px;
+  padding: 5px;
+  color: #667085;
+  margin-top: 10px;
+  word-break: break-all;
+  word-spacing: 6px;
+}
+
+.limg img{
+    margin-top: -300px;
+}
+
+.rimg img{
+  margin-top: 100px;
 }

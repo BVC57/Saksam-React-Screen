@@ -325,12 +325,12 @@ const App = (Newdata) => {
         data.data.address.length > 0
       ) {
         setaddDataPresent(true);
-        
-          setLabelData(`Mainaddress-label`, data.data.address[0].house || "-");
-          setLabelData(`Pincode-label`, data.data.address[0].zip || "-");
-          setLabelData(`District-label`, data.data.address[0].dist || "-");
-          setLabelData(`State-label`, data.data.address[0].state || "-");
-   
+        data.data.address.forEach((address, index) => {
+          setLabelData(`Mainaddress-label-${index}`, address.house || "-");
+          setLabelData(`Pincode-label-${index}`, address.zip || "-");
+          setLabelData(`District-label-${index}`, address.dist || "-");
+          setLabelData(`State-label-${index}`, address.state || "-");
+        });
       }
     } else {
       console.log("data is empty");
@@ -358,11 +358,7 @@ const App = (Newdata) => {
     <div>
       {(loading || error) && (
         <div id="loading-message">
-          {loading && (
-            <h1>
-              Please Wait....
-            </h1>
-          )}
+          {loading && <h1>Pls Wait...</h1>}
           {error && (
             <div id="error-message">
               <h1>Error In Page Generating! Please try again later.</h1>
@@ -391,7 +387,7 @@ const App = (Newdata) => {
                   />
                 </div>
                 <div className="score">
-                  <Score score={555} total={TotalScore} />
+                  <Score score={444} total={TotalScore} />
                   <p>Trust Score</p>
                 </div>
               </div>
@@ -421,142 +417,158 @@ const App = (Newdata) => {
               <div
                 className="MainCard"
                 style={{ display: aadharDataPresent ? "block" : "none" }}>
+                <div className="ab">
                 <div className="card">
-                  <h2>Aadhar Card</h2>
-                  <div className="cardinfo">
-                    <div className="apdlable">
+                  <div className="carddata">
+                    <div className="cardinfo">
+                      <h1>Aadhar Card</h1>
                       <p>Aadhar Number:</p>
-                      <p>Address:</p>
-                      <p>Date Of Birth:</p>
-                      <p>Gender:</p>
-                    </div>
-                    <div className="apddata">
                       <label
                         htmlFor="aadhar-id-number-label"
                         id="aadhar-id-number-label">
                         -
                       </label>
+                      <p>Address:</p>
                       <label
                         htmlFor="aadhar-address-label"
                         id="aadhar-address-label">
                         -
                       </label>
-                      <label htmlFor="aadhar-dob-label" id="aadhar-dob-label">
-                        -
-                      </label>
-                      <label
-                        htmlFor="aadhar-gender-label"
-                        id="aadhar-gender-label">
-                        -
-                      </label>
+                      <p>Date Of Birth:</p>
+                      <div className="aadhar-dob">
+                        <label htmlFor="aadhar-dob-label" id="aadhar-dob-label">
+                          -
+                        </label>
+                      </div>
+                      <p>Gender:</p>
+                      <div className="aadhar-gender">
+                        <label
+                          htmlFor="aadhar-gender-label"
+                          id="aadhar-gender-label">
+                          -
+                        </label>
+                      </div>
                     </div>
-                  </div>
-                  <div className="image-container">
-                    <img
-                      src={aadharImageSrc}
-                      alt="Not Uploaded"
-                      id="aadhar-image"
-                    />
+                    <div className="image-container">
+                      <img
+                        src={aadharImageSrc}
+                        alt="Not Uploded"
+                        id="aadhar-image"
+                      />
+                    </div>
                   </div>
                 </div>
                 <div className="upbyadhar">
-                  <p id="upbyadhar">Added {} / By Aadhar API</p>
-                  <p id="upbyzoop">Latest verification Date {} / By Zoop API</p>
+                  <p id="upbyadhar">Added / By Aadhar API</p>
+
+                  <p id="upbyzoop">Latest verification Date / By Zoop API</p>
+                </div>
                 </div>
               </div>
 
               {/* PAN Card */}
               <div
-                className="MainCard"
-                style={{ display: panDataPresent ? "block" : "none" }}>
-                <div className="card">
-                  <h2>PAN Card</h2>
-                  <div className="cardinfo">
-                    <div className="apdlable">
-                      <p>PanCard Number:</p>
-                      <p>Adress:</p>
-                      <p>Date Of Birth:</p>
-                      <p>Gender:</p>
-                    </div>
-                    <div className="apddata">
-                      <label
-                        htmlFor="pan-id-number-label"
-                        id="pan-id-number-label">
-                        -
-                      </label>
-                      <label htmlFor="pan-address-label" id="pan-address-label">
-                        -
-                      </label>
-                      <label htmlFor="pan-dob-label" id="pan-dob-label">
-                        -
-                      </label>
-                      <label htmlFor="pan-gender-label" id="pan-gender-label">
-                        -
-                      </label>
-                    </div>
+              className="MainCard"
+              style={{ display: panDataPresent ? "block" : "none" }}>
+              <div className="ab">
+              <div className="card">
+              <div className="carddata">
+                <div className="cardinfo">
+                  <h1>PAN Card</h1>
+                  <p>PanCard Number:</p>
+                  <label htmlFor="pan-id-number-label" id="pan-id-number-label">
+                    -
+                  </label>
+                  <p>Adress:</p>
+                  <label htmlFor="pan-address-label" id="pan-address-label">
+                    -
+                  </label>
+                  <p>Date Of Birth:</p>
+                  <div className="pan-dob">
+                    <label htmlFor="pan-dob-label" id="pan-dob-label">
+                      -
+                    </label>
                   </div>
-                  <div className="image-container">
-                    <img
-                      src={panImageSrc}
-                      alt="Not Uploded"
-                      id="aadhar-image"
-                    />
+                  <p>Gender:</p>
+                  <div className="pan-gender">
+                    <label htmlFor="pan-gender-label" id="pan-gender-label">
+                      -
+                    </label>
                   </div>
                 </div>
-                <div className="upbyadhar">
-                  <p id="upbyadhar">Added On {} / By Aadhar API</p>
+                <div className="image-container">
+                  <img src={panImageSrc} alt="Not Uploded" id="aadhar-image" />
+                </div>
+                </div>
+              </div>
+              <div className="upbyadhar">
+                <p id="upbyadhar">
+                  Added On  / By Aadhar API
+                </p>
 
-                  <p id="upbyzoop">Latest verification Date {} / By Zoop API</p>
-                </div>
+                <p id="upbyzoop">
+                  Latest verification Date / By Zoop API
+                </p>
+              </div>
+              </div>
               </div>
 
               {/* Driving License */}
               <div
-                className="MainCard"
-                style={{ display: dlDataPresent ? "block" : "none" }}>
-                <div className="card">
-                  <h2>Driving License</h2>
-                  <div className="cardinfo">
-                    <div className="apdlable">
-                      <p>License Number:</p>
-                      <p>Valid From/To: [Validity Dates]</p>
-                      <p>Date Of Birth</p>
-                      <p>Gender</p>
-                    </div>
-                    <div className="apddata">
-                      <label
-                        htmlFor="license-number-label"
-                        id="license-number-label">
-                        -
-                      </label>
-                      <label
-                        htmlFor="license-validity-label"
-                        id="license-validity-label">
-                        -
-                      </label>
-                      <label htmlFor="license-dob-label" id="license-dob-label">
-                        -
-                      </label>
-                      <label
-                        htmlFor="license-gender-label"
-                        id="license-gender-label">
-                        -
-                      </label>
-                    </div>
+              className="MainCard"
+              style={{ display: dlDataPresent ? "block" : "none" }}>
+              <div className="card">
+              <div className="ab">
+              <div className="carddata">
+                <div className="cardinfo">
+                  <h1>Driving License</h1>
+                  <p>License Number:</p>
+                  <label htmlFor="license-number-label" id="license-number-label">
+                    -
+                  </label>
+                  <p>Valid From/To: [Validity Dates]</p>
+                  <label
+                    htmlFor="license-validity-label"
+                    id="license-validity-label">
+                    -
+                  </label>
+                  <p>Date Of Birth</p>
+                  <div className="license-dob">
+                    <label htmlFor="license-dob-label" id="license-dob-label">
+                      -
+                    </label>
                   </div>
-                  <div className="image-container">
-                    <img src={DLImagesrc} alt="Not Uploded" id="aadhar-image" />
+                  <p>Gender</p>
+                  <div className="license-gender">
+                    <label
+                      htmlFor="license-gender-label"
+                      id="license-gender-label">
+                      -
+                    </label>
                   </div>
                 </div>
-                <div className="upbyadhar">
-                  <p id="upbyadhar">Added On {} / By Aadhar API</p>
-
-                  <p id="upbyzoop">Latest verification Date {} / By Zoop API</p>
+                <div className="image-container">
+                  <img src={DLImagesrc} alt="Not Uploded" id="aadhar-image" />
+                </div>
                 </div>
               </div>
+              <div className="upbyadhar">
+                <p id="upbyadhar">
+                  Added On / By Aadhar API
+                </p>
+
+                <p id="upbyzoop">
+                  Latest verification Date / By Zoop API
+                </p>
+              </div>
+              </div>
+              </div>
             </div>
+
+
             <div className="od">
               {/* <h2>Identity</h2> */}
+
               {/* EDUCATIONAL QUALIFICATIONS */}
               <div className="MainCard" style={{ border: "none" }}>
                 <h2 className="eq">EDUCATIONAL DETAILS</h2>
@@ -613,7 +625,7 @@ const App = (Newdata) => {
                   data.data.employment &&
                   data.data.employment.map((employment, index) => (
                     <div className="mcard" key={index}>
-                      <h5 style={{margin:"20px"}}>{employment.tag}</h5>
+                      <p className="at">{employment.tag}</p>
                       <div className="card">
                         <div className="cardinfo">
                           {/* <div className="apdlable">
@@ -626,12 +638,14 @@ const App = (Newdata) => {
                             <h1 htmlFor={`Job-Name-label-${index}`}>
                               {employment.dept || "-"}
                             </h1>
-                            <h2 htmlFor={`Company-Name-label-${index}`}>
+                            <h3 htmlFor={`Company-Name-label-${index}`}>
                               {employment.emp || "-"} : {employment.type || "-"}
-                            </h2>
+                            </h3>
                             <h5 htmlFor={`Duration-label-${index}`}>
-                              {employment.start_date || "-"} TO {" "}
-                              {employment.end_date || "-"}( {employment.tt_exp_yr || "-"} Yr {employment.tt_exp_mnth || "-"} Mon )
+                              {employment.start_date || "-"} TO{" "}
+                              {employment.end_date || "-"}({" "}
+                              {employment.tt_exp_yr || "-"} Yr{" "}
+                              {employment.tt_exp_mnth || "-"} Mon )
                             </h5>
                             <h4 htmlFor={`Address-label-${index}`}>
                               {employment.loct || "-"}
@@ -667,39 +681,52 @@ const App = (Newdata) => {
 
               <div className="MainCard" style={{ border: "none" }}>
                 <h2 className="eq">Address Details</h2>
-            
-                    <div className="mcard">
-                      <h4 className="AH"></h4>
-                      {/* <p className="isv" style={{ backgroundColor: ified ? "green" : "darkgray" }}>{ified ? "Verify" : "Not Verify"}</p> */}
+                {addDataPresent &&
+                  data.data.address &&
+                  data.data.address.map((address, index) => (
+                    <div className="mcard" key={index}>
+                      <p className="at">{address.type}</p>
+                      <p
+                        className="isv"
+                        style={{
+                          backgroundColor: address.is_verified
+                            ? "green"
+                            : "darkgray",
+                        }}>
+                        {address.is_verified ? "Verify" : "Not Verify"}
+                      </p>
+
                       <div className="card">
                         <div className="cardinfo">
                           <div className="apddata">
-                            <label id={`Mainaddress-label`} >
-                              -
+                            <label htmlFor={`Mainaddress-label-${index}`}>
+                              {address.house || "-"} - {address.street || "-"} -{" "}
+                              {address.landmark || "-"}
                             </label>
-                            <label id={`Pincode-label`}>
-                              -
+                            <label htmlFor={`Pincode-label-${index}`}>
+                              {address.zip || "-"}
                             </label>
-                            <label id={`District-label`}>
-                              -
+                            <label htmlFor={`District-label-${index}`}>
+                              {address.dist || "-"}
                             </label>
-                            <label id={`State-label`}>
-                              -
+                            <label htmlFor={`State-label-${index}`}>
+                              {address.state || "-"}
                             </label>
                           </div>
                         </div>
                       </div>
                       <div className="upbyadhar">
                         <p id="upbyadhar">
-                          Added On  / By Aadhar API
+                          Added On {address.updated_date} / By Aadhar API
                         </p>
                         <p id="upbyzoop">
-                          Latest verifation date / By
+                          Latest verifation date {address.updated_date} / By
                           Zoop API
                         </p>
                       </div>
                       {/* <hr /> */}
                     </div>
+                  ))}
               </div>
 
               {/* EDUCATIONAL CERTIFICATIONS */}

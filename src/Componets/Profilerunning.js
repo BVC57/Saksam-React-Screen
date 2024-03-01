@@ -614,7 +614,7 @@ const App = (Newdata) => {
                   data.data.employment &&
                   data.data.employment.map((employment, index) => (
                     <div className="mcard" key={index}>
-                      <h5 style={{margin:"20px"}}>{employment.tag}</h5>
+                      <h5 style={{ margin: "20px" }}>{employment.tag}</h5>
                       <div className="card">
                         <div className="cardinfo">
                           {/* <div className="apdlable">
@@ -631,8 +631,10 @@ const App = (Newdata) => {
                               {employment.emp || "-"} : {employment.type || "-"}
                             </h2>
                             <h5 htmlFor={`Duration-label-${index}`}>
-                              {employment.start_date || "-"} TO {" "}
-                              {employment.end_date || "-"}( {employment.tt_exp_yr || "-"} Yr {employment.tt_exp_mnth || "-"} Mon )
+                              {employment.start_date || "-"} TO{" "}
+                              {employment.end_date || "-"}({" "}
+                              {employment.tt_exp_yr || "-"} Yr{" "}
+                              {employment.tt_exp_mnth || "-"} Mon )
                             </h5>
                             <h4 htmlFor={`Address-label-${index}`}>
                               {employment.loct || "-"}
@@ -673,11 +675,21 @@ const App = (Newdata) => {
                   data.data.address.map((address, index) => (
                     <div className="mcard" key={index}>
                       <h4 className="AH">{address.type}</h4>
+                      <p
+                        className="isv"
+                        style={{
+                          backgroundColor: address.is_verified
+                            ? "green"
+                            : "darkgray",
+                        }}>
+                        {address.is_verified ? "Verify" : "Not Verify"}
+                      </p>
+
                       <div className="card">
                         <div className="cardinfo">
                           <div className="apddata">
                             <label htmlFor={`Mainaddress-label-${index}`}>
-                              {address.house || "-"} - {address.street || "-"} - {" "}
+                              {address.house || "-"} - {address.street || "-"} -{" "}
                               {address.landmark || "-"}
                             </label>
                             <label htmlFor={`Pincode-label-${index}`}>
