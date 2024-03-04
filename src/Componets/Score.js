@@ -7,7 +7,6 @@ const CircleProgressBar = ({ score, total }) => {
   const normalizedRadius = radius - strokeWidth * 2;
   const circumference = normalizedRadius * 2 * Math.PI;
   const strokeDashoffset = circumference - (percentage / 100) * circumference;
-  {/* <p className="isv" style={{ backgroundColor: ified ? "green" : "darkgray" }}>{ified ? "Verify" : "Not Verify"}</p> */}
 
   return (
     
@@ -21,7 +20,7 @@ const CircleProgressBar = ({ score, total }) => {
         cy={radius}
       />
       <circle
-        stroke={score <= 150 ? 'red' : 'green'}
+        stroke={score <= 350 ? 'red' : 'green'}
         fill="transparent"
         strokeWidth={strokeWidth}
         strokeDasharray={`${circumference} ${circumference}`}

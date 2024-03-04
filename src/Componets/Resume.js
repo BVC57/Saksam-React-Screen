@@ -3,9 +3,8 @@ import html2pdf from "html2pdf.js";
 import "./Main.css";
 import Score from "./Score";
 
-const App = (Newdata) => {
+const App = () => {
   const TotalScore = 1000;
-  const { userId, authToken } = Newdata;
   // console.log('userId for profile', userId);
   // console.log('authToken: profile', authToken);
   // State variables to manage loading, error, and API data
@@ -33,23 +32,61 @@ const App = (Newdata) => {
   const [Acdatetime, setAcdatetime] = useState(""); // state var for save adharuploaded data and time
   const [Pcdatetime, setPcdatetime] = useState(""); // state var for save adharuploaded data and time
   const [Dldatetime, setDldatetime] = useState(""); // state var for save adharuploaded data and time
+  const [Token, setToken] = useState("");
   
 
-  // useEffect to make the API call when the component mounts
+  useEffect(() => {
+    const getUserData = async () => {
+      try {
+        // Get the path name from the URL
+        const pathName = window.location.pathname;
 
+        // Extract the userId from the path
+        const userId = pathName.split('/').pop();
+
+        // Make sure userId is available
+        if (!userId) {
+          throw new Error('User ID not found in URL');
+        }
+
+        // Fetch token using the userId
+        const response = await fetch(`https://bjejzjksx9.execute-api.ap-south-1.amazonaws.com/DEV/get_token?user_id=${userId}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        setToken(data.Token)
+        // console.log("data for resume",data)
+      } catch (error) {
+        console.error('There was a problem fetching the data:', error);
+        setError(error);
+      }
+    };
+
+    getUserData(); // Call getUserData when component mounts
+  }, []); // Empty dependency array to run only once on mount
+
+  // useEffect to make the API call when the component mounts
   useEffect(() => {
     const makeAPICall = async () => {
-      if (authToken === undefined) {
+      if (Token === undefined) {
         setError("Token Not Found");
       } else {
         setLoading(true);
         try {
           const response = await fetch(
-            `https://bjejzjksx9.execute-api.ap-south-1.amazonaws.com/DEV/get_viewer_attribute_list?id=${userId}`,
+            `https://bjejzjksx9.execute-api.ap-south-1.amazonaws.com/DEV/get_resume_detail`,
             {
               method: "GET",
               headers: {
-                Authorization: `Bearer ${authToken}`,
+                Authorization: `Bearer ${Token}`,
                 "Content-Type": "application/json",
               },
             }
@@ -74,7 +111,8 @@ const App = (Newdata) => {
     };
 
     makeAPICall();
-  }, [userId, authToken]);
+  }, [Token]);
+
 
   useEffect(() => {
     if (data) {
@@ -387,28 +425,23 @@ const App = (Newdata) => {
   // Render the component UI
   return (
     <div>
-      {(loading || error) && (
+      {(loading) && (
         <div id="loading-message">
           {loading && <h1>Pls Wait...</h1>}
-          {error && (
-            <div id="error-message">
-              <h1>Error In Page Generating! Please try again later.</h1>
-            </div>
-          )}
         </div>
       )}
       
-      {!loading && !error && data && (
+      {!loading && data && (
         <div
           id="pdf-content"
           className="main"
-          style={{ display: loading || error ? "none" : "block" }}>
+          style={{ display: loading ? "none" : "block" }}>
           <div className="download-pdf-icon" onClick={handleDownloadPDF}>
             <i className="fas fa-download"></i>
           </div>
           {/* Personal information */}
           <div className="personal-info">
-            <h1>Saksham Profile</h1>
+            <h1>Saksham Resume</h1>
             <section>
               <div className="ps">
                 <div className="profileimg">

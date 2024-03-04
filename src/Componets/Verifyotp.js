@@ -23,6 +23,28 @@ const OTPVerification = ({ userId, authToken }) => {
     sendOTP(); // Call sendOTP function when component mounts
   }, [ userId,authToken]);
 
+  useEffect(() => {
+    document.addEventListener('paste', handlePaste);
+
+    return () => {
+      document.removeEventListener('paste', handlePaste);
+    };
+  }, [otpValues]);
+
+  const handlePaste = (event) => {
+    event.preventDefault();
+    const pastedData = event.clipboardData.getData('Text');
+    const pastedValues = pastedData.match(/\d/g); // Extract only digits
+    if (pastedValues && pastedValues.length <= 6) {
+      const updatedValues = [...otpValues];
+      pastedValues.forEach((value, index) => {
+        updatedValues[index] = value;
+      });
+      setOtpValues(updatedValues);
+      updateButtonText(updatedValues);
+    }
+  };
+
   const sendOTP = async () => {
     if (!authToken) {
       setLoading(true);
@@ -31,7 +53,7 @@ const OTPVerification = ({ userId, authToken }) => {
     }
 
     try {
-      const apiUrl = 'https://huf6ubili4.execute-api.ap-south-1.amazonaws.com/DEV/send_viewer_otp';
+      const apiUrl = 'https://bjejzjksx9.execute-api.ap-south-1.amazonaws.com/DEV/send_viewer_otp';
       const headers = {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${authToken}`,
@@ -87,7 +109,7 @@ const OTPVerification = ({ userId, authToken }) => {
       const updatedValues = [...otpValues];
       updatedValues[index] = "";
       if (updatedValues[index] === "" && index > 0) {
-        updatedValues[index - 1] = "";
+        updatedValues[index] = "";
       }
       setOtpValues(updatedValues);
       const prevIndex = index > 0 ? index - 1 : 0;
@@ -111,7 +133,7 @@ const OTPVerification = ({ userId, authToken }) => {
       if (!authToken) {
         throw new Error("Token Not Found");
       }
-      const apiUrl = "https://huf6ubili4.execute-api.ap-south-1.amazonaws.com/DEV/viewer_otp_verification";
+      const apiUrl = "https://bjejzjksx9.execute-api.ap-south-1.amazonaws.com/DEV/viewer_otp_verification";
       const requestOptions = {
         method: "POST",
         headers: {
@@ -147,6 +169,7 @@ const OTPVerification = ({ userId, authToken }) => {
     <>
       {loading1 ? (
         <div className="loader1"></div>
+        
       ) : (
         showBody && (
           <body>

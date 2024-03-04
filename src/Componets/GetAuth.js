@@ -13,7 +13,7 @@ const getUserData = async () => {
     }
 
     // Fetch data using the userId
-    const response = await fetch(`https://huf6ubili4.execute-api.ap-south-1.amazonaws.com/DEV/get_token?id=${userId}`, {
+    const response = await fetch(`https://bjejzjksx9.execute-api.ap-south-1.amazonaws.com/DEV/get_token?id=${userId}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

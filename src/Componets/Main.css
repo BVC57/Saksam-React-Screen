@@ -159,7 +159,6 @@ section label{
 .card {
   padding: 20px;
   margin-bottom: 20px;
-  display: flex;
   flex-wrap: wrap;
   margin-bottom: 20px;
 
@@ -173,7 +172,7 @@ section label{
   color:black;
 }
 .cardinfo label{
-  color:#a0a0a0;
+  color:black;
   font-size: 18px;
 }
 .carddata{
@@ -377,6 +376,7 @@ section label{
   margin: 10px;
   background-color: white;
   margin-top: 40px;
+  border-radius: 5px;
 }
 
 
@@ -425,7 +425,13 @@ i.fas.fa-download {
     font-size: 30px;
     float: right;
     padding: 10px;
-    color: red;
+    color: #dcdcdc;
+    margin-left: -50px;
+    margin-right: -80px;
+    margin-top: -40px;
+}
+i.fas.fa-download:hover{
+  cursor: pointer;
 }
 
 /*   css for hr line in eduction detail    */
@@ -541,6 +547,9 @@ hr{
   .profileimg img{
     border-radius: 100% !important;
   }
+  .creddata{
+    width: 250px !important;
+  }
 }
 
 
@@ -625,7 +634,9 @@ hr{
     font-size: 30px;
     float: right;
     padding: 10px;
-    color: red;
+    color:#0059ff;
+    margin-top: -10px;
+    margin-right: -5px;
 }
 .input-field input{
   width: 45px !important;
@@ -715,7 +726,7 @@ p.at{
 }
 
 .apddata label{
-  font-size: 20px;
+  font-size: 16px;
   line-height: 2;
 }
 
@@ -754,7 +765,7 @@ p.at {
   border-radius:5px;
   padding: 0.35rem 0.75rem;
   margin-top: -20px;
-  margin-left: -0.10px;
+  margin-left: 0;
 }
 
 .score{
