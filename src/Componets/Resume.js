@@ -63,10 +63,10 @@ const App = () => {
 
         const data = await response.json();
         setToken(data.Token)
-        // console.log("data for resume",data)
+        console.log("data for resume",data)
       } catch (error) {
         console.error('There was a problem fetching the data:', error);
-        setError(error);
+        setError(true);
       }
     };
 
@@ -99,8 +99,8 @@ const App = () => {
             setLoading(false);
           } else {
             console.error("API call failed with status:", result.message);
-            setLoading(false);
-            setError(true);
+            setLoading(true);
+            // setError(result.message);
           }
         } catch (error) {
           console.error("Error fetching data from API:", error);
@@ -399,9 +399,9 @@ const App = () => {
   const handleDownloadPDF = () => {
     // Function to handle PDF download
     console.log("Username",Username)
-    const filename = `${Username}_Saksham_Profile.pdf`; // Filename with username
+    // const filename = `${Username}_Saksham_Profile.pdf`; // Filename with username
     const options = {
-      filename: `${Username}_Saksham_Profile.pdf`,
+      filename: `${Username}_Saksham_Resume.pdf`,
       html2canvas: { scale: 2 },
       jsPDF: { format: 'a4', orientation: 'landscape' }
     };
@@ -427,7 +427,8 @@ const App = () => {
     <div>
       {(loading) && (
         <div id="loading-message">
-          {loading && <h1>Pls Wait...</h1>}
+          <div className="loader1" style={{marginLeft:"180px", marginBottom:"50px"}}></div><br/>
+          {loading && <h1 style={{display:"flex",fontSize:"18px"}}>Please wait, while we generate your resume...</h1>}
         </div>
       )}
       
@@ -452,7 +453,7 @@ const App = () => {
                   />
                 </div>
                 <div className="score">
-                  <Score score={300} total={TotalScore} />
+                  <Score score={888} total={TotalScore} />
                   <p>Trust Score</p>
                 </div>
               </div>
