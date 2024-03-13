@@ -14,7 +14,7 @@ body {
   align-items: center;
   justify-content: center;
   caret-color: transparent;
-  background-color: #003cff;
+  background-color: lightgray;
 }
 
 :where(.container, form, .input-field, header) {
