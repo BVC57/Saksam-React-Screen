@@ -762,7 +762,7 @@ const App = () => {
                   data.data.address.map((address, index) => (
                     <div className="mcard" key={index}>
                       <p className="at">
-                      {address.type === "1" ? "As Per AdharCard" :"null" && address.type === "5" ? "Present" :"null" && address.type === "6" ? "Permanent" :"null" && address.type === "7" ? "Past" : "Null"}
+                      {address.type === "1" ? "As Per AdharCard" :"null" && address.type === "2" ? "Pan-Permanent" :"null" && address.type === "5" ? "Present" :"null" && address.type === "6" ? "Permanent" :"null" && address.type === "7" ? "Past" : "Null"}
                       </p>
 
                       <p

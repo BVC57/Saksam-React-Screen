@@ -1,6 +1,4 @@
 
-/* code for new design css here */
-
 /* Import Google font - Poppins */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
 
@@ -172,7 +170,7 @@ section label{
   color:black;
 }
 .cardinfo label{
-  color:black;
+  color:#99a2b4;
   font-size: 18px;
 }
 .carddata{
@@ -265,6 +263,7 @@ section label{
 .ab{
   background-color: white;
   border-radius: 10px;
+  padding: 1px;
 }
 
 
@@ -346,24 +345,24 @@ section label{
 
 .upbyadhar {
   display: flex;
-  flex-direction: column; /* Added to display <p> elements in a column */
-  height: auto; /* Adjusted to accommodate content */
-  font-size: 10px;
-  padding: 20px;
-  margin-top: -60px;
-  text-align: center;
+    flex-direction: column;
+    height: auto;
+    padding: 5px;
+    margin-top: -45px;
+    float: right;
 }
 
 .upbyadhar p {
   color: #667085;
   display: block;
-  font-size: 15px;
+  font-size: 10px;
+  text-align: end;
 }
 
 /* new css add here */
 
 .MainCard{
-  border: 1px solid black;
+  /* border: 1px solid black; */
   display: block;
   border-radius: 10px;
   margin-top: 20px;
@@ -372,16 +371,17 @@ section label{
 }
 .mcard{
   display: block;
-  border: 1px solid black;
-  margin: 10px;
+  /* border: 1px solid black; */
+  margin: -2px;
   background-color: white;
   margin-top: 40px;
   border-radius: 5px;
+  padding: 1px;
 }
 
 
 h2.eq{
-  margin-left: 15px;
+  margin-left: 0;
 }
 
 .apd{
@@ -396,11 +396,11 @@ h2.eq{
 }
 .od h2{
   color: white;
-  margin-left: 22px;
 }
 .creddata {
   background-color: #0059ff;
   border-radius: 10px;
+  padding: 5px;
 }
 
 
@@ -600,7 +600,7 @@ hr{
   
   .upbyadhar p {
     display: block;
-    font-size: 10px;
+    font-size: 7px;
     padding-bottom: 5px;
   }
   .container {
@@ -675,6 +675,15 @@ p.at{
 .personal-info h1{
   font-size: 25px;
 }
+.aadhar-dob{
+  display: block !important;
+}
+.aadhar-gender{
+  display: block !important;
+}
+.upbyadhar{
+  margin-top: -52px;
+}
 }
 
 
@@ -730,6 +739,7 @@ p.at{
   line-height: 2;
 }
 
+
 h4.AH{
     margin: 10px;
 }
@@ -743,7 +753,6 @@ p.isv {
     font-weight: 700;
     letter-spacing: 0.025rem;
     font-style: normal;
-    text-transform: uppercase;
     color: white;
     background-color: #FFFFFF;
     border-radius: 1.25rem;
@@ -762,10 +771,10 @@ p.at {
   text-transform: uppercase;
   color:#0059ff;
   background-color: #FFFFFF;
-  border-radius:5px;
+  border-radius: 2px;
   padding: 0.35rem 0.75rem;
   margin-top: -20px;
-  margin-left: 0;
+  margin-left: -1px;
 }
 
 .score{
@@ -776,6 +785,18 @@ p.at {
   margin-top: -10px;
   margin-left: 10px;
   font-weight: 500;
+}
+.aadhar-dob{
+  display: flex;
+}
+.aadhar-dob label{
+  margin-left: 10px;
+}
+.aadhar-gender{
+  display: flex;
+}
+.aadhar-gender label{
+  margin-left: 10px;
 }
 
 

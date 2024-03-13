@@ -4,6 +4,7 @@ import Verifyotp from './Componets/Verifyotp';
 import Profilepage from "./Componets/Profile";
 import getUserData from './Componets/GetAuth';
 import Resume from './Componets/Resume';
+import Figma from './Componets/Figma';
 
 const App = () => {
   const [userId, setUserId] = useState(null);

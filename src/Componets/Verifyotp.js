@@ -6,8 +6,8 @@ import Rimg from '../Images/Group 427318468.png';
 import "./Main.css";
 
 const OTPVerification = ({ userId, authToken }) => {
-  console.log("from votp", userId);
-  console.log("from votp", authToken);
+  // console.log("from votp", userId);
+  // console.log("from votp", authToken);
   const navigate = useNavigate();
   const [otpValues, setOtpValues] = useState(Array(6).fill(""));
   const [buttonText, setButtonText] = useState("Submit");

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import html2pdf from "html2pdf.js";
+// import html2pdf from "html2pdf.js";
 import "./Main.css";
 import Score from "./Score";
 
@@ -94,8 +94,8 @@ const App = (Newdata) => {
       setUsername(data.data.p_info.fullname);
       setLabelData("full-name-label", data.data.p_info.fullname || "-");
       setLabelData("date-of-birth-label", data.data.p_info.dob || "-");
-      setLabelData("gender-label", data.data.p_info.gender || "-");
-      setLabelData("fname-label", data.data.p_info.fathername || "-");
+      setLabelData("gender-label", data.data.p_info.gender === "1" ? "Male" :"-" && data.data.p_info.gender === "2" ? "Female" :"-" );
+      setLabelData("fname-label", data.data.p_info.father_name || "-");
       setLabelData("contact-Phone-label", data.data.p_info.phonenumber || "-");
       setLabelData("contact-Email-label", data.data.p_info.mail || "-");
       // Set Profile Image image
@@ -126,7 +126,7 @@ const App = (Newdata) => {
         setLabelData("aadhar-dob-label", data.data.aadhaar[0].dob || "-");
         setLabelData(
           "aadhar-gender-label",
-          data.data.aadhaar[0].gender || "-"
+          data.data.aadhaar[0].gender === "1" ? "Male" :"-" && data.data.aadhaar[0].gender === "2" ? "Female" :"-" 
         );
 
         setAcdatetime(data.data.aadhaar[0].identity_verification_date)
@@ -155,9 +155,9 @@ const App = (Newdata) => {
       ) {
         setpanDataPresent(true);
         setLabelData("pan-id-number-label", data.data.pan[0].pan_number || "-");
-        setLabelData("pan-address-label", data.data.pan[0].issueDate || "-");
-        setLabelData("pan-dob-label", data.data.pan[0].issueDate || "-");
-        setLabelData("pan-gender-label", data.data.pan[0].issueDate || "-");
+        setLabelData("pan-address-label", data.data.pan[0].address || "-");
+        setLabelData("pan-dob-label", data.data.pan[0].dob || "-");
+        setLabelData("pan-gender-label", data.data.pan[0].gender === "1" ? "Male" :"-" && data.data.pan[0].gender === "2" ? "Female" :"-" );
         setPcdatetime(data.data.pan[0].identity_verification_date)
 
         // Set Pan Card image
@@ -358,30 +358,49 @@ const App = (Newdata) => {
     }
   };
 
-  const handleDownloadPDF = () => {
-    // Function to handle PDF download
-    console.log("Username",Username)
-    const filename = `${Username}_Saksham_Profile.pdf`; // Filename with username
-    const options = {
-      filename: `${Username}_Saksham_Profile.pdf`,
-      html2canvas: { scale: 2 },
-      jsPDF: { format: 'a4', orientation: 'landscape' }
-    };
-    const element = document.getElementById("pdf-content"); // Get the element to convert to PDF
-    html2pdf()
-    .from(element)
-    .set(options)
-    .save();
-  };
+  // const handleDownloadPDF = () => {
+  //   // Function to handle PDF download
+  //   console.log("Username",Username)
+  //   const filename = `${Username}_Saksham_Profile.pdf`; // Filename with username
+  //   const options = {
+  //     filename: `${Username}_Saksham_Profile.pdf`,
+  //     html2canvas: { scale: 2 },
+  //     jsPDF: { format: 'a4', orientation: 'landscape' }
+  //   };
+  //   const element = document.getElementById("pdf-content"); // Get the element to convert to PDF
+  //   html2pdf()
+  //   .from(element)
+  //   .set(options)
+  //   .save();
+  // };
 
   // Function to format date string to "DD MMM YYYY" format
   const formatDate = (dateString) => {
     const options = { month: 'short', year: 'numeric' };
     return new Date(dateString).toLocaleDateString('en-US', options);
   };
-  const formatDate1 = (dateString) => {
-    const options = { year: 'numeric' };
-    return new Date(dateString).toLocaleDateString('en-US', options);
+  // const handleDownloadPDF = () => {
+  //   // Function to handle PDF download
+  //   const filename = `${Username}_Saksham_Profile.pdf`; // Filename with username
+  //   const element = document.getElementById("pdf-content"); // Get the element to convert to PDF
+  //   html2pdf().from(element).save(filename);
+  // };
+
+  const getAddressName = (type) => {
+    switch (type) {
+      case "1":
+        return "Aadhaar";
+      case "2":
+        return "PAN";
+      case "5":
+        return "Present";
+      case "6":
+        return "Permanent";
+      case "7":
+        return "Past";
+      default:
+        return "Null";
+    }
   };
 
   // Render the component UI
@@ -403,9 +422,9 @@ const App = (Newdata) => {
           id="pdf-content"
           className="main"
           style={{ display: loading || error ? "none" : "block" }}>
-          <div className="download-pdf-icon" onClick={handleDownloadPDF}>
+          {/* <div className="download-pdf-icon" onClick={handleDownloadPDF}>
             <i className="fas fa-download"></i>
-          </div>
+          </div> */}
           {/* Personal information */}
           <div className="personal-info">
             <h1>Saksham Profile</h1>
@@ -419,7 +438,7 @@ const App = (Newdata) => {
                   />
                 </div>
                 <div className="score">
-                  <Score score={300} total={TotalScore} />
+                  <Score score={777} total={TotalScore} />
                   <p>Trust Score</p>
                 </div>
               </div>
@@ -466,16 +485,16 @@ const App = (Newdata) => {
                           id="aadhar-address-label">
                           -
                         </label>
-                        <p>Date Of Birth:</p>
                         <div className="aadhar-dob">
+                        <p>Date Of Birth:</p>
                           <label
                             htmlFor="aadhar-dob-label"
                             id="aadhar-dob-label">
                             -
                           </label>
                         </div>
-                        <p>Gender:</p>
                         <div className="aadhar-gender">
+                        <p>Gender:</p>
                           <label
                             htmlFor="aadhar-gender-label"
                             id="aadhar-gender-label">
@@ -493,9 +512,9 @@ const App = (Newdata) => {
                     </div>
                   </div>
                   <div className="upbyadhar">
-                    <p id="upbyadhar">Added On {Acdatetime}/ By Aadhar API</p>
+                    <p id="upbyadhar">Added On {Acdatetime}</p>
 
-                    <p id="upbyzoop">Latest verification Date {Acdatetime} / By Zoop API</p>
+                    <p id="upbyzoop">Latest verification Date {Acdatetime}</p>
                   </div>
                 </div>
               </div>
@@ -509,7 +528,7 @@ const App = (Newdata) => {
                     <div className="carddata">
                       <div className="cardinfo">
                         <h1>PAN Card</h1>
-                        <p>PanCard Number:</p>
+                        <p>Pan</p>
                         <label
                           htmlFor="pan-id-number-label"
                           id="pan-id-number-label">
@@ -521,14 +540,14 @@ const App = (Newdata) => {
                           id="pan-address-label">
                           -
                         </label>
+                        <div className="aadhar-dob">
                         <p>Date Of Birth:</p>
-                        <div className="pan-dob">
                           <label htmlFor="pan-dob-label" id="pan-dob-label">
                             -
                           </label>
                         </div>
+                        <div className="aadhar-gender">
                         <p>Gender:</p>
-                        <div className="pan-gender">
                           <label
                             htmlFor="pan-gender-label"
                             id="pan-gender-label">
@@ -546,9 +565,9 @@ const App = (Newdata) => {
                     </div>
                   </div>
                   <div className="upbyadhar">
-                    <p id="upbyadhar">Added On  {Pcdatetime}/ By Aadhar API</p>
+                    <p id="upbyadhar">Added On  {Pcdatetime}</p>
 
-                    <p id="upbyzoop">Latest verification Date  {Pcdatetime}/ By Zoop API</p>
+                    <p id="upbyzoop">Latest verification Date  {Pcdatetime}</p>
                   </div>
                 </div>
               </div>
@@ -568,22 +587,22 @@ const App = (Newdata) => {
                           id="license-number-label">
                           -
                         </label>
-                        <p>Valid From/To: [Validity Dates]</p>
+                        <p>Valid From/To:</p>
                         <label
                           htmlFor="license-validity-label"
                           id="license-validity-label">
                           -
                         </label>
+                        <div className="aadhar-dob">
                         <p>Date Of Birth</p>
-                        <div className="license-dob">
                           <label
                             htmlFor="license-dob-label"
                             id="license-dob-label">
                             -
                           </label>
                         </div>
+                        <div className="aadhar-gender">
                         <p>Gender</p>
-                        <div className="license-gender">
                           <label
                             htmlFor="license-gender-label"
                             id="license-gender-label">
@@ -601,9 +620,9 @@ const App = (Newdata) => {
                     </div>
                   </div>
                   <div className="upbyadhar">
-                    <p id="upbyadhar">Added On {Dldatetime}/ By Aadhar API</p>
+                    <p id="upbyadhar">Added On {Dldatetime}</p>
 
-                    <p id="upbyzoop">Latest verification Date {Dldatetime}/ By Zoop API</p>
+                    <p id="upbyzoop">Latest verification Date {Dldatetime}</p>
                   </div>
                 </div>
               </div>
@@ -619,24 +638,26 @@ const App = (Newdata) => {
                   data.data.employment &&
                   data.data.education.map((education, index) => (
                     <div className="mcard" key={index}>
+                      <p
+                        className="isv"
+                        style={{
+                          backgroundColor: education.is_verified
+                            ? "green"
+                            : "darkgray",
+                        }}>
+                        {education.is_verified ? "Verified" : "Not Verified"}
+                      </p>
                       <div className="card">
                         <div className="cardinfo">
-                          {/* <div className="apdlable">
-                            <p>Institution Name:</p>
-                            <p>Degree Name:</p>
-                            <p>Year Of Passing:</p>
-                            <p>Honors:</p>
-                            <p>Distinctions:</p>
-                          </div> */}
                           <div className="apddata">
                             <h1 htmlFor={`Degree-Name-label-${index}`}>
-                              {education.degree_name || "-"}
+                            {education.degree_name === "1" ? "10th" :"null" && education.degree_name === "2" ? "12th" :"null" && education.degree_name === "3" ? "Diploma" :"null" && education.degree_name === "4" ? "Graduate" :"null" && education.degree_name === "5" ? "Post Graduate" : "Null" && education.degree_name === "6" ? "Doctorate" : "Null"}
                             </h1>
                             <h3 htmlFor={`Institution-Name-label-${index}`}>
-                              {education.institute_name || "-"}
+                              {education.institute_name || ""}
                             </h3>
                             <h5 htmlFor={`Year-Of-Passing-label-${index}`}>
-                            [{education.course_start_year || "-"}] TO [{education.course_end_year || "-"}]
+                            [{education.course_start_year || ""}] TO [{education.course_end_year || ""}]
                             </h5>
                             {/* <label htmlFor={`Honors-label-${index}`}>
                             {education.board || "-"}
@@ -649,11 +670,10 @@ const App = (Newdata) => {
                       </div>
                       <div className="upbyadhar">
                         <p id="upbyadhar">
-                          Added On {education.updated_date} / By Aadhar API
+                          Added On {education.updated_date}
                         </p>
                         <p id="upbyzoop">
-                          Latest verifation date {education.updated_date} / By
-                          Zoop API
+                          Latest verifation date {education.updated_date}
                         </p>
                       </div>
                       {/* <hr /> */}
@@ -664,11 +684,22 @@ const App = (Newdata) => {
               {/* EMPLOYMENT HISTORY */}
               <div className="MainCard" style={{ display: empDataPresent ? "block" : "none", border:"none" }}>
                 <h2 className="eq">EMPLOYMENT HISTORY</h2>
-                {eqDataPresent &&
+                {empDataPresent &&
                   data.data.employment &&
                   data.data.employment.map((employment, index) => (
                     <div className="mcard" key={index}>
-                      {/* <p className="at">{employment.employment_type}</p> */}
+                      <p className="at">
+                      {employment.curr_past_organization === "Current" ? "Current" :"-" && employment.curr_past_organization === "Past" ? "Past" :"-" && employment.is_verified === true ? "As Per EPFO" :"-"}
+                      </p>
+                      <p
+                        className="isv"
+                        style={{
+                          backgroundColor: employment.is_verified
+                            ? "green"
+                            : "darkgray",
+                        }}>
+                        {employment.is_verified ? "Verified" : "Not Verified"}
+                      </p>
                       <div className="card">
                         <div className="cardinfo">
                           {/* <div className="apdlable">
@@ -679,7 +710,7 @@ const App = (Newdata) => {
                           </div> */}
                           <div className="apddata">
                             <h1 htmlFor={`Job-Name-label-${index}`}>
-                              {employment.designation || "-"}
+                              {employment.designation || ""}
                             </h1>
                             <h3 htmlFor={`Company-Name-label-${index}`}>
                             {employment.organization_name}:{employment.employment_type === "1" ? "Full Time" :"null" && employment.employment_type === "2" ? "Internship" :"null" && employment.employment_type === "3" ? "Contract" :"null" && employment.employment_type === "4" ? "Part Time" : "Null" && employment.employment_type === "5" ? "Freelance" : "Null"}
@@ -690,10 +721,10 @@ const App = (Newdata) => {
                               {employment.tt_exp_mnth || "-"} Mon ) */}
                             </h5>
                             <h4 htmlFor={`Address-label-${index}`}>
-                              {employment.organization_location || "-"}
+                              {employment.organization_location || ""}
                             </h4>
                             <h5 htmlFor={`Email-label-${index}`}>
-                              {employment.email_id || "-"}
+                              {employment.email_id || ""}
                             </h5>
                           </div>
                         </div>
@@ -707,11 +738,10 @@ const App = (Newdata) => {
                       </div>
                       <div className="upbyadhar">
                         <p id="upbyadhar">
-                          Added On {employment.updated_date} / By Aadhar API
+                          Added On {employment.updated_date}
                         </p>
                         <p id="upbyzoop">
-                          Latest verifation date {employment.updated_date} / By
-                          Zoop API
+                          Latest verifation date {employment.updated_date} 
                         </p>
                       </div>
                       {/* <hr /> */}
@@ -727,9 +757,10 @@ const App = (Newdata) => {
                   data.data.address &&
                   data.data.address.map((address, index) => (
                     <div className="mcard" key={index}>
-                      <p className="at">
-                      {address.type === "1" ? "As Per AdharCard" :"null" && address.type === "5" ? "Present" :"null" && address.type === "6" ? "Permanent" :"null" && address.type === "7" ? "Past" : "Null"}
-                      </p>
+                      {/* <p className="at">
+                      {address.type === "1" ? "As Per AdharCard" :"null" && address.type === "2" ? "Pan-Permanent" :"null" && address.type === "5" ? "Present" :"null" && address.type === "6" ? "Permanent" :"null" && address.type === "7" ? "Past" : "Null"}
+                      </p> */}
+                      <p className="at">{getAddressName(address.type)}</p>
 
                       <p
                         className="isv"
@@ -738,38 +769,37 @@ const App = (Newdata) => {
                             ? "green"
                             : "darkgray",
                         }}>
-                        {address.is_verified ? "Verify" : "Not Verify"}
+                        {address.is_verified ? "Verified" : "Not Verified"}
                       </p>
 
                       <div className="card">
                         <div className="cardinfo">
                           <div className="apddata">
-                            <label htmlFor={`Mainaddress-label-${index}`}>
+                            <h5 htmlFor={`Mainaddress-label-${index}`}>
                               {address.house || "-"} - {address.street || "-"} -{" "}
                               {address.landmark || "-"}
-                            </label>
-                            <label htmlFor={`Pincode-label-${index}`}>
+                            </h5>
+                            <h5 htmlFor={`Pincode-label-${index}`}>
                               {address.zip || "-"}
-                            </label>
-                            <label htmlFor={`District-label-${index}`}>
+                            </h5>
+                            <h5 htmlFor={`District-label-${index}`}>
                               {address.dist || "-"}
-                            </label>
-                            <label htmlFor={`State-label-${index}`}>
+                            </h5>
+                            <h5 htmlFor={`State-label-${index}`}>
                               {address.state || "-"}
-                            </label>
-                            <label htmlFor={`State-label-${index}`}>
+                            </h5>
+                            {/* <label htmlFor={`State-label-${index}`}>
                               {formatDate1(address.start_date)} TO {formatDate1(address.end_date)}
-                            </label>
+                            </label> */}
                           </div>
                         </div>
                       </div>
                       <div className="upbyadhar">
                         <p id="upbyadhar">
-                          Added On {address.updated_date} / By Aadhar API
+                          Added On {address.updated_date}
                         </p>
                         <p id="upbyzoop">
-                          Latest verifation date {address.updated_date} / By
-                          Zoop API
+                          Latest verifation date {address.updated_date}
                         </p>
                       </div>
                       {/* <hr /> */}
