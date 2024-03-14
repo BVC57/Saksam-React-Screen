@@ -29,11 +29,10 @@ const App = (Newdata) => {
   const [eqDataPresent, seteqDataPresent] = useState(false); // set for eduction qulification visibility
   const [addDataPresent, setaddDataPresent] = useState(false); // set for eduction qulification visibility
   const [empDataPresent, setempDataPresent] = useState(false); // set for eduction qulification visibility
-  const [Username, setUsername] = useState(""); // State variable to store username
+  // const [Username, setUsername] = useState(""); // State variable to store username
   const [Acdatetime, setAcdatetime] = useState(""); // state var for save adharuploaded data and time
   const [Pcdatetime, setPcdatetime] = useState(""); // state var for save adharuploaded data and time
   const [Dldatetime, setDldatetime] = useState(""); // state var for save adharuploaded data and time
-  
 
   // useEffect to make the API call when the component mounts
 
@@ -91,10 +90,17 @@ const App = (Newdata) => {
       data.data !== undefined
     ) {
       // Set personal information //
-      setUsername(data.data.p_info.fullname);
+      // setUsername(data.data.p_info.fullname);
       setLabelData("full-name-label", data.data.p_info.fullname || "-");
       setLabelData("date-of-birth-label", data.data.p_info.dob || "-");
-      setLabelData("gender-label", data.data.p_info.gender === "1" ? "Male" :"-" && data.data.p_info.gender === "2" ? "Female" :"-" );
+      setLabelData(
+        "gender-label",
+        data.data.p_info.gender === "1"
+          ? "Male"
+          : "-" && data.data.p_info.gender === "2"
+          ? "Female"
+          : "-"
+      );
       setLabelData("fname-label", data.data.p_info.father_name || "-");
       setLabelData("contact-Phone-label", data.data.p_info.phonenumber || "-");
       setLabelData("contact-Email-label", data.data.p_info.mail || "-");
@@ -126,11 +132,14 @@ const App = (Newdata) => {
         setLabelData("aadhar-dob-label", data.data.aadhaar[0].dob || "-");
         setLabelData(
           "aadhar-gender-label",
-          data.data.aadhaar[0].gender === "1" ? "Male" :"-" && data.data.aadhaar[0].gender === "2" ? "Female" :"-" 
+          data.data.aadhaar[0].gender === "1"
+            ? "Male"
+            : "-" && data.data.aadhaar[0].gender === "2"
+            ? "Female"
+            : "-"
         );
 
-        setAcdatetime(data.data.aadhaar[0].identity_verification_date)
-
+        setAcdatetime(data.data.aadhaar[0].identity_verification_date);
 
         // Set Aadhar Card image
         if (
@@ -157,8 +166,15 @@ const App = (Newdata) => {
         setLabelData("pan-id-number-label", data.data.pan[0].pan_number || "-");
         setLabelData("pan-address-label", data.data.pan[0].address || "-");
         setLabelData("pan-dob-label", data.data.pan[0].dob || "-");
-        setLabelData("pan-gender-label", data.data.pan[0].gender === "1" ? "Male" :"-" && data.data.pan[0].gender === "2" ? "Female" :"-" );
-        setPcdatetime(data.data.pan[0].identity_verification_date)
+        setLabelData(
+          "pan-gender-label",
+          data.data.pan[0].gender === "1"
+            ? "Male"
+            : "-" && data.data.pan[0].gender === "2"
+            ? "Female"
+            : "-"
+        );
+        setPcdatetime(data.data.pan[0].identity_verification_date);
 
         // Set Pan Card image
         if (
@@ -198,7 +214,7 @@ const App = (Newdata) => {
           "license-gender-label",
           data.data.drivinglicense[0].issueDate || "-"
         );
-        setDldatetime(data.data.drivinglicense[0].identity_verification_date)
+        setDldatetime(data.data.drivinglicense[0].identity_verification_date);
         // Set drivinglicence image
         if (
           data.data.aadhaarcard &&
@@ -252,46 +268,6 @@ const App = (Newdata) => {
       }
 
       // Check EDUCATIONAL CERTIFICATE//
-
-      // if (
-      //   data.data &&
-      //   data.data.education &&
-      //   Array.isArray(data.data.education) &&
-      //   data.data.education.length > 0
-      // ) {
-      //   setecDataPresent(true);
-      //   setLabelData(
-      //     "Institution-Name-label",
-      //     data.data.education[0].dl_number || "-"
-      //   );
-      //   setLabelData(
-      //     "Degree-Name-label",
-      //     data.data.education[0].issueDate || "-"
-      //   );
-      //   setLabelData(
-      //     "Year-Of-Passing-label",
-      //     data.data.education[0].verificationLink || "-"
-      //   );
-      //   setLabelData(
-      //     "Honors-label",
-      //     data.data.education[0].verificationLink || "-"
-      //   );
-      //   setLabelData(
-      //     "Distinctions-label",
-      //     data.data.education[0].verificationLink || "-"
-      //   );
-      //   // Set education images image
-      //   if (
-      //     data.data.aadhaarcard &&
-      //     data.data.aadhaarcard.length > 0 &&
-      //     data.data.aadhaarcard[0].aadhaar_image
-      //   ) {
-      //     const imageSrc = `data:image/jpeg;base64, ${data.data.aadhaarcard[0].aadhaar_image} `;
-      //     setECImagesrc(imageSrc);
-      //   } else {
-      //     console.error("Aadhar Card image not found in the API response.");
-      //   }
-      // }
 
       // Check EMPLOYMENT HISTORY //
 
@@ -358,26 +334,10 @@ const App = (Newdata) => {
     }
   };
 
-  // const handleDownloadPDF = () => {
-  //   // Function to handle PDF download
-  //   console.log("Username",Username)
-  //   const filename = `${Username}_Saksham_Profile.pdf`; // Filename with username
-  //   const options = {
-  //     filename: `${Username}_Saksham_Profile.pdf`,
-  //     html2canvas: { scale: 2 },
-  //     jsPDF: { format: 'a4', orientation: 'landscape' }
-  //   };
-  //   const element = document.getElementById("pdf-content"); // Get the element to convert to PDF
-  //   html2pdf()
-  //   .from(element)
-  //   .set(options)
-  //   .save();
-  // };
-
   // Function to format date string to "DD MMM YYYY" format
   const formatDate = (dateString) => {
-    const options = { month: 'short', year: 'numeric' };
-    return new Date(dateString).toLocaleDateString('en-US', options);
+    const options = { month: "short", year: "numeric" };
+    return new Date(dateString).toLocaleDateString("en-US", options);
   };
   // const handleDownloadPDF = () => {
   //   // Function to handle PDF download
@@ -389,9 +349,9 @@ const App = (Newdata) => {
   const getAddressName = (type) => {
     switch (type) {
       case "1":
-        return "Aadhaar";
+        return "As per Aadhaar";
       case "2":
-        return "PAN";
+        return "As per PAN";
       case "5":
         return "Present";
       case "6":
@@ -416,7 +376,7 @@ const App = (Newdata) => {
           )}
         </div>
       )}
-      
+
       {!loading && !error && data && (
         <div
           id="pdf-content"
@@ -472,8 +432,7 @@ const App = (Newdata) => {
                   <div className="card">
                     <div className="carddata">
                       <div className="cardinfo">
-                        <h1>Aadhar Card</h1>
-                        <p>Aadhar Number:</p>
+                        <p>Aadhaar Number:</p>
                         <label
                           htmlFor="aadhar-id-number-label"
                           id="aadhar-id-number-label">
@@ -486,7 +445,7 @@ const App = (Newdata) => {
                           -
                         </label>
                         <div className="aadhar-dob">
-                        <p>Date Of Birth:</p>
+                          <p>Date Of Birth:</p>
                           <label
                             htmlFor="aadhar-dob-label"
                             id="aadhar-dob-label">
@@ -494,7 +453,7 @@ const App = (Newdata) => {
                           </label>
                         </div>
                         <div className="aadhar-gender">
-                        <p>Gender:</p>
+                          <p>Gender:</p>
                           <label
                             htmlFor="aadhar-gender-label"
                             id="aadhar-gender-label">
@@ -503,6 +462,7 @@ const App = (Newdata) => {
                         </div>
                       </div>
                       <div className="image-container">
+                        <h1>Aadhaar Card</h1>
                         <img
                           src={aadharImageSrc}
                           alt="Not Uploded"
@@ -527,8 +487,7 @@ const App = (Newdata) => {
                   <div className="card">
                     <div className="carddata">
                       <div className="cardinfo">
-                        <h1>PAN Card</h1>
-                        <p>Pan</p>
+                        <p>PAN</p>
                         <label
                           htmlFor="pan-id-number-label"
                           id="pan-id-number-label">
@@ -541,13 +500,13 @@ const App = (Newdata) => {
                           -
                         </label>
                         <div className="aadhar-dob">
-                        <p>Date Of Birth:</p>
+                          <p>Date Of Birth:</p>
                           <label htmlFor="pan-dob-label" id="pan-dob-label">
                             -
                           </label>
                         </div>
                         <div className="aadhar-gender">
-                        <p>Gender:</p>
+                          <p>Gender:</p>
                           <label
                             htmlFor="pan-gender-label"
                             id="pan-gender-label">
@@ -556,6 +515,7 @@ const App = (Newdata) => {
                         </div>
                       </div>
                       <div className="image-container">
+                        <h1>PAN Card</h1>
                         <img
                           src={panImageSrc}
                           alt="Not Uploded"
@@ -565,9 +525,9 @@ const App = (Newdata) => {
                     </div>
                   </div>
                   <div className="upbyadhar">
-                    <p id="upbyadhar">Added On  {Pcdatetime}</p>
+                    <p id="upbyadhar">Added On {Pcdatetime}</p>
 
-                    <p id="upbyzoop">Latest verification Date  {Pcdatetime}</p>
+                    <p id="upbyzoop">Latest verification Date {Pcdatetime}</p>
                   </div>
                 </div>
               </div>
@@ -580,7 +540,6 @@ const App = (Newdata) => {
                   <div className="ab">
                     <div className="carddata">
                       <div className="cardinfo">
-                        <h1>Driving License</h1>
                         <p>License Number:</p>
                         <label
                           htmlFor="license-number-label"
@@ -594,7 +553,7 @@ const App = (Newdata) => {
                           -
                         </label>
                         <div className="aadhar-dob">
-                        <p>Date Of Birth</p>
+                          <p>Date Of Birth</p>
                           <label
                             htmlFor="license-dob-label"
                             id="license-dob-label">
@@ -602,7 +561,7 @@ const App = (Newdata) => {
                           </label>
                         </div>
                         <div className="aadhar-gender">
-                        <p>Gender</p>
+                          <p>Gender</p>
                           <label
                             htmlFor="license-gender-label"
                             id="license-gender-label">
@@ -611,6 +570,7 @@ const App = (Newdata) => {
                         </div>
                       </div>
                       <div className="image-container">
+                        <h1>Driving License</h1>
                         <img
                           src={DLImagesrc}
                           alt="Not Uploded"
@@ -632,10 +592,15 @@ const App = (Newdata) => {
               {/* <h2>Identity</h2> */}
 
               {/* EDUCATIONAL QUALIFICATIONS */}
-              <div className="MainCard" style={{ display: eqDataPresent ? "block" : "none", border:"none"}}>
-                <h2 className="eq">EDUCATIONAL DETAILS</h2>
+              <div
+                className="MainCard"
+                style={{
+                  display: eqDataPresent ? "block" : "none",
+                  border: "none",
+                }}>
+                <h2 className="eq">Educational Details</h2>
                 {eqDataPresent &&
-                  data.data.employment &&
+                  data.data.education &&
                   data.data.education.map((education, index) => (
                     <div className="mcard" key={index}>
                       <p
@@ -651,13 +616,26 @@ const App = (Newdata) => {
                         <div className="cardinfo">
                           <div className="apddata">
                             <h1 htmlFor={`Degree-Name-label-${index}`}>
-                            {education.degree_name === "1" ? "10th" :"null" && education.degree_name === "2" ? "12th" :"null" && education.degree_name === "3" ? "Diploma" :"null" && education.degree_name === "4" ? "Graduate" :"null" && education.degree_name === "5" ? "Post Graduate" : "Null" && education.degree_name === "6" ? "Doctorate" : "Null"}
+                              {education.degree_name === "1"
+                                ? "10th"
+                                : " " && education.degree_name === "2"
+                                ? "12th"
+                                : " " && education.degree_name === "3"
+                                ? "Diploma"
+                                : " " && education.degree_name === "4"
+                                ? "Graduate"
+                                : " " && education.degree_name === "5"
+                                ? "Post Graduate"
+                                : " " && education.degree_name === "6"
+                                ? "Doctorate"
+                                : " "}
                             </h1>
                             <h3 htmlFor={`Institution-Name-label-${index}`}>
                               {education.institute_name || ""}
                             </h3>
                             <h5 htmlFor={`Year-Of-Passing-label-${index}`}>
-                            [{education.course_start_year || ""}] TO [{education.course_end_year || ""}]
+                              [{education.course_start_year || ""}] TO [
+                              {education.course_end_year || ""}]
                             </h5>
                             {/* <label htmlFor={`Honors-label-${index}`}>
                             {education.board || "-"}
@@ -668,28 +646,45 @@ const App = (Newdata) => {
                           </div>
                         </div>
                       </div>
-                      <div className="upbyadhar">
-                        <p id="upbyadhar">
-                          Added On {education.updated_date}
-                        </p>
-                        <p id="upbyzoop">
-                          Latest verifation date {education.updated_date}
-                        </p>
-                      </div>
+                      {education.is_verified ? (
+                        <div className="upbyadhar">
+                          <p id="upbyadhar">
+                            Added On {education.updated_date}
+                          </p>
+                          <p id="upbyzoop">
+                            Latest Verification Date {education.updated_date}
+                          </p>
+                        </div>
+                      ) : (
+                        <div className="update">
+                          <p id="upbyadhar"> Updated Date {education.updated_date} </p>
+                        </div>
+                      )}
                       {/* <hr /> */}
                     </div>
                   ))}
               </div>
 
               {/* EMPLOYMENT HISTORY */}
-              <div className="MainCard" style={{ display: empDataPresent ? "block" : "none", border:"none" }}>
-                <h2 className="eq">EMPLOYMENT HISTORY</h2>
+              <div
+                className="MainCard"
+                style={{
+                  display: empDataPresent ? "block" : "none",
+                  border: "none",
+                }}>
+                <h2 className="eq">Employment History</h2>
                 {empDataPresent &&
                   data.data.employment &&
                   data.data.employment.map((employment, index) => (
                     <div className="mcard" key={index}>
                       <p className="at">
-                      {employment.curr_past_organization === "Current" ? "Current" :"-" && employment.curr_past_organization === "Past" ? "Past" :"-" && employment.is_verified === true ? "As Per EPFO" :"-"}
+                        {employment.curr_past_organization === "Current"
+                          ? "Current"
+                          : "-" && employment.curr_past_organization === "Past"
+                          ? "Past"
+                          : "-" && employment.is_verified === true
+                          ? "As per EPFO"
+                          : "-"}
                       </p>
                       <p
                         className="isv"
@@ -712,11 +707,23 @@ const App = (Newdata) => {
                             <h1 htmlFor={`Job-Name-label-${index}`}>
                               {employment.designation || ""}
                             </h1>
-                            <h3 htmlFor={`Company-Name-label-${index}`}>
-                            {employment.organization_name}:{employment.employment_type === "1" ? "Full Time" :"null" && employment.employment_type === "2" ? "Internship" :"null" && employment.employment_type === "3" ? "Contract" :"null" && employment.employment_type === "4" ? "Part Time" : "Null" && employment.employment_type === "5" ? "Freelance" : "Null"}
-                            </h3>
+                            <h5 htmlFor={`Company-Name-label-${index}`}>
+                              {employment.organization_name}:
+                              {employment.employment_type === "1"
+                                ? "Full Time"
+                                : " " && employment.employment_type === "2"
+                                ? "Internship"
+                                : " " && employment.employment_type === "3"
+                                ? "Contract"
+                                : " " && employment.employment_type === "4"
+                                ? "Part Time"
+                                : " " && employment.employment_type === "5"
+                                ? "Freelance"
+                                : " "}
+                            </h5>
                             <h5 htmlFor={`Duration-label-${index}`}>
-                            {formatDate(employment.from_date)} TO {formatDate(employment.to_date)}
+                              {formatDate(employment.from_date)} TO{" "}
+                              {formatDate(employment.to_date)}
                               {/* {employment.tt_exp_yr || "-"} Yr{" "}
                               {employment.tt_exp_mnth || "-"} Mon ) */}
                             </h5>
@@ -736,14 +743,20 @@ const App = (Newdata) => {
                           />
                         </div> */}
                       </div>
-                      <div className="upbyadhar">
-                        <p id="upbyadhar">
-                          Added On {employment.updated_date}
-                        </p>
-                        <p id="upbyzoop">
-                          Latest verifation date {employment.updated_date} 
-                        </p>
-                      </div>
+                      {employment.is_verified ? (
+                        <div className="upbyadhar">
+                          <p id="upbyadhar">
+                            Added On {employment.updated_date}
+                          </p>
+                          <p id="upbyzoop">
+                            Latest Verification Date {employment.updated_date}
+                          </p>
+                        </div>
+                      ) : (
+                        <div className="update">
+                          <p id="upbyadhar"> Updated Date {employment.updated_date} </p>
+                        </div>
+                      )}
                       {/* <hr /> */}
                     </div>
                   ))}
@@ -751,7 +764,12 @@ const App = (Newdata) => {
 
               {/* Address details */}
 
-              <div className="MainCard" style={{ display: addDataPresent ? "block" : "none",border:"none" }}>
+              <div
+                className="MainCard"
+                style={{
+                  display: addDataPresent ? "block" : "none",
+                  border: "none",
+                }}>
                 <h2 className="eq">Address Details</h2>
                 {addDataPresent &&
                   data.data.address &&
@@ -794,14 +812,18 @@ const App = (Newdata) => {
                           </div>
                         </div>
                       </div>
-                      <div className="upbyadhar">
-                        <p id="upbyadhar">
-                          Added On {address.updated_date}
-                        </p>
-                        <p id="upbyzoop">
-                          Latest verifation date {address.updated_date}
-                        </p>
-                      </div>
+                      {address.is_verified ? (
+                        <div className="upbyadhar">
+                          <p id="upbyadhar">Added On {address.updated_date}</p>
+                          <p id="upbyzoop">
+                            Latest Verification Date {address.updated_date}
+                          </p>
+                        </div>
+                      ) : (
+                        <div className="update">
+                          <p id="upbyadhar"> Updated Date {address.updated_date} </p>
+                        </div>
+                      )}
                       {/* <hr /> */}
                     </div>
                   ))}
@@ -885,6 +907,7 @@ const App = (Newdata) => {
                 </div>
               </div>
               </div> */}
+
             </div>
           </div>
         </div>

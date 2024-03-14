@@ -14,8 +14,9 @@ body {
   align-items: center;
   justify-content: center;
   caret-color: transparent;
-  background-color: lightgray;
+  background-color:lightgray;
 }
+
 
 :where(.container, form, .input-field, header) {
   display: flex;
@@ -164,6 +165,7 @@ section label{
 .cardinfo{
     width: 300px;
     line-height: 30px;
+    margin-top: 10px;
 }
 .cardinfo h1{
   font-size: 20px;
@@ -188,6 +190,13 @@ section label{
   width: 350px;
   height: 250px;
   border-radius: 5px;
+}
+
+.image-container h1{
+  font-size: 15px;
+  text-align: center;
+  margin-top: -30px;
+  margin-bottom: 10px;
 }
 
 .verification-link {
@@ -355,10 +364,16 @@ section label{
 .upbyadhar p {
   color: #667085;
   display: block;
-  font-size: 10px;
+  font-size: 12px;
   text-align: end;
 }
 
+.update p{
+  color: #667085;
+  display: block;
+  font-size: 12px;
+  text-align: end;
+}
 /* new css add here */
 
 .MainCard{
@@ -597,6 +612,10 @@ hr{
     align-items: center;
     text-align: center;
   }
+  .image-container h1{
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
   
   .upbyadhar p {
     display: block;
@@ -728,6 +747,7 @@ p.at{
   display: flex;
   flex-direction: column;
   align-items: flex-start; /* Align items to start (left) */
+  width: 110%;
 }
 .apdlable p{
   font-size: 20px;
@@ -768,7 +788,6 @@ p.at {
   font-weight: 700;
   letter-spacing: 0.025rem;
   font-style: normal;
-  text-transform: uppercase;
   color:#0059ff;
   background-color: #FFFFFF;
   border-radius: 2px;
