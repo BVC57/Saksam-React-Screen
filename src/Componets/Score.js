@@ -11,38 +11,19 @@ const CircleProgressBar = ({ score, total }) => {
   return (
     
     <svg height={radius * 2} width={radius * 2}>
-      <circle
-        stroke="silver"
-        fill="white"
-        strokeWidth={strokeWidth}
-        r={normalizedRadius}
-        cx={radius}
-        cy={radius}
-      />
-      <circle
-        stroke={score <= 350 ? 'red' : 'green'}
-        fill="transparent"
-        strokeWidth={strokeWidth}
-        strokeDasharray={`${circumference} ${circumference}`}
-        style={{
-          strokeDashoffset,
-          transform: `rotate(-90deg) translate(-${radius * 2}px)`,
-        }}
-        r={normalizedRadius}
-        cx={radius}
-        cy={radius}
-      />
       <text
         x="50%"
         y="50%"
         textAnchor="middle"
-        stroke="#0075F3"
+        stroke="#4CC43C"
         strokeWidth="0.2px"
+        fill='#4CC43C'
         dy=".3em"
-        fontSize="16px"
+        fontSize="30px"
         fontWeight="bold"
       >
         {score}
+        
       </text>
     </svg>
   );

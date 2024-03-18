@@ -3,8 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Verifyotp from './Componets/Verifyotp';
 import Profilepage from "./Componets/Profile";
 import getUserData from './Componets/GetAuth';
-import Resume from './Componets/Resume';
-import Figma from './Componets/Figma';
+
 
 const App = () => {
   const [userId, setUserId] = useState(null);
@@ -22,9 +21,8 @@ const App = () => {
   return (
     <Router>
       <Routes>
-          {/* <Route path="/" element={<Figma/>}/> */}
           <Route path="/:id" element={<Verifyotp userId={userId} authToken={authToken} />}/>
-          <Route path="/resume/:userid"  element={<Resume/>} />
+          {/* <Route path="/resume/:userid"  element={<Resume/>} /> */}
           <Route path="/profile"  element={<Profilepage userId={userId} authToken={authToken} />} />
       </Routes>
     </Router>

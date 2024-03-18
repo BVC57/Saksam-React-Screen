@@ -73,9 +73,9 @@ const OTPVerification = ({ userId, authToken }) => {
         setShowBody(true);
         setLoading1(false);
       } else {
-        alert(data.message);
+        // alert(data);
         setLoading1(false)
-        console.error('Error:', data.message);
+        console.error('Error:', data);
         setErrorMessage(data.message || 'Error sending OTP. Please try again.');
       }
     } catch (error) {

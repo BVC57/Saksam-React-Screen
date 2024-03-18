@@ -122,16 +122,18 @@ section{
   border: 1px solid #000000;
   font-size: 15px;
   background: #19254B;
-  display: flex;
   justify-content: space-evenly;
   margin-bottom: 20px;
   border-radius: 10px;
   padding: 20px;
-  height: 270px;
+  height: 350px;
   background-image: url('../Images/Mask\ group.png');
   background-size: auto; /* Adjusts the background image size to cover the entire body */
   background-position: right; /* Centers the background image */
   background-repeat:repeat-y; /* Prevents the background image from repeating */
+}
+.profileimg{
+  margin-top: 20px;
 }
 section h2{
   text-align: center;
@@ -144,14 +146,23 @@ section label{
 }
 .pi{
   margin-left: 10px;
-  display: block;
+  display: flex;
 }
 .dd{
-  margin-left: 20px;
+  display: flex;
+  margin-left: 15px;
 }
 .dd p{
   line-height: 40px;
   color: white;
+  font-size: 25px;
+  margin-left: -5px;
+}
+.dd span{
+  font-size: 18px;
+  padding-right: 10px;
+  color: white;
+  margin-top: 7px;
 }
 
 /* card detail css here */
@@ -185,10 +196,23 @@ section label{
   flex: 1;
   padding: 10px;
 }
+.image-container1 {
+  max-width: 100%;
+  height: auto;
+  flex: 1;
+  padding: 10px;
+  margin-left: 185px;
+  margin-top: -20px;
+}
 
 .image-container img {
   width: 350px;
   height: 250px;
+  border-radius: 5px;
+}
+.image-container1 img {
+  width: 340px;
+  height: 200px;
   border-radius: 5px;
 }
 
@@ -196,6 +220,11 @@ section label{
   font-size: 15px;
   text-align: center;
   margin-top: -30px;
+  margin-bottom: 10px;
+}
+.image-container1 h1{
+  font-size: 15px;
+  margin-top: 10px;
   margin-bottom: 10px;
 }
 
@@ -373,11 +402,13 @@ section label{
   display: block;
   font-size: 12px;
   text-align: end;
+  margin-top: -30px;
 }
+
+
 /* new css add here */
 
 .MainCard{
-  /* border: 1px solid black; */
   display: block;
   border-radius: 10px;
   margin-top: 20px;
@@ -386,7 +417,6 @@ section label{
 }
 .mcard{
   display: block;
-  /* border: 1px solid black; */
   margin: -2px;
   background-color: white;
   margin-top: 40px;
@@ -394,9 +424,10 @@ section label{
   padding: 1px;
 }
 
-
-h2.eq{
-  margin-left: 0;
+h1.eh{
+  font-size: 25px;
+  margin-bottom: -20px;
+  color: white;
 }
 
 .apd{
@@ -451,9 +482,11 @@ i.fas.fa-download:hover{
 
 /*   css for hr line in eduction detail    */
 hr{
-    width: 50%;
-    margin: 1% 0px 1% 25%;
-    background: white;
+  width: 100%;
+  margin: 1% 0px 1% 0;
+  background-color: black;
+  height: 2px;
+  border: none;
 }
 
 /* responsive desing for all devices code here */
@@ -587,18 +620,40 @@ hr{
     text-align: center;
   }
 
-  .cardinfo,
+  .cardinfo{
+    order: 2;
+    text-align: left;
+  }
   .image-container {
+    order: 1;
     flex: none;
     width: 100%;
-    align-items: center;
-    text-align: center;
+    text-align: left;
   }
   .image-container img{
     width: 290px;
     height: 200px;
     margin-left: -15px;
   }
+
+  .image-container1 {
+    flex: none;
+    width: 100%;
+    align-items: center;
+    text-align: center;
+    margin-left: -17px;
+  }
+  .image-container1 img{
+    width: 290px;
+    height: 200px;
+  }
+  .image-container1 h1{
+    margin-left: -70px;
+  }
+  .apddata h5{
+    width: 200px;
+  }
+  
   .cardinfo h2{
     font-size: 25px;
     color: black;
@@ -671,7 +726,8 @@ section{
   width: 335px !important;
 }
 .carddata{
-  display: block;
+  display: flex;
+  flex-direction: column;
 }
 .creddata{
   width: 340px !important;
@@ -683,8 +739,9 @@ section{
   margin: 6px !important;
 }
 p.at{
-  /* margin-top: -5px !important; */
-  display: none;
+  margin: 10px !important;
+  background-color: #99a2b4 !important;
+  color: white !important;
 }
 .apddata{
   font-size: 12px;
@@ -703,6 +760,46 @@ p.at{
 .upbyadhar{
   margin-top: -52px;
 }
+.pid {
+  margin-left: -15px;
+  margin-top: -20px;
+}
+.profileimg img{
+  height: 100px;
+  width: 100px;
+}
+.profileimg span img{
+  margin-left: 30px !important;
+  margin-top: -40px;
+}
+.dd{
+  display: block;
+}
+.dd span{
+  display: none;
+}
+.score{
+  height: 130px;
+  width: 100px !important;
+  margin-left: 5px;
+}
+.score p{
+  font-size: 15px;
+}
+.tsi{
+  font-size: 9px;
+  margin-left: 2px !important;
+}
+.tsi img{
+  margin-top: -20px !important;
+}
+h1.eh{
+  margin: 0 59px 0 5px;
+}
+/* .footer p{
+  
+} */
+
 }
 
 
@@ -711,23 +808,39 @@ p.at{
 
 
 
-/*########################## the new page css here start  ############################*/
+/*########################## the new page css start here  ############################*/
 
 .ps{
   display: block;
+  margin-top: 40px;
 }
 
 
 .personal-info h1{
   text-align: center;
-  color: #003cff;
+  color: white;
+  font-size: 25px;
+}
+h1.sh{
+  text-align: center;
+  color:#0059ff;
+  font-size: 30px;
 }
 
+p#full-name-label {
+  font-size: 25px;
+  color: white;
+}
 
 .profileimg img{
-  height: 90px;
-  width: 90px;
+  height: 120px;
+  width: 120px;
   border-radius: 50%;
+}
+.profileimg span img{
+  height: 60px;
+  width: 60px;
+  margin-left: -40px;
 }
 
 .tscore p{
@@ -747,7 +860,7 @@ p.at{
   display: flex;
   flex-direction: column;
   align-items: flex-start; /* Align items to start (left) */
-  width: 110%;
+  width: 150%;
 }
 .apdlable p{
   font-size: 20px;
@@ -797,13 +910,29 @@ p.at {
 }
 
 .score{
-  margin-top: 30px;
+  width: 200px;
+  align-items: center;
+  text-align: center;
+  background-color: #0B132F;
+  border-radius: 20px;
+}
+.tsi{
+  display: flex;
+  text-align: center;
+  margin-left: 35px;
 }
 .score p{
   color: white;
-  margin-top: -10px;
+  margin-top: -30px;
   margin-left: 10px;
   font-weight: 500;
+  margin-bottom: 25px;
+}
+.tsi img{
+  height: 20px;
+  width: 20px;
+  margin-top: -28px;
+  margin-left: 10px;
 }
 .aadhar-dob{
   display: flex;
@@ -865,4 +994,43 @@ p.at {
 
 .rimg img{
   margin-top: 100px;
+}
+
+
+/* css for new profile header */
+
+span{
+  margin-left: 5px;
+  margin-top: 3px;
+}
+
+.pid{
+  display: flex;
+  justify-content: space-between;
+}
+.scoresection{
+  display: flex;
+  justify-content: space-around;
+  margin-top: 30px;
+}
+.footer{
+  text-align: justify;
+  width: auto;
+  padding: 15px;
+  color: gray;
+  font-size: 12px;
+}
+
+.footer h2{
+  color: black;
+  text-align: center;
+}
+h6.fh{
+  font-size: 20px;
+  text-align: center;
+  border: 2px solid black;
+  margin-top: 20px;
+}
+h6.fh span{
+  color:#0075F3;
 }

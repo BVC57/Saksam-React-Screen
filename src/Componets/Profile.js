@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 // import html2pdf from "html2pdf.js";
 import "./Main.css";
 import Score from "./Score";
+// import QRimg from "../Images/qr.png";
+import Ticimg from "../Images/btick.png";
+import Qsimg from "../Images/question.png";
 
 const App = (Newdata) => {
   const TotalScore = 1000;
@@ -33,6 +36,7 @@ const App = (Newdata) => {
   const [Acdatetime, setAcdatetime] = useState(""); // state var for save adharuploaded data and time
   const [Pcdatetime, setPcdatetime] = useState(""); // state var for save adharuploaded data and time
   const [Dldatetime, setDldatetime] = useState(""); // state var for save adharuploaded data and time
+  const [age, setAge] = useState(null);
 
   // useEffect to make the API call when the component mounts
 
@@ -43,6 +47,7 @@ const App = (Newdata) => {
       } else {
         setLoading(true);
         try {
+          
           const response = await fetch(
             `https://bjejzjksx9.execute-api.ap-south-1.amazonaws.com/DEV/get_viewer_attribute_list?id=${userId}`,
             {
@@ -51,13 +56,17 @@ const App = (Newdata) => {
                 Authorization: `Bearer ${authToken}`,
                 "Content-Type": "application/json",
               },
+              // signal // Pass the signal to the fetch request
             }
           );
-
+          // clearTimeout(timeoutId); // Clear timeout since the request succeeded
           const result = await response.json();
 
           if (result.Status_Code === 200) {
             setData(result);
+            // Assuming 'data' is your state variable holding API response
+            const years = calculateAge(result.data.p_info.dob);
+            setAge(years);
             setLoading(false);
           } else {
             console.error("API call failed with status:", result.message);
@@ -92,7 +101,7 @@ const App = (Newdata) => {
       // Set personal information //
       // setUsername(data.data.p_info.fullname);
       setLabelData("full-name-label", data.data.p_info.fullname || "-");
-      setLabelData("date-of-birth-label", data.data.p_info.dob || "-");
+      setLabelData("date-of-birth-label", `${age} Years` || "-");
       setLabelData(
         "gender-label",
         data.data.p_info.gender === "1"
@@ -339,9 +348,33 @@ const App = (Newdata) => {
     const options = { month: "short", year: "numeric" };
     return new Date(dateString).toLocaleDateString("en-US", options);
   };
+
+  // get the only totla year between two dates
+  const calculateAge = (dob) => {
+    // Split the date string into day, month, and year
+    const [day, month, year] = dob.split("-");
+    // Construct a Date object from the parsed components
+    const birthDate = new Date(`${month}-${day}-${year}`);
+    // Get the current date
+    const currentDate = new Date();
+
+    let age = currentDate.getFullYear() - birthDate.getFullYear();
+
+    const monthDifference = currentDate.getMonth() - birthDate.getMonth();
+
+    if (
+      monthDifference < 0 ||
+      (monthDifference === 0 && currentDate.getDate() < birthDate.getDate())
+    ) {
+      age--;
+    }
+
+    return age;
+  };
+
   // const handleDownloadPDF = () => {
   //   // Function to handle PDF download
-  //   const filename = `${Username}_Saksham_Profile.pdf`; // Filename with username
+  //   const filename = `Saksham_Profile.pdf`; // Filename with username
   //   const element = document.getElementById("pdf-content"); // Get the element to convert to PDF
   //   html2pdf().from(element).save(filename);
   // };
@@ -387,36 +420,59 @@ const App = (Newdata) => {
           </div> */}
           {/* Personal information */}
           <div className="personal-info">
-            <h1>Saksham Profile</h1>
+            <h1 className="sh">Saksham Profile</h1>
             <section>
-              <div className="ps">
+              <div className="pid">
+                <div className="ps">
+                  <div className="pi">
+                    <p id="full-name-label">-</p>
+                    <span>
+                      <img
+                        src={Ticimg}
+                        alt="not found"
+                        height={30}
+                        width={30}></img>
+                    </span>
+                  </div>
+                  <div className="dd">
+                    <p id="date-of-birth-label"></p>
+                    <span>/</span>
+                    <p id="gender-label"></p>
+                  </div>
+                </div>
                 <div className="profileimg">
                   <img
                     src={ProfileImagesrc}
                     alt="Not Uploded"
                     id="aadhar-image"
                   />
+                  {/* <span>
+                    <img src={QRimg} alt="not found"></img>
+                </span> */}
+                </div>
+              </div>
+              <div className="scoresection">
+                <div className="score">
+                  <Score score={777} total={TotalScore} />
+                  <div className="tsi">
+                    <p>Trust Score</p>
+                    <img src={Qsimg} alt="not found"></img>
+                  </div>
                 </div>
                 <div className="score">
                   <Score score={777} total={TotalScore} />
-                  <p>Trust Score</p>
+                  <div className="tsi">
+                    <p>Cibil Score</p>
+                    <img src={Qsimg} alt="not found"></img>
+                  </div>
                 </div>
-              </div>
-              <div className="pi">
-                <label htmlFor="full-name-label">Name:</label>
-                <label htmlFor="date-of-birth-label">DOB:</label>
-                <label htmlFor="gender-label">Gender:</label>
-                <label htmlFor="Fname-label">Father Name:</label>
-                <label htmlFor="contact-Phone-label">Phone:</label>
-                <label htmlFor="contact-Email-label">Email:</label>
-              </div>
-              <div className="dd">
-                <p id="full-name-label">-</p>
-                <p id="date-of-birth-label">-</p>
-                <p id="gender-label">-</p>
-                <p id="fname-label">-</p>
-                <p id="contact-Phone-label">-</p>
-                <p id="contact-Email-label">-</p>
+                <div className="score">
+                  <Score score={777} total={TotalScore} />
+                  <div className="tsi">
+                    <p>Credit Score</p>
+                    <img src={Qsimg} alt="not found"></img>
+                  </div>
+                </div>
               </div>
             </section>
           </div>
@@ -598,7 +654,7 @@ const App = (Newdata) => {
                   display: eqDataPresent ? "block" : "none",
                   border: "none",
                 }}>
-                <h2 className="eq">Educational Details</h2>
+                <h1 className="eh">Educational Details</h1>
                 {eqDataPresent &&
                   data.data.education &&
                   data.data.education.map((education, index) => (
@@ -613,36 +669,46 @@ const App = (Newdata) => {
                         {education.is_verified ? "Verified" : "Not Verified"}
                       </p>
                       <div className="card">
-                        <div className="cardinfo">
-                          <div className="apddata">
-                            <h1 htmlFor={`Degree-Name-label-${index}`}>
-                              {education.degree_name === "1"
-                                ? "10th"
-                                : " " && education.degree_name === "2"
-                                ? "12th"
-                                : " " && education.degree_name === "3"
-                                ? "Diploma"
-                                : " " && education.degree_name === "4"
-                                ? "Graduate"
-                                : " " && education.degree_name === "5"
-                                ? "Post Graduate"
-                                : " " && education.degree_name === "6"
-                                ? "Doctorate"
-                                : " "}
-                            </h1>
-                            <h3 htmlFor={`Institution-Name-label-${index}`}>
-                              {education.institute_name || ""}
-                            </h3>
-                            <h5 htmlFor={`Year-Of-Passing-label-${index}`}>
-                              [{education.course_start_year || ""}] TO [
-                              {education.course_end_year || ""}]
-                            </h5>
-                            {/* <label htmlFor={`Honors-label-${index}`}>
+                        <div className="carddata">
+                          <div className="cardinfo">
+                            <div className="apddata">
+                              <h1 htmlFor={`Degree-Name-label-${index}`}>
+                                {education.degree_name === "1"
+                                  ? "10th"
+                                  : " " && education.degree_name === "2"
+                                  ? "12th"
+                                  : " " && education.degree_name === "3"
+                                  ? "Diploma"
+                                  : " " && education.degree_name === "4"
+                                  ? "Graduate"
+                                  : " " && education.degree_name === "5"
+                                  ? "Post Graduate"
+                                  : " " && education.degree_name === "6"
+                                  ? "Doctorate"
+                                  : " "}
+                              </h1>
+                              <h5 htmlFor={`Institution-Name-label-${index}`}>
+                                {education.institute_name || ""}
+                              </h5>
+                              <h5 htmlFor={`Year-Of-Passing-label-${index}`}>
+                                [{education.course_start_year || ""}] TO [
+                                {education.course_end_year || ""}]
+                              </h5>
+                              {/* <label htmlFor={`Honors-label-${index}`}>
                             {education.board || "-"}
                           </label>
                           <label htmlFor={`Distinctions-label-${index}`}>
                             {education.data_source || "-"}
                           </label> */}
+                            </div>
+                          </div>
+                          <div className="image-container1">
+                            <h1>Marksheet</h1>
+                            <img
+                              src={aadharImageSrc}
+                              alt="Not Uploded"
+                              id="aadhar-image"
+                            />
                           </div>
                         </div>
                       </div>
@@ -657,7 +723,10 @@ const App = (Newdata) => {
                         </div>
                       ) : (
                         <div className="update">
-                          <p id="upbyadhar"> Updated Date {education.updated_date} </p>
+                          <p id="upbyadhar">
+                            {" "}
+                            Updated Date {education.updated_date}{" "}
+                          </p>
                         </div>
                       )}
                       {/* <hr /> */}
@@ -754,7 +823,10 @@ const App = (Newdata) => {
                         </div>
                       ) : (
                         <div className="update">
-                          <p id="upbyadhar"> Updated Date {employment.updated_date} </p>
+                          <p id="upbyadhar">
+                            {" "}
+                            Updated Date {employment.updated_date}{" "}
+                          </p>
                         </div>
                       )}
                       {/* <hr /> */}
@@ -821,7 +893,10 @@ const App = (Newdata) => {
                         </div>
                       ) : (
                         <div className="update">
-                          <p id="upbyadhar"> Updated Date {address.updated_date} </p>
+                          <p id="upbyadhar">
+                            {" "}
+                            Updated Date {address.updated_date}{" "}
+                          </p>
                         </div>
                       )}
                       {/* <hr /> */}
@@ -895,21 +970,41 @@ const App = (Newdata) => {
 
               {/* PRIVACY STATEMENT AND CONSENT */}
 
-              {/* <div className="MainCard">
-              <div className="card">
-                <div className="cardinfo">
-                  <h2 className="ph">PRIVACY STATEMENT AND CONSENT</h2>
-                  <p className="pd">
-                    A statement about the privacy and use of this document.
-                    Consent clause for the verifier to use this document for
-                    verification purposes only.
-                  </p>
+              <div className="MainCard">
+                <div className="mcard">
+                  <div className="footer">
+                    <h2>CONFIDENTIAL</h2>
+                    <p>
+                      This verification report contains privileged and
+                      confidential information intended solely for the recipient
+                      named above. If you are not the intended recipient, you
+                      are hereby notified that any dissemination, distribution,
+                      or copying of this report is strictly prohibited. Please
+                      notify the sender immediately and delete all copies of
+                      this report from your system.
+                    </p>
+                    <h2>DISCLAIMER</h2>
+                    <p>
+                      This verification report is provided for informational
+                      purposes only and is based on the information available at
+                      the time of its creation. While every effort has been made
+                      to ensure the accuracy and completeness of the information
+                      contained herein, we make no representations or warranties
+                      of any kind, express or implied, about the accuracy,
+                      reliability, or suitability of this report for any
+                      particular purpose. The recipient acknowledges that the
+                      findings in this report are subject to change and should
+                      be independently verified. We shall not be liable for any
+                      damages or losses arising from the use of or reliance on
+                      this report.
+                    </p>
+                  </div>
                 </div>
               </div>
-              </div> */}
-
             </div>
           </div>
+          {/* <hr></hr> */}
+          <h6 className="fh">All rights reserved. © 2024 <span>Saksham</span></h6>
         </div>
       )}
     </div>
