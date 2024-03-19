@@ -781,7 +781,7 @@ p.at{
 
 }
 .personal-info h1{
-  font-size: 25px;
+  font-size: 18px !important;
 }
 .aadhar-dob{
   display: block !important;
