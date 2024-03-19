@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useState, useEffect} from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Verifyotp from './Componets/Verifyotp';
 import Profilepage from "./Componets/Profile";
@@ -14,9 +14,10 @@ const App = () => {
     setUserId(userId);
     setAuthToken(authToken);
   };
-
-  // Call fetchData directly inside the component
-  fetchData();
+  useEffect(() => {
+    // Call fetchData directly inside the component
+    fetchData();
+  }, []);
 
   return (
     <Router>

@@ -46,6 +46,8 @@ const OTPVerification = ({ userId, authToken }) => {
   };
 
   const sendOTP = async () => {
+    // Record the start time before making the API call
+    const startTime = new Date().getTime();
     if (!authToken) {
       setLoading(true);
       // setErrorMessage('Token Not Found');
@@ -68,12 +70,16 @@ const OTPVerification = ({ userId, authToken }) => {
       }
 
       const data = await response.json();
+      // Calculate the total time taken
+      const endTime = new Date().getTime();
+      const totalTime = endTime - startTime;
+      console.log("Total time taken from SendOTP:", totalTime, "milliseconds");
       if (data.Status_Code === 200) {
         console.log(`Send Done - OTP: ${data.OTP}`);
         setShowBody(true);
         setLoading1(false);
       } else {
-        // alert(data);
+        alert(data.message);
         setLoading1(false)
         console.error('Error:', data);
         setErrorMessage(data.message || 'Error sending OTP. Please try again.');
@@ -127,6 +133,8 @@ const OTPVerification = ({ userId, authToken }) => {
   };
 
   const verifyOTP = async () => {
+    // Record the start time before making the API call
+    const startTime = new Date().getTime();
     setLoading(true);
     const enteredOTP = otpValues.join("");
     try {
@@ -147,6 +155,11 @@ const OTPVerification = ({ userId, authToken }) => {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       const data = await response.json();
+       // Calculate the total time taken
+       const endTime = new Date().getTime();
+       const totalTime = endTime - startTime;
+       console.log("Total time taken from VerifyOTP:", totalTime, "milliseconds");
+
       if (data.Status_Code === 200) {
         navigate("/profile");
       } else {

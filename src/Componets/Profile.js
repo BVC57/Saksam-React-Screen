@@ -21,7 +21,7 @@ const App = (Newdata) => {
   const [DLImagesrc, setDLImagesrc] = useState("");
   // const [ECImagesrc, setECImagesrc] = useState("");
   // const [EHImagesrc, setEHImagesrc] = useState("");
-  // const [EQImagesrc, setEQImagesrc] = useState("");
+  const [EQImagesrc, setEQImagesrc] = useState("");
   // const [DSImagesrc, setDSImagesrc] = useState("");
   const [aadharDataPresent, setAadharDataPresent] = useState(false); // set for Aadhar card visibility
   const [panDataPresent, setpanDataPresent] = useState(false); // set for Pan card visibility
@@ -32,61 +32,66 @@ const App = (Newdata) => {
   const [eqDataPresent, seteqDataPresent] = useState(false); // set for eduction qulification visibility
   const [addDataPresent, setaddDataPresent] = useState(false); // set for eduction qulification visibility
   const [empDataPresent, setempDataPresent] = useState(false); // set for eduction qulification visibility
-  // const [Username, setUsername] = useState(""); // State variable to store username
+  const [Username, setUsername] = useState(""); 
   const [Acdatetime, setAcdatetime] = useState(""); // state var for save adharuploaded data and time
   const [Pcdatetime, setPcdatetime] = useState(""); // state var for save adharuploaded data and time
   const [Dldatetime, setDldatetime] = useState(""); // state var for save adharuploaded data and time
   const [age, setAge] = useState(null);
 
   // useEffect to make the API call when the component mounts
-
-  useEffect(() => {
-    const makeAPICall = async () => {
-      if (authToken === undefined) {
-        setError("Token Not Found");
-      } else {
-        setLoading(true);
-        try {
-          
-          const response = await fetch(
-            `https://bjejzjksx9.execute-api.ap-south-1.amazonaws.com/DEV/get_viewer_attribute_list?id=${userId}`,
-            {
-              method: "GET",
-              headers: {
-                Authorization: `Bearer ${authToken}`,
-                "Content-Type": "application/json",
-              },
-              // signal // Pass the signal to the fetch request
-            }
-          );
-          // clearTimeout(timeoutId); // Clear timeout since the request succeeded
-          const result = await response.json();
-
-          if (result.Status_Code === 200) {
-            setData(result);
-            // Assuming 'data' is your state variable holding API response
-            const years = calculateAge(result.data.p_info.dob);
-            setAge(years);
-            setLoading(false);
-          } else {
-            console.error("API call failed with status:", result.message);
-            setLoading(false);
-            setError(true);
+  const makeAPICall = async () => {
+    // Record the start time before making the API call
+    const startTime = new Date().getTime();
+    if (authToken === undefined) {
+      setError("Token Not Found");
+    } else {
+      setLoading(true);
+      try {
+        const response = await fetch(
+          `https://bjejzjksx9.execute-api.ap-south-1.amazonaws.com/DEV/get_viewer_attribute_list?id=${userId}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+              "Content-Type": "application/json",
+            },
+            // signal // Pass the signal to the fetch request
           }
-        } catch (error) {
-          console.error("Error fetching data from API:", error);
+        );
+        // clearTimeout(timeoutId); // Clear timeout since the request succeeded
+        const result = await response.json();
+
+        // Calculate the total time taken
+        const endTime = new Date().getTime();
+        const totalTime = endTime - startTime;
+        console.log("Total time taken for GAlist:", totalTime, "milliseconds");
+
+        if (result.Status_Code === 200) {
+          setData(result);
+          // Assuming 'data' is your state variable holding API response
+          const years = calculateAge(result.data.p_info.dob);
+          setAge(years);
+          setLoading(false);
+        } else {
+          console.error("API call failed with status:", result.message);
           setLoading(false);
           setError(true);
         }
+      } catch (error) {
+        console.error("Error fetching data from API:", error);
+        setLoading(false);
+        setError(true);
       }
-    };
-
+    }
+  };
+  useEffect(() => {
     makeAPICall();
   }, [userId, authToken]);
 
   useEffect(() => {
     if (data) {
       setDataLabels(data);
+      fetchImageSources();
     }
   }, [data]);
 
@@ -99,7 +104,7 @@ const App = (Newdata) => {
       data.data !== undefined
     ) {
       // Set personal information //
-      // setUsername(data.data.p_info.fullname);
+      setUsername(data.data.p_info.fullname);
       setLabelData("full-name-label", data.data.p_info.fullname || "-");
       setLabelData("date-of-birth-label", `${age} Years` || "-");
       setLabelData(
@@ -233,9 +238,9 @@ const App = (Newdata) => {
           const imageSrc = `data:image/jpeg;base64, ${data.data.aadhaarcard[0].aadhaar_image} `;
           setDLImagesrc(imageSrc);
         } else {
-          console.error(
-            "driving lincense  image not found in the API response."
-          );
+          // console.e(
+          //   "driving lincense  image not found in the API response."
+          // );
         }
       }
 
@@ -273,6 +278,7 @@ const App = (Newdata) => {
             `Distinctions-label-${index}`,
             education.data_source || "-"
           );
+          // Set education image
         });
       }
 
@@ -306,9 +312,7 @@ const App = (Newdata) => {
             const imageSrc = `data:image/jpeg;base64, ${data.data.employment[0].aadhaar_image} `;
             setDLImagesrc(imageSrc);
           } else {
-            console.error(
-              "driving lincense  image not found in the API response."
-            );
+            
           }
         });
       }
@@ -371,7 +375,13 @@ const App = (Newdata) => {
 
     return age;
   };
-
+  // Function to fetch image sources from education data
+  const fetchImageSources = () => {
+    if (data.data.education) {
+      const sources = data.data.education.map((education) => education.pic);
+      setEQImagesrc(sources);
+    }
+  };
   // const handleDownloadPDF = () => {
   //   // Function to handle PDF download
   //   const filename = `Saksham_Profile.pdf`; // Filename with username
@@ -420,10 +430,20 @@ const App = (Newdata) => {
           </div> */}
           {/* Personal information */}
           <div className="personal-info">
-            <h1 className="sh">Saksham Profile</h1>
+            <h1 className="sh">{Username} Saksham Profile</h1>
             <section>
               <div className="pid">
                 <div className="ps">
+                  <div className="profileimg">
+                    <img
+                      src={ProfileImagesrc}
+                      alt="Not Uploded"
+                      id="aadhar-image"
+                    />
+                    {/* <span>
+                    <img src={QRimg} alt="not found"></img>
+                </span> */}
+                  </div>
                   <div className="pi">
                     <p id="full-name-label">-</p>
                     <span>
@@ -439,16 +459,6 @@ const App = (Newdata) => {
                     <span>/</span>
                     <p id="gender-label"></p>
                   </div>
-                </div>
-                <div className="profileimg">
-                  <img
-                    src={ProfileImagesrc}
-                    alt="Not Uploded"
-                    id="aadhar-image"
-                  />
-                  {/* <span>
-                    <img src={QRimg} alt="not found"></img>
-                </span> */}
                 </div>
               </div>
               <div className="scoresection">
@@ -657,6 +667,7 @@ const App = (Newdata) => {
                 <h1 className="eh">Educational Details</h1>
                 {eqDataPresent &&
                   data.data.education &&
+                  Array.isArray(data.data.education) &&
                   data.data.education.map((education, index) => (
                     <div className="mcard" key={index}>
                       <p
@@ -675,17 +686,17 @@ const App = (Newdata) => {
                               <h1 htmlFor={`Degree-Name-label-${index}`}>
                                 {education.degree_name === "1"
                                   ? "10th"
-                                  : " " && education.degree_name === "2"
+                                  : education.degree_name === "2"
                                   ? "12th"
-                                  : " " && education.degree_name === "3"
+                                  : education.degree_name === "3"
                                   ? "Diploma"
-                                  : " " && education.degree_name === "4"
+                                  : education.degree_name === "4"
                                   ? "Graduate"
-                                  : " " && education.degree_name === "5"
+                                  : education.degree_name === "5"
                                   ? "Post Graduate"
-                                  : " " && education.degree_name === "6"
+                                  : education.degree_name === "6"
                                   ? "Doctorate"
-                                  : " "}
+                                  : ""}
                               </h1>
                               <h5 htmlFor={`Institution-Name-label-${index}`}>
                                 {education.institute_name || ""}
@@ -694,21 +705,14 @@ const App = (Newdata) => {
                                 [{education.course_start_year || ""}] TO [
                                 {education.course_end_year || ""}]
                               </h5>
-                              {/* <label htmlFor={`Honors-label-${index}`}>
-                            {education.board || "-"}
-                          </label>
-                          <label htmlFor={`Distinctions-label-${index}`}>
-                            {education.data_source || "-"}
-                          </label> */}
                             </div>
                           </div>
                           <div className="image-container1">
                             <h1>Marksheet</h1>
-                            <img
-                              src={aadharImageSrc}
-                              alt="Not Uploded"
-                              id="aadhar-image"
-                            />
+                            {/* Render the image if 'pic' field is available */}
+                            {education.pic && (
+                              <img src={`data:image/jpeg;base64,${education.pic}`} alt={`Not Found`} />
+                            )}
                           </div>
                         </div>
                       </div>
@@ -724,12 +728,10 @@ const App = (Newdata) => {
                       ) : (
                         <div className="update">
                           <p id="upbyadhar">
-                            {" "}
-                            Updated Date {education.updated_date}{" "}
+                            Updated Date {education.updated_date}
                           </p>
                         </div>
                       )}
-                      {/* <hr /> */}
                     </div>
                   ))}
               </div>
@@ -749,11 +751,11 @@ const App = (Newdata) => {
                       <p className="at">
                         {employment.curr_past_organization === "Current"
                           ? "Current"
-                          : "-" && employment.curr_past_organization === "Past"
+                          : " " && employment.curr_past_organization === "Past"
                           ? "Past"
-                          : "-" && employment.is_verified === true
+                          : " " && employment.is_verified === true
                           ? "As per EPFO"
-                          : "-"}
+                          : " "}
                       </p>
                       <p
                         className="isv"
@@ -866,17 +868,17 @@ const App = (Newdata) => {
                         <div className="cardinfo">
                           <div className="apddata">
                             <h5 htmlFor={`Mainaddress-label-${index}`}>
-                              {address.house || "-"} - {address.street || "-"} -{" "}
-                              {address.landmark || "-"}
+                              {address.house || " "} - {address.street || " "} -{" "}
+                              {address.landmark || " "}
                             </h5>
                             <h5 htmlFor={`Pincode-label-${index}`}>
-                              {address.zip || "-"}
+                              {address.zip || " "}
                             </h5>
                             <h5 htmlFor={`District-label-${index}`}>
-                              {address.dist || "-"}
+                              {address.dist || " "}
                             </h5>
                             <h5 htmlFor={`State-label-${index}`}>
-                              {address.state || "-"}
+                              {address.state || " "}
                             </h5>
                             {/* <label htmlFor={`State-label-${index}`}>
                               {formatDate1(address.start_date)} TO {formatDate1(address.end_date)}
@@ -1004,7 +1006,7 @@ const App = (Newdata) => {
             </div>
           </div>
           {/* <hr></hr> */}
-          <h6 className="fh">All rights reserved. © 2024 <span>Saksham</span></h6>
+          {/* <h6 className="fh">All rights reserved. © 2024 <span>Saksham</span></h6> */}
         </div>
       )}
     </div>

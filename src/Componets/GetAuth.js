@@ -1,6 +1,8 @@
 // authUtils.js
 const getUserData = async () => {
   try {
+     // Record the start time before making the API call
+     const startTime = new Date().getTime();
     // Get the path name from the URL
     const pathName = window.location.pathname;
     
@@ -25,6 +27,10 @@ const getUserData = async () => {
     }
 
     const data = await response.json();
+    // Calculate the total time taken
+    const endTime = new Date().getTime();
+    const totalTime = endTime - startTime;
+    console.log("Total time taken from GetAuth:", totalTime, "milliseconds");
     // console.log("from auth",userId)
     // console.log("from auth",data.Token)
     return { userId: userId, authToken: data.Token };
